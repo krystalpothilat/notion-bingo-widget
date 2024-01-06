@@ -5,8 +5,6 @@ function WidgetCustomization(){
     const [backgroundColor, setBackgroundColor] = useState("#ffffff");
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
-    const [text, setText] = useState("Hello, World!");
-    // const [widgetId, setWidgetId] = useState(null);
 
 
     const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
@@ -15,10 +13,6 @@ function WidgetCustomization(){
 
     const handleBackgroundColorChange = (e) => {
         setBackgroundColor(e.target.value);
-    };
-
-    const handleTextChange = (e) => {
-        setText(e.target.value);
     };
 
     const handleTextColorChange = (e) => {
@@ -108,15 +102,6 @@ function WidgetCustomization(){
                 /> 
             </div>
 
-            <div className = "input">
-                <label htmlFor="text">Text:</label>
-                <input
-                    type="text"
-                    id="text"
-                    value={text}
-                    onChange={handleTextChange}
-                />
-            </div>
         </div>
     );
 }
