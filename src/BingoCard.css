@@ -1,10 +1,18 @@
 .bingocard{
+    /* width: 450px; */
+
     text-align: center;
+    /* align-items: center;
+    justify-content: center; */
+    
+}
+#title{
+    margin-bottom: 20px;
 }
 
 .squares{
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     grid-gap: 0px; 
-    width: 450x;
+    width: 450px;
 }
