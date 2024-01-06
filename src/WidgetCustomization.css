@@ -1,0 +1,13 @@
+.widget-customization-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: purple;
+    height: 100vh;
+    width: 40vw;
+}
+
+.input {
+    margin-bottom: 16px;
+}
