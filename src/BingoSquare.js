@@ -20,18 +20,20 @@ function BingoSquare(){
     };
 
     return (
-        <div id = "square" onClick={handleBoxClick}>
-          {isEditing ? (
-            <input
-              type="text"
-              value={text}
-              onChange={handleInputChange}
-              onBlur={() => setIsEditing(false)}
-              onKeyPress={handleKeyPress}
-              autoFocus
-            />
-          ) : (text)}
-        </div> 
+      <div className="square" onClick={handleBoxClick}>
+      {isEditing ? (
+        <input
+          type="text"
+          value={text}
+          onChange={handleInputChange}
+          onBlur={() => setIsEditing(false)}
+          onKeyPress={handleKeyPress}
+          autoFocus
+        />
+      ) : (
+        text
+      )}
+      </div>
 
     );
 

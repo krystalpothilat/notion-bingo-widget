@@ -1,3 +1,10 @@
-.BingoCard{
-    width: 920px;
+.bingocard{
+    text-align: center;
+}
+
+.squares{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 0px; 
+    width: 450x;
 }

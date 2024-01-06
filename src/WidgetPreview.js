@@ -6,6 +6,7 @@ function WidgetPreview(){
         <div className = "preview">
             {/* <h2> test</h2> */}
             <BingoCard />
+
         </div>
     );
 }
