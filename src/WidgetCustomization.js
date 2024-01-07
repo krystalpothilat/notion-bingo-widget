@@ -1,49 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./WidgetCustomization.css"; 
 
-function WidgetCustomization(){
-    const [backgroundColor, setBackgroundColor] = useState("#ffffff");
-    const [textColor, setTextColor] = useState("#000000");
-    const [outlineColor, setOutlineColor] = useState("#000000");
-
-
-    const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
-    const [hexTextColor, setHexTextColor] = useState('#000000');
-    const [hexOutlineColor, setHexOutlineColor] = useState('#007bff');
-
-    const handleBackgroundColorChange = (e) => {
-        setBackgroundColor(e.target.value);
-    };
-
-    const handleTextColorChange = (e) => {
-        setTextColor(e.target.value);
-    };
-
-    const handleOutlineColorChange = (e) => {
-        setOutlineColor(e.target.value);
-    };
-
-
-    const updateColorFromHex = (hexCode, setColorFunction) => {
-        // Validate hex code format
-        const hexRegex = /^#([0-9A-Fa-f]{3}){1,2}$/;
-        if (hexRegex.test(hexCode)) {
-          setColorFunction(hexCode);
-        }
-    };
-
-    useEffect(() => {
-        updateColorFromHex(hexBackgroundColor, setBackgroundColor);
-    }, [hexBackgroundColor]);
-    
-    useEffect(() => {
-    updateColorFromHex(hexTextColor, setTextColor);
-    }, [hexTextColor]);
-
-    useEffect(() => {
-    updateColorFromHex(hexOutlineColor, setOutlineColor);
-    }, [hexOutlineColor]);
-
+const WidgetCustomization = ({backgroundColor, textColor, outlineColor, 
+    onBackgroundColorChange, onTextColorChange, onOutlineColorChange}) => {
 
     return (
         <div className = "widget-customization-container">
@@ -55,15 +14,15 @@ function WidgetCustomization(){
                     type="color"
                     id="backgroundColor"
                     value={backgroundColor}
-                    onChange={handleBackgroundColorChange}
+                    onChange={onBackgroundColorChange}
                 />
-                <input
+                {/* <input
                     type="text"
                     id="hexBackgroundColor"
                     value={hexBackgroundColor}
                     onChange={(e) => setHexBackgroundColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                />
+                /> */}
             </div>
             
             <div className = "input">
@@ -72,15 +31,15 @@ function WidgetCustomization(){
                     type="color"
                     id="textColor"
                     value={textColor}
-                    onChange={handleTextColorChange}
+                    onChange={onTextColorChange}
                 />
-                <input
+                {/* <input
                     type="text"
                     id="hexTextColor"
                     value={hexTextColor}
                     onChange={(e) => setHexTextColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                /> 
+                />  */}
             </div>
 
             
@@ -91,15 +50,15 @@ function WidgetCustomization(){
                     type="color"
                     id="outlineColor"
                     value={outlineColor}
-                    onChange={handleOutlineColorChange}
+                    onChange={onOutlineColorChange}
                 />
-                <input
+                {/* <input
                     type="text"
                     id="hexOutlineColor"
                     value={hexOutlineColor}
                     onChange={(e) => setHexOutlineColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                /> 
+                />  */}
             </div>
 
         </div>

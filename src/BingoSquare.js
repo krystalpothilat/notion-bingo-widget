@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./BingoSquare.css";
 
-function BingoSquare(){
+const BingoSquare = ({ backgroundColor, textColor, outlineColor }) => {
+
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
 
@@ -20,7 +21,7 @@ function BingoSquare(){
     };
 
     return (
-      <div className="square" onClick={handleBoxClick}>
+      <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>
       {isEditing ? (
         <input
           type="text"

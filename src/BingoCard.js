@@ -3,7 +3,7 @@ import BingoSquare from "./BingoSquare";
 import "./BingoCard.css";
 
 
-function BingoCard(){
+const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
 
@@ -23,7 +23,7 @@ function BingoCard(){
 
     return (
       <div className = "bingocard">
-        <h2  id = "title" onClick={handleTitleClick}>
+        <h2  id = "title" style = {{color: titleColor}} onClick={handleTitleClick}>
           {isEditing ? (
             <input
               type="text"
@@ -40,13 +40,16 @@ function BingoCard(){
 
         <div className = "squares">
           {[...Array(9).keys()].map((index) => (
-            <BingoSquare key={index} />
+            <BingoSquare key={index} backgroundColor={backgroundColor}
+            textColor={textColor}
+            outlineColor={outlineColor}
+            />
           ))}
         </div>
 
       </div>
 
       );
-}
+};
 
 export default BingoCard;

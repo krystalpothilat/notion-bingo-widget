@@ -1,10 +1,15 @@
 import "./WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
-function WidgetPreview(){
+const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor}) => {
+
     return (
         <div className = "preview">
-            <BingoCard />
+            <BingoCard
+                backgroundColor={backgroundColor}
+                textColor={textColor}
+                outlineColor={outlineColor}
+                titleColor = {titleColor} />
         </div>
     );
 }
