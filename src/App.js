@@ -42,21 +42,28 @@ function App() {
         }
     };
 
-    useEffect(() => {
-        updateColorFromHex(hexBackgroundColor, setBackgroundColor);
-    }, [hexBackgroundColor]);
-    
-    useEffect(() => {
-    updateColorFromHex(hexTextColor, setTextColor);
-    }, [hexTextColor]);
+  useEffect(() => {
+      updateColorFromHex(hexBackgroundColor, setBackgroundColor);
+  }, [hexBackgroundColor]);
+  
+  useEffect(() => {
+  updateColorFromHex(hexTextColor, setTextColor);
+  }, [hexTextColor]);
 
-    useEffect(() => {
-    updateColorFromHex(hexOutlineColor, setOutlineColor);
-    }, [hexOutlineColor]);
+  useEffect(() => {
+  updateColorFromHex(hexOutlineColor, setOutlineColor);
+  }, [hexOutlineColor]);
 
-    useEffect(() => {
-    updateColorFromHex(hexTitleColor, setTitleColor);
-    }, [hexTitleColor]);
+  useEffect(() => {
+  updateColorFromHex(hexTitleColor, setTitleColor);
+  }, [hexTitleColor]);
+
+  const [saveWidget, setSaveWidget] = useState(false);
+
+  const toggleSave = () => {
+    setSaveWidget(true);
+  };
+
 
   return (
     <div className="App">
@@ -64,7 +71,7 @@ function App() {
               textColor = {textColor}
               outlineColor = {outlineColor} 
               titleColor = {titleColor}/>
-      {/* <WidgetCustomization /> */}
+
       <div className = "widget-customization-container">
             <h2> Customize Widget </h2>
 
@@ -136,6 +143,11 @@ function App() {
                     onChange={(e) => setHexTitleColor(e.target.value)}
                     placeholder="Enter Hex Code"
                 /> 
+            </div>
+
+            <div className = "input">
+              <button onClick={toggleSave} > Save Widget</button>
+
             </div>
 
         </div>
