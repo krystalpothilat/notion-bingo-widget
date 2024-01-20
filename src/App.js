@@ -9,7 +9,12 @@ function App() {
   const [textColor, setTextColor] = useState("#000000");
   const [outlineColor, setOutlineColor] = useState("#000000");
   const [titleColor, setTitleColor] = useState("#000000");
-  
+  const [squareTexts, setSquareTexts] = useState(Array(9).fill(""));
+  const [title, setTitle] = useState("");
+
+  // const [title, setTitle] =
+
+
   const handleBackgroundColorChange = (color) => {
     setHexBackgroundColor(color.target.value);
     setBackgroundColor(color.target.value);
@@ -58,10 +63,45 @@ function App() {
   updateColorFromHex(hexTitleColor, setTitleColor);
   }, [hexTitleColor]);
 
-  const [saveWidget, setSaveWidget] = useState(false);
+  // const [saveWidget, setSaveWidget] = useState(false);
+  
+  const handleTitleChange = (newTitle) => {
+    setTitle(newTitle);
+  };
+
+  const handleAnySquareTextChange = (index, newSquareText) => {
+    // Update the squareTexts state with the new text for the specific square
+    setSquareTexts((prevSquareTexts) => {
+      const newSquareTexts = [...prevSquareTexts];
+      newSquareTexts[index] = newSquareText;
+      return newSquareTexts;
+    });
+  };
 
   const toggleSave = () => {
-    setSaveWidget(true);
+    const widgetData = {
+        backgroundColor,
+        textColor,
+        outlineColor,
+        titleColor,
+        squareTexts,
+        title,
+    };
+    
+    fetch('/api/widgetCustomization/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(widgetData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Widget saved:', data);
+      })
+      .catch((error) => {
+        console.error('Error saving widget:', error);
+      });
   };
 
 
@@ -70,7 +110,9 @@ function App() {
       <WidgetPreview backgroundColor = {backgroundColor}
               textColor = {textColor}
               outlineColor = {outlineColor} 
-              titleColor = {titleColor}/>
+              titleColor = {titleColor}
+              onTitleChange={handleTitleChange}
+              onAnySquareTextChange={handleAnySquareTextChange}/>
 
       <div className = "widget-customization-container">
             <h2> Customize Widget </h2>

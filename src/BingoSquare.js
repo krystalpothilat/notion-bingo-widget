@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./BingoSquare.css";
 
-const BingoSquare = ({ backgroundColor, textColor, outlineColor }) => {
+const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextChange}) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
@@ -12,6 +12,7 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor }) => {
 
     const handleInputChange = (e) => {
         setText(e.target.value);
+        onSquareTextChange(e.target.value); //callback
     };
 
     const handleKeyPress = (e) => {

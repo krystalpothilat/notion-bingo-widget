@@ -1,7 +1,14 @@
 import "./WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
-const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor}) => {
+const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, onTitleChange, onAnySquareTextChange}) => {
+    const handleTitleChange = (newTitle) => {
+        onTitleChange(newTitle);
+      };
+    
+      const handleAnySquareTextChange = (index, newSquareText) => {
+        onAnySquareTextChange(index, newSquareText);
+      };
 
     return (
         <div className = "preview">
@@ -9,7 +16,10 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor}) =
                 backgroundColor={backgroundColor}
                 textColor={textColor}
                 outlineColor={outlineColor}
-                titleColor = {titleColor} />
+                titleColor = {titleColor}
+                onTitleChange={handleTitleChange}
+                onAnySquareTextChange={handleAnySquareTextChange}
+                />
         </div>
     );
 }

@@ -1,18 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Widget = require('../models/Widget');
+const { v4: uuidv4 } = require('uuid');
 
 router.post('/save', async (req, res) => {
   try {
     // Extract widget customization data from request body
-    const { title, backgroundColor, textColor, squareInputs } = req.body;
+    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, title} = req.body;
+
+    const widgetId = uuidv4();
 
     // Create a new widget document
     const newWidget = new Widget({
-      title,
       backgroundColor,
       textColor,
+      outlineColor,
+      titleColor,
+      widgetId,
       squareInputs,
+      title,
     });
 
     // Save the widget to the database
