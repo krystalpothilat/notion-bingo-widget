@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 router.post('/save', async (req, res) => {
   try {
+    console.log("reached save");
     // Extract widget customization data from request body
     const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, title} = req.body;
 
@@ -26,6 +27,7 @@ router.post('/save', async (req, res) => {
 
     // Respond with the saved widget ID
     res.json({ widgetId: savedWidget._id });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

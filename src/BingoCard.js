@@ -19,6 +19,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, onTitl
     };
     
     const handleSquareTextChangeLocal = (index, newSquareText) => {
+      console.log("handle input change in bingocard.js for square" + index + " to " + newSquareText);
       onAnySquareTextChange(index, newSquareText);
 
     };

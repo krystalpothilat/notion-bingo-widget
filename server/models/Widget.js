@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const arrayLengthValidator = (val) => val.length === 9;
 
 const widgetSchema = new mongoose.Schema({
   backgroundColor: {
@@ -24,28 +25,31 @@ const widgetSchema = new mongoose.Schema({
     default: uuidv4(),
     unique: true,
   },
-  squareInputs: [
-    {
-      index: {
-        type: Number,
-        required: true,
+  squareInputs: {
+    type: [
+      {
+        index: {
+          type: Number,
+          required: true,
+        },
+        text: {
+          type: String,
+          required: true,
+        },
       },
-      text: {
-        type: String,
-        required: true,
-      },
+    ],
+    validate: {
+      validator: arrayLengthValidator,
+      message: '{PATH} must have exactly 9 elements',
     },
-  ],
-  validate: [arrayLengthValidator, '{PATH} must have exactly 9 elements'],
+    required: true,
+  },
   title: {
     type: String,
     required: true,
   },
 });
 
-function arrayLengthValidator(value) {
-  return value.length === 9;
-}
 
 const Widget = mongoose.model('Widget', widgetSchema);
 

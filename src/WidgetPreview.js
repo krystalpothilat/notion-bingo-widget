@@ -7,6 +7,7 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, on
       };
     
       const handleAnySquareTextChange = (index, newSquareText) => {
+        console.log("handling square text change in widgetpreview.js");
         onAnySquareTextChange(index, newSquareText);
       };
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import "./App.css";
-// import WidgetCustomization from "./WidgetCustomization";
 import WidgetPreview from "./WidgetPreview";
 
 function App() {
@@ -11,8 +10,6 @@ function App() {
   const [titleColor, setTitleColor] = useState("#000000");
   const [squareTexts, setSquareTexts] = useState(Array(9).fill(""));
   const [title, setTitle] = useState("");
-
-  // const [title, setTitle] =
 
 
   const handleBackgroundColorChange = (color) => {
@@ -71,11 +68,15 @@ function App() {
 
   const handleAnySquareTextChange = (index, newSquareText) => {
     // Update the squareTexts state with the new text for the specific square
+    console.log("made it to app.js, square change!");
+    console.log("in app.js, the new string is " + newSquareText + " for square " + index);
     setSquareTexts((prevSquareTexts) => {
       const newSquareTexts = [...prevSquareTexts];
       newSquareTexts[index] = newSquareText;
       return newSquareTexts;
     });
+    console.log("All squareTexts:", squareTexts);
+
   };
 
   const toggleSave = () => {
@@ -84,11 +85,13 @@ function App() {
         textColor,
         outlineColor,
         titleColor,
-        squareTexts,
+        squareInputs: squareTexts.map((text, index) => ({ index, text })),
         title,
     };
-    
-    fetch('/api/widgetCustomization/save', {
+    console.log("toggle save");
+    console.log("All squareTexts:", squareTexts);
+
+    fetch('http://localhost:8080/WidgetCustomization/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,11 +100,12 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Widget saved:', data);
+        // console.log('Widget saved:', data);
+        console.log("saved");
       })
       .catch((error) => {
         console.error('Error saving widget:', error);
-      });
+      });  
   };
 
 
