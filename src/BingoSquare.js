@@ -21,6 +21,7 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
         setIsEditing(false);
         }
     };
+    
 
     return (
       <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>

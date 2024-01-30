@@ -3,7 +3,7 @@ import BingoSquare from "./BingoSquare";
 import "./BingoCard.css";
 
 
-const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, onTitleChange, onAnySquareTextChange}) => {
+const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle,onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
     // const [squareTexts, setSquareTexts] = useState(Aray(9).fill(""));
@@ -28,9 +28,14 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, onTitl
       setText(e.target.value);
       onTitleChange(e.target.value);
     }
+    
+    const handleAnySquareTextEditLocal = (index) => {
+      onAnySquareTextEdit(index);
+    };
+
     return (
       <div className = "bingocard">
-        <h2  id = "title" style = {{color: titleColor}} onClick={handleTitleClick}>
+        <h2  id = "title" style = {{color: titleColor, visibility: titleToggle ? 'visible' : 'hidden',}} onClick={handleTitleClick}>
           {isEditing ? (
             <input
               type="text"
@@ -50,9 +55,10 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, onTitl
             <BingoSquare key={index} backgroundColor={backgroundColor}
             textColor={textColor}
             outlineColor={outlineColor}
-            onSquareTextChange = {(newSquareText) =>
-              handleSquareTextChangeLocal(index, newSquareText)
-            }
+            onSquareTextChange = {(newSquareText) => {
+              handleSquareTextChangeLocal(index, newSquareText);
+              handleAnySquareTextEditLocal(index);
+            }}
             />
           ))}
         </div>

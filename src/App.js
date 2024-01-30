@@ -10,7 +10,8 @@ function App() {
   const [titleColor, setTitleColor] = useState("#000000");
   const [squareTexts, setSquareTexts] = useState(Array(9).fill(""));
   const [title, setTitle] = useState("");
-
+  const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
+  const [titleToggle, setTitleToggle] = useState(true);
 
   const handleBackgroundColorChange = (color) => {
     setHexBackgroundColor(color.target.value);
@@ -59,13 +60,14 @@ function App() {
   useEffect(() => {
   updateColorFromHex(hexTitleColor, setTitleColor);
   }, [hexTitleColor]);
-
-  // const [saveWidget, setSaveWidget] = useState(false);
   
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
   };
-
+  
+  const handleTitleToggle = () => {
+    setTitleToggle(!titleToggle);
+  }
   const handleAnySquareTextChange = (index, newSquareText) => {
     // Update the squareTexts state with the new text for the specific square
     console.log("made it to app.js, square change!");
@@ -79,7 +81,29 @@ function App() {
 
   };
 
+  const handleAnySquareEdit = (index) => {
+    setSquareTextEdit((prevSquareTextEdits) => {
+      const newSquareEdits = [...prevSquareTextEdits];
+      newSquareEdits[index] = true;
+      return newSquareEdits;
+    });
+    console.log("All square edits:", squareTextEdit);
+  }
+
   const toggleSave = () => {
+    if(titleToggle && title ===""){
+      alert("Title cannot be empty when visible.");
+      return;
+    }
+
+    const isAllTrue = squareTextEdit.every((value) => value === true);
+
+    if (!isAllTrue) {
+      // console.log("Not all elements in squareTextEdit are true. Aborting save.");
+      alert(`Missing text in at least 1 square.`);
+      return;
+    }
+
     const widgetData = {
         backgroundColor,
         textColor,
@@ -115,8 +139,10 @@ function App() {
               textColor = {textColor}
               outlineColor = {outlineColor} 
               titleColor = {titleColor}
+              titleToggle = {titleToggle}
               onTitleChange={handleTitleChange}
-              onAnySquareTextChange={handleAnySquareTextChange}/>
+              onAnySquareTextChange={handleAnySquareTextChange}
+              onAnySquareTextEdit={handleAnySquareEdit}/>
 
       <div className = "widget-customization-container">
             <h2> Customize Widget </h2>
@@ -190,7 +216,13 @@ function App() {
                     placeholder="Enter Hex Code"
                 /> 
             </div>
-
+            <div className="title-toggle">
+              <label className = "slider-label"> Title</label>
+              <label className="slider">
+                <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
+                <div className="slider-btn"></div>
+              </label>
+            </div>
             <div className = "input">
               <button onClick={toggleSave} > Save Widget</button>
 
