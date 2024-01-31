@@ -93,7 +93,6 @@ function App() {
   const toggleSave = async () => {
     if(titleToggle && title ===""){
       alert("Title cannot be empty when visible.");
-      return;
     }
 
     const isAllTrue = squareTextEdit.every((value) => value === true);
@@ -152,9 +151,11 @@ function App() {
             <h2> Customize Widget </h2>
 
             <div className = "input">
-                <label htmlFor="backgroundColor">Background Color:</label>
+                <label htmlFor="backgroundColor" className = "inputlabel">Background Color:</label>
+                <div className = "input-container">
                 <input
                     type="color"
+                    className = "hex"
                     id="backgroundColor"
                     value={backgroundColor}
                     onChange={handleBackgroundColorChange}
@@ -166,12 +167,16 @@ function App() {
                     onChange={(e) => setHexBackgroundColor(e.target.value)}
                     placeholder="Enter Hex Code"
                 />
+
+                </div>
             </div>
             
             <div className = "input">
-                <label htmlFor="textColor">Text Color:</label>
+                <label htmlFor="textColor" className = "inputlabel">Text Color:</label>
+                <div className = "input-container">
                 <input
                     type="color"
+                    className = "hex"
                     id="textColor"
                     value={textColor}
                     onChange={handleTextColorChange}
@@ -182,15 +187,18 @@ function App() {
                     value={hexTextColor}
                     onChange={(e) => setHexTextColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                /> 
+                />
+                </div> 
             </div>
 
             
 
             <div className = "input">
-                <label htmlFor="outlineColor">Outline Color:</label>
+                <label htmlFor="outlineColor" className = "inputlabel">Outline Color:</label>
+                <div className = "input-container">
                 <input
                     type="color"
+                    className = "hex"
                     id="outlineColor"
                     value={outlineColor}
                     onChange={handleOutlineColorChange}
@@ -201,13 +209,16 @@ function App() {
                     value={hexOutlineColor}
                     onChange={(e) => setHexOutlineColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                /> 
+                />
+                </div> 
             </div>
 
             <div className = "input">
-                <label htmlFor="titleColor">Title Color:</label>
+                <label htmlFor="titleColor" className = "inputlabel">Title Color:</label>
+                <div className = "input-container">
                 <input
                     type="color"
+                    className = "hex"
                     id="titleColor"
                     value={titleColor}
                     onChange={handleTitleColorChange}
@@ -218,17 +229,21 @@ function App() {
                     value={hexTitleColor}
                     onChange={(e) => setHexTitleColor(e.target.value)}
                     placeholder="Enter Hex Code"
-                /> 
+                />
+                </div> 
             </div>
             <div className="title-toggle">
-              <label className = "slider-label"> Title</label>
+              <label className = "slider-label" className = "inputlabel"> Title</label>
+              <div className = "input-container">
               <label className="slider">
                 <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
                 <div className="slider-btn"></div>
               </label>
+              </div>
             </div>
+
             <div className = "input">
-              <button onClick={toggleSave} > Save Widget</button>
+              <button onClick={toggleSave} id = "save-button"> Save Widget</button>
 
             </div>
 

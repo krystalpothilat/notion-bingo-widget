@@ -1,22 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 .App {
   margin: 0;
   padding: 0;
   display: flex;
   height: 100vh;
+  font-family: 'Poppins', sans-serif;
 }
 
 .widget-customization-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: purple;
+  align-items: flex-start;
+  /* padding: 20px; */
+  background-color: #ededed;
   height: 100vh;
-  width: 30vw;
+  width: 400px;
+  justify-content: space-evenly;
+}
+
+input {
+  margin-left: 10px;
+  height: 25px;
+  width: 50px;
+  font-size: 15px;
 }
 
 .input {
-  margin-bottom: 16px;
+  display: relative;
+  margin: 20px;
+  font-size: 15px;
+  width: 300px;
+}
+
+.input-container{
+  display: flex;
+  /* border: 2px solid black; */
+  padding: 4px;
+}
+.hex {
+  height: 30px;
+  width: 30px;
 }
 
 .title-toggle {
@@ -72,3 +96,8 @@
   transform: translateX(26px);
 }
 
+#save-button {
+  height: 25px;
+  width: 350px;
+
+}
