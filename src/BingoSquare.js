@@ -33,6 +33,10 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
           onBlur={() => setIsEditing(false)}
           onKeyPress={handleKeyPress}
           autoFocus
+          style={{
+            color: textColor, 
+            backgroundColor: backgroundColor,
+          }}
         />
       ) : (
         text

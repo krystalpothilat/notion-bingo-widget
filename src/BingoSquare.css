@@ -1,16 +1,28 @@
+
 .square { 
-    border: 1px solid #ccc;
-    cursor: text;
+    /* border: 1px solid #ccc; */
+    cursor: pointer;
     width: 150px;
     height: 150px;
     display: grid; 
     align-items: center; 
     text-align: center;
-    vertical-align: center;
+    outline: none;
+    justify-content: center;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
 } 
 
 .square input {
-    width: 100%;
-    height: 100%;
+    width: 150px;
+    height: 150px;
     text-align: center;
+    outline: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
 } 

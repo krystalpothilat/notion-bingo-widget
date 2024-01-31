@@ -44,6 +44,9 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
               onBlur={() => setIsEditing(false)}
               onKeyPress={handleKeyPress}
               autoFocus
+              style={{
+                color: titleColor, 
+              }}
             />
           ) : (
             text

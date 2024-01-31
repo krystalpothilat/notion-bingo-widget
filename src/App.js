@@ -162,6 +162,7 @@ function App() {
                 />
                 <input
                     type="text"
+                    className = "textbox"
                     id="hexBackgroundColor"
                     value={hexBackgroundColor}
                     onChange={(e) => setHexBackgroundColor(e.target.value)}
@@ -183,6 +184,7 @@ function App() {
                 />
                 <input
                     type="text"
+                    className = "textbox"
                     id="hexTextColor"
                     value={hexTextColor}
                     onChange={(e) => setHexTextColor(e.target.value)}
@@ -205,6 +207,7 @@ function App() {
                 />
                 <input
                     type="text"
+                    className = "textbox"
                     id="hexOutlineColor"
                     value={hexOutlineColor}
                     onChange={(e) => setHexOutlineColor(e.target.value)}
@@ -225,6 +228,7 @@ function App() {
                 />
                 <input
                     type="text"
+                    className = "textbox"
                     id="hexTitleColor"
                     value={hexTitleColor}
                     onChange={(e) => setHexTitleColor(e.target.value)}
@@ -233,8 +237,8 @@ function App() {
                 </div> 
             </div>
             <div className="title-toggle">
-              <label className = "slider-label" className = "inputlabel"> Title</label>
-              <div className = "input-container">
+              <label className = "slider-label" > Title</label>
+              <div className = "input-container" id = "slider-container">
               <label className="slider">
                 <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
                 <div className="slider-btn"></div>
