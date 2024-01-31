@@ -12,7 +12,7 @@ router.get('/:widgetId', async (req, res) => {
     }
 
     // Generate HTML for rendering the widget based on the retrieved configuration
-    const widgetHtml = `<div style="background-color: ${widget.backgroundColor}; color: ${widget.textColor};">${widget.title}</div>`;
+    const widgetHtml = getHtml(widget);
 
     // Send the HTML back to the client
     res.send(widgetHtml);

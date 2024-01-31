@@ -44,9 +44,13 @@ const widgetSchema = new mongoose.Schema({
     },
     required: true,
   },
+  titleToggle: {
+    type: Boolean,
+    required: true,
+  },
   title: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

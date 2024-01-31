@@ -90,7 +90,7 @@ function App() {
     console.log("All square edits:", squareTextEdit);
   }
 
-  const toggleSave = () => {
+  const toggleSave = async () => {
     if(titleToggle && title ===""){
       alert("Title cannot be empty when visible.");
       return;
@@ -110,26 +110,30 @@ function App() {
         outlineColor,
         titleColor,
         squareInputs: squareTexts.map((text, index) => ({ index, text })),
+        titleToggle,
         title,
     };
     console.log("toggle save");
     console.log("All squareTexts:", squareTexts);
 
-    fetch('http://localhost:8080/WidgetCustomization/save', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(widgetData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log('Widget saved:', data);
-        console.log("saved");
-      })
-      .catch((error) => {
-        console.error('Error saving widget:', error);
-      });  
+
+    try {
+      const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(widgetData),
+      });
+      
+      const { widgetId} = await response.json();
+      const customUrl = `http://localhost:3000/render-widget/${widgetId}`;
+
+      console.log('Custom URL:', customUrl);
+
+    } catch (error) {
+      console.error('Error saving widget:', error);
+    }
   };
 
 

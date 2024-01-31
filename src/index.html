@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Widget</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="/WidgetTemplate.handlebars" type="text/x-handlebars-template" id="bingoCardTemplate"></script>
+</head>
+<body>
+
+<div id="bingocardcontainer"></div>
+
+<script>
+    // Compile the Handlebars template
+    var bingoCardSource = document.getElementById('bingoCardTemplate').innerHTML;
+    var bingoCardTemplate = Handlebars.compile(bingoCardSource);
+
+    fetch('http://localhost:8080/WidgetRender/' + /* provide the widgetId dynamically */)
+        .then(response => response.text())
+        .then(widgetHtml => {
+            // Render the BingoCard template with the fetched HTML
+            document.getElementById('renderedWidgetContainer').innerHTML = widgetHtml;
+        })
+        .catch(error => {
+            console.error('Error fetching widget data:', error);
+        });
+</script>
+
+</body>
+</html>
