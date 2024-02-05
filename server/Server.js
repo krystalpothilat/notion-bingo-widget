@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const handlebars = require('handlebars');
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -33,7 +34,21 @@ const widgetCustomizationRoutes = require('./routes/WidgetCustomization');
 const widgetRenderRoutes = require('./routes/WidgetRender');
 
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
-app.use('/WidgetRender', widgetRenderRoutes);
+app.use('/', widgetRenderRoutes);
+
+app.get('*', (req, res) => {
+  console.log('Catch-All Route:', req.originalUrl);
+  res.sendFile(path.join(__dirname, '../../public/index.html'));
+});
+
+// app.get('*', (req, res) => {
+//   try {
+//     res.sendFile(path.join(__dirname, '../../public/index.html'));
+//   } catch (error) {
+//     console.error('Error sending file:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 // Start Server
 app.listen(port, () => {

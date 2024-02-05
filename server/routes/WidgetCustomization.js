@@ -7,7 +7,7 @@ router.post('/save', async (req, res) => {
   try {
     console.log("reached save");
     // Extract widget customization data from request body
-    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, title} = req.body;
+    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title} = req.body;
 
     const widgetId = uuidv4();
 
@@ -19,9 +19,10 @@ router.post('/save', async (req, res) => {
       titleColor,
       widgetId,
       squareInputs,
+      titleToggle,
       title,
     });
-
+    
     // Save the widget to the database
     const savedWidget = await newWidget.save();
 

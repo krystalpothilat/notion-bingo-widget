@@ -6,7 +6,6 @@ import "./BingoCard.css";
 const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle,onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
-    // const [squareTexts, setSquareTexts] = useState(Aray(9).fill(""));
 
     const handleTitleClick = () => {
         setIsEditing(true);
@@ -19,7 +18,6 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
     };
     
     const handleSquareTextChangeLocal = (index, newSquareText) => {
-      console.log("handle input change in bingocard.js for square" + index + " to " + newSquareText);
       onAnySquareTextChange(index, newSquareText);
 
     };

@@ -11,7 +11,6 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
     };
 
     const handleInputChange = (e) => {
-      console.log("handleinput change in square.js");
         setText(e.target.value);
         onSquareTextChange(e.target.value); //callback
     };

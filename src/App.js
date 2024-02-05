@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import "./App.css";
 import WidgetPreview from "./WidgetPreview";
+import WidgetRenderComponent from './WidgetRenderComponent';
 
 function App() {
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
@@ -12,7 +14,8 @@ function App() {
   const [title, setTitle] = useState("");
   const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
   const [titleToggle, setTitleToggle] = useState(true);
-
+  const [widgetId, setWidgetId] = useState("");
+  
   const handleBackgroundColorChange = (color) => {
     setHexBackgroundColor(color.target.value);
     setBackgroundColor(color.target.value);
@@ -69,15 +72,11 @@ function App() {
     setTitleToggle(!titleToggle);
   }
   const handleAnySquareTextChange = (index, newSquareText) => {
-    // Update the squareTexts state with the new text for the specific square
-    console.log("made it to app.js, square change!");
-    console.log("in app.js, the new string is " + newSquareText + " for square " + index);
     setSquareTexts((prevSquareTexts) => {
       const newSquareTexts = [...prevSquareTexts];
       newSquareTexts[index] = newSquareText;
       return newSquareTexts;
     });
-    console.log("All squareTexts:", squareTexts);
 
   };
 
@@ -87,7 +86,6 @@ function App() {
       newSquareEdits[index] = true;
       return newSquareEdits;
     });
-    console.log("All square edits:", squareTextEdit);
   }
 
   const toggleSave = async () => {
@@ -98,7 +96,6 @@ function App() {
     const isAllTrue = squareTextEdit.every((value) => value === true);
 
     if (!isAllTrue) {
-      // console.log("Not all elements in squareTextEdit are true. Aborting save.");
       alert(`Missing text in at least 1 square.`);
       return;
     }
@@ -112,8 +109,6 @@ function App() {
         titleToggle,
         title,
     };
-    console.log("toggle save");
-    console.log("All squareTexts:", squareTexts);
 
 
     try {
@@ -126,17 +121,39 @@ function App() {
       });
       
       const { widgetId} = await response.json();
-      const customUrl = `http://localhost:3000/render-widget/${widgetId}`;
+      setWidgetId(widgetId);
+      console.log (widgetId);
+
+      const customUrl = `http://localhost:3000/${widgetId}`;
 
       console.log('Custom URL:', customUrl);
 
     } catch (error) {
       console.error('Error saving widget:', error);
     }
+
+    try {
+      console.log("fetchwidgetdata in widgetrendercomponent.js");
+      // Fetch widget data based on widgetId from the server
+      const response = await fetch(`http://localhost:8080/${widgetId}`);
+      // const data = await response.json();
+      console.log(response);
+
+    } catch (error) {
+      console.error('Error fetching widget data:', error);
+    }
+
   };
 
 
   return (
+
+    <Router>
+      <Routes>
+    {/* <Switch> */}
+      {/* <Route path="/:widgetId" component={<WidgetRenderComponent/>}/> */}
+
+      <Route path="/" element = {
     <div className="App">
       <WidgetPreview backgroundColor = {backgroundColor}
               textColor = {textColor}
@@ -254,6 +271,11 @@ function App() {
         </div>
 
     </div>
+
+      } />
+      {/* </Switch> */}
+      </Routes>
+    </Router>
   );
 }
 

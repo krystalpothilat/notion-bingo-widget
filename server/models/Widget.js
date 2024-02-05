@@ -7,7 +7,6 @@ const widgetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   textColor: {
     type: String,
     required: true,
