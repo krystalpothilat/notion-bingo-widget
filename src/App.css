@@ -13,7 +13,7 @@
 .widget-customization-container{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   /* padding: 20px; */
   background-color: #ededed;
   height: 100vh;
@@ -21,6 +21,7 @@
   max-width: 400px;
   justify-content: space-evenly;
 }
+
 
 input {
   margin-left: 10px;
@@ -31,7 +32,6 @@ input {
 
 .input {
   display: relative;
-  /* margin: 20px; */
   padding: 20px;
   font-size: 15px;
   width: calc(100% - 40px);
@@ -125,22 +125,27 @@ h2 {
 }
 
 .url-display{
-  /* max-width: 25vw;
-  border: 1px solid black;
-  overflow-x: hidden; */
   display: flex;
   align-items: center;
-  max-width: 25vw;
-  border: 1px solid black;
+  justify-content: center;
+  max-width: 27vw;
   overflow-x: hidden;
+  /* border-radius: 10px; */
+  border: 2px solid black; 
+  height: 40px;
+  margin: 0px;
+  position: fixed;
+  bottom: 0;
+
 }
 
 
 #url {
   flex-grow: 1;
+  /* max-width: 22vw; */
   white-space: nowrap;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  font-size: 16px; 
 }
 
 .url-display img {

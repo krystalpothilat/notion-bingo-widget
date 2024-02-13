@@ -93,10 +93,8 @@ function App() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url).then(() => {
-      // Handle success, e.g., show a notification
       console.log('URL copied to clipboard');
     }).catch((error) => {
-      // Handle error, e.g., show an error message
       console.error('Failed to copy URL to clipboard', error);
     });
   };
