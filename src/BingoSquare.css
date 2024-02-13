@@ -12,11 +12,13 @@
     position: relative;
     margin: 0px;
     padding: 0px;
+    resize: none;
+    overflow-wrap: break-word;
 } 
 
-.square input {
-    width: 150px;
-    height: 150px;
+.square textarea {
+    width: 100%;
+    height: 100%;
     text-align: center;
     outline: none;
     position: absolute;
@@ -25,4 +27,6 @@
     margin: 0px;
     padding: 0px;
     border: 0px;
+    resize: none;
+    overflow-wrap: break-word;
 } 

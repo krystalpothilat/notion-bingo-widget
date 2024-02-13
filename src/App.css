@@ -123,3 +123,27 @@ h2 {
   border-radius: 10px;
   border: 2px solid black;
 }
+
+.url-display{
+  /* max-width: 25vw;
+  border: 1px solid black;
+  overflow-x: hidden; */
+  display: flex;
+  align-items: center;
+  max-width: 25vw;
+  border: 1px solid black;
+  overflow-x: hidden;
+}
+
+
+#url {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+}
+
+.url-display img {
+  width: 30px; /* Adjust the image width as needed */
+  height: auto; /* Maintain aspect ratio */
+}

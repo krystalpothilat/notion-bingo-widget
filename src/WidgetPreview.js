@@ -27,6 +27,7 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
                 onAnySquareTextEdit={handleAnySquareTextEdit}
                 />
         </div>
+
     );
 }
 

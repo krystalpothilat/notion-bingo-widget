@@ -25,13 +25,14 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
     return (
       <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>
       {isEditing ? (
-        <input
+        <textarea
           type="text"
           value={text}
           onChange={handleInputChange}
           onBlur={() => setIsEditing(false)}
           onKeyPress={handleKeyPress}
           autoFocus
+          maxLength={50}
           style={{
             color: textColor, 
             backgroundColor: backgroundColor,

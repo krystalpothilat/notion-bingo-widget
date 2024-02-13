@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import "./App.css";
 import WidgetPreview from "./WidgetPreview";
 import WidgetRenderComponent from './WidgetRenderComponent';
+import copyimg from "./copy.png";
 
 function App() {
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
@@ -15,6 +16,8 @@ function App() {
   const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
   const [titleToggle, setTitleToggle] = useState(true);
   const [widgetId, setWidgetId] = useState("");
+  const [url, setUrl] = useState("");
+  const [showUrl, setShowUrl] = useState(false);
   
   const handleBackgroundColorChange = (color) => {
     setHexBackgroundColor(color.target.value);
@@ -88,6 +91,16 @@ function App() {
     });
   }
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      // Handle success, e.g., show a notification
+      console.log('URL copied to clipboard');
+    }).catch((error) => {
+      // Handle error, e.g., show an error message
+      console.error('Failed to copy URL to clipboard', error);
+    });
+  };
+
   const toggleSave = async () => {
     if(titleToggle && title ===""){
       alert("Title cannot be empty when visible.");
@@ -125,6 +138,8 @@ function App() {
       console.log (widgetId);
 
       const customUrl = `http://localhost:3000/${widgetId}`;
+      setUrl(customUrl);
+      setShowUrl(true);
 
       console.log('Custom URL:', customUrl);
 
@@ -150,130 +165,134 @@ function App() {
 
     <Router>
       <Routes>
-    {/* <Switch> */}
       <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
 
       <Route path="/" element = {
-    <div className="App">
-      <WidgetPreview backgroundColor = {backgroundColor}
-              textColor = {textColor}
-              outlineColor = {outlineColor} 
-              titleColor = {titleColor}
-              titleToggle = {titleToggle}
-              onTitleChange={handleTitleChange}
-              onAnySquareTextChange={handleAnySquareTextChange}
-              onAnySquareTextEdit={handleAnySquareEdit}/>
+        <div className="App">
+          <WidgetPreview backgroundColor = {backgroundColor}
+                  textColor = {textColor}
+                  outlineColor = {outlineColor} 
+                  titleColor = {titleColor}
+                  titleToggle = {titleToggle}
+                  onTitleChange={handleTitleChange}
+                  onAnySquareTextChange={handleAnySquareTextChange}
+                  onAnySquareTextEdit={handleAnySquareEdit}/>
 
-      <div className = "widget-customization-container">
-            <h2> Customize Widget </h2>
+          <div className = "widget-customization-container">
+                <h2> Customize Widget </h2>
 
-            <div className = "input">
-                <label htmlFor="backgroundColor" className = "inputlabel">Background Color:</label>
-                <div className = "input-container">
-                <input
-                    type="color"
-                    className = "hex"
-                    id="backgroundColor"
-                    value={backgroundColor}
-                    onChange={handleBackgroundColorChange}
-                />
-                <input
-                    type="text"
-                    className = "textbox"
-                    id="hexBackgroundColor"
-                    value={hexBackgroundColor}
-                    onChange={(e) => setHexBackgroundColor(e.target.value)}
-                    placeholder="Enter Hex Code"
-                />
+                <div className = "input">
+                    <label htmlFor="backgroundColor" className = "inputlabel">Background Color:</label>
+                    <div className = "input-container">
+                    <input
+                        type="color"
+                        className = "hex"
+                        id="backgroundColor"
+                        value={backgroundColor}
+                        onChange={handleBackgroundColorChange}
+                    />
+                    <input
+                        type="text"
+                        className = "textbox"
+                        id="hexBackgroundColor"
+                        value={hexBackgroundColor}
+                        onChange={(e) => setHexBackgroundColor(e.target.value)}
+                        placeholder="Enter Hex Code"
+                    />
 
+                    </div>
                 </div>
-            </div>
-            
-            <div className = "input">
-                <label htmlFor="textColor" className = "inputlabel">Text Color:</label>
-                <div className = "input-container">
-                <input
-                    type="color"
-                    className = "hex"
-                    id="textColor"
-                    value={textColor}
-                    onChange={handleTextColorChange}
-                />
-                <input
-                    type="text"
-                    className = "textbox"
-                    id="hexTextColor"
-                    value={hexTextColor}
-                    onChange={(e) => setHexTextColor(e.target.value)}
-                    placeholder="Enter Hex Code"
-                />
-                </div> 
-            </div>
+                
+                <div className = "input">
+                    <label htmlFor="textColor" className = "inputlabel">Text Color:</label>
+                    <div className = "input-container">
+                    <input
+                        type="color"
+                        className = "hex"
+                        id="textColor"
+                        value={textColor}
+                        onChange={handleTextColorChange}
+                    />
+                    <input
+                        type="text"
+                        className = "textbox"
+                        id="hexTextColor"
+                        value={hexTextColor}
+                        onChange={(e) => setHexTextColor(e.target.value)}
+                        placeholder="Enter Hex Code"
+                    />
+                    </div> 
+                </div>
 
-            
+                
 
-            <div className = "input">
-                <label htmlFor="outlineColor" className = "inputlabel">Outline Color:</label>
-                <div className = "input-container">
-                <input
-                    type="color"
-                    className = "hex"
-                    id="outlineColor"
-                    value={outlineColor}
-                    onChange={handleOutlineColorChange}
-                />
-                <input
-                    type="text"
-                    className = "textbox"
-                    id="hexOutlineColor"
-                    value={hexOutlineColor}
-                    onChange={(e) => setHexOutlineColor(e.target.value)}
-                    placeholder="Enter Hex Code"
-                />
-                </div> 
-            </div>
+                <div className = "input">
+                    <label htmlFor="outlineColor" className = "inputlabel">Outline Color:</label>
+                    <div className = "input-container">
+                    <input
+                        type="color"
+                        className = "hex"
+                        id="outlineColor"
+                        value={outlineColor}
+                        onChange={handleOutlineColorChange}
+                    />
+                    <input
+                        type="text"
+                        className = "textbox"
+                        id="hexOutlineColor"
+                        value={hexOutlineColor}
+                        onChange={(e) => setHexOutlineColor(e.target.value)}
+                        placeholder="Enter Hex Code"
+                    />
+                    </div> 
+                </div>
 
-            <div className = "input">
-                <label htmlFor="titleColor" className = "inputlabel">Title Color:</label>
-                <div className = "input-container">
-                <input
-                    type="color"
-                    className = "hex"
-                    id="titleColor"
-                    value={titleColor}
-                    onChange={handleTitleColorChange}
-                />
-                <input
-                    type="text"
-                    className = "textbox"
-                    id="hexTitleColor"
-                    value={hexTitleColor}
-                    onChange={(e) => setHexTitleColor(e.target.value)}
-                    placeholder="Enter Hex Code"
-                />
-                </div> 
-            </div>
-            <div className="title-toggle">
-              <label className = "slider-label" > Title</label>
-              <div className = "input-container" id = "slider-container">
-              <label className="slider">
-                <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
-                <div className="slider-btn"></div>
-              </label>
-              </div>
-            </div>
+                <div className = "input">
+                    <label htmlFor="titleColor" className = "inputlabel">Title Color:</label>
+                    <div className = "input-container">
+                    <input
+                        type="color"
+                        className = "hex"
+                        id="titleColor"
+                        value={titleColor}
+                        onChange={handleTitleColorChange}
+                    />
+                    <input
+                        type="text"
+                        className = "textbox"
+                        id="hexTitleColor"
+                        value={hexTitleColor}
+                        onChange={(e) => setHexTitleColor(e.target.value)}
+                        placeholder="Enter Hex Code"
+                    />
+                    </div> 
+                </div>
+                <div className="title-toggle">
+                  <label className = "slider-label" > Title</label>
+                  <div className = "input-container" id = "slider-container">
+                  <label className="slider">
+                    <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
+                    <div className="slider-btn"></div>
+                  </label>
+                  </div>
+                </div>
 
-            <div className = "input">
-              <button onClick={toggleSave} id = "save-button"> Save Widget</button>
+                <div className = "input">
+                  <button onClick={toggleSave} id = "save-button"> Save Widget</button>
+                </div>
+
+                {showUrl && (
+                  <div className="url-display">
+                    <div id="url">{url}</div>
+                    <img src = {copyimg} alt = "Copy to Clipboard" onClick={copyToClipboard} style={{ cursor: 'pointer' }}/>
+                  </div>
+                )}
 
             </div>
 
         </div>
 
-    </div>
-
-      } />
-      {/* </Switch> */}
+        } />
       </Routes>
     </Router>
   );
