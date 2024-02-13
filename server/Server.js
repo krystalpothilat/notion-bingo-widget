@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const handlebars = require('handlebars');
+// const handlebars = require('handlebars');
 const app = express();
 const port = process.env.PORT || 8080;
+const path = require('path');
 
 // Middleware
 app.use(cors({
@@ -36,10 +37,10 @@ const widgetRenderRoutes = require('./routes/WidgetRender');
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
 app.use('/', widgetRenderRoutes);
 
-app.get('*', (req, res) => {
-  console.log('Catch-All Route:', req.originalUrl);
-  res.sendFile(path.join(__dirname, '../../public/index.html'));
-});
+// app.get('*', (req, res) => {
+//   console.log('Catch-All Route:', req.originalUrl);
+//   res.sendFile(path.join(__dirname, '../../public/index.html'));
+// });
 
 // app.get('*', (req, res) => {
 //   try {

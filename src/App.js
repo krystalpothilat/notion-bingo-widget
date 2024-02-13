@@ -151,7 +151,7 @@ function App() {
     <Router>
       <Routes>
     {/* <Switch> */}
-      {/* <Route path="/:widgetId" component={<WidgetRenderComponent/>}/> */}
+      <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
 
       <Route path="/" element = {
     <div className="App">

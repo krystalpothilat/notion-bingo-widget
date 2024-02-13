@@ -25,9 +25,10 @@ router.post('/save', async (req, res) => {
     
     // Save the widget to the database
     const savedWidget = await newWidget.save();
+    console.log ("saved widget id is " + savedWidget._id.toString());
 
     // Respond with the saved widget ID
-    res.json({ widgetId: savedWidget._id });
+    res.json({ widgetId: savedWidget._id.toString() });
     
   } catch (error) {
     console.error(error);

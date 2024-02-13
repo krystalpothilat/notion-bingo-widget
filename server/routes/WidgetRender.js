@@ -5,8 +5,18 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 const allowPrototypeAccess = require('@handlebars/allow-prototype-access');
+// const allowPrototypeAccess = require('@handlebars/allow-prototype-access').allowPrototypeAccess;
 
-allowPrototypeAccess(handlebars);
+// const handlebars = require('handlebars');
+// const { allowPrototypeAccess } = require('@handlebars/allow-prototype-access');
+
+// allowPrototypeAccess(handlebars);
+
+if (handlebars.SafeString) {
+  handlebars.SafeString.prototype.allowProtoAccess = true;
+} else {
+  console.warn("Handlebars version does not support allowPrototypeAccess.");
+}
 
 router.get('/:widgetId', async (req, res) => {
   try {
@@ -33,19 +43,26 @@ router.get('/:widgetId', async (req, res) => {
 
 function getHtml(data) {
   console.log("getHtml");
-  // Adjust the path based on your project structure
-  const templateSource = fs.readFileSync(path.join(__dirname, '../../public/WidgetTemplate.handlebars'), 'utf-8');  
+  const html = `
+    <div class="bingocard" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+      <h2 id="title" style="color: ${data.titleColor}; visibility: ${data.titleToggle ? 'visible' : 'hidden'};">
+        ${data.title}
+      </h2>
 
+      <div class="squares">
+        ${data.squareInputs.map((input, index) => `
+          <div class="square" id="square-${index}" style="background-color: ${data.backgroundColor}; color: ${data.textColor}; border: 1px solid ${data.outlineColor};" onclick="handleBoxClick(${index})">
+            <div class="text" style="pointer-events: none;">${input.text}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
 
-  // Compile the template with runtime options
-  const template = handlebars.compile(templateSource, { noEscape: true });
+  `;
 
-  // Fill the template with data
-  const filledTemplate = template(data);
-
-  console.log(filledTemplate);
-
-  return filledTemplate;
+  console.log(html);
+  console.log("html done");
+  return html;
 }
 
 
