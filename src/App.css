@@ -62,7 +62,7 @@ h2 {
   width: 30px;
 }
 
-.title-toggle {
+.title-toggle, .title-toggle label{
   margin: 20px;
 }
 

@@ -265,15 +265,15 @@ function App() {
                     />
                     </div> 
                 </div>
-                <div className="title-toggle">
-                  <label className = "slider-label" > Title</label>
+                <label className="title-toggle">
+                  <span className = "slider-label" > Title</span>
                   <div className = "input-container" id = "slider-container">
                   <label className="slider">
-                    <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} />
+                    <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} id = "titlecheck" />
                     <div className="slider-btn"></div>
                   </label>
                   </div>
-                </div>
+                </label>
 
                 <div className = "input">
                   <button onClick={toggleSave} id = "save-button"> Save Widget</button>
