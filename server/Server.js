@@ -8,7 +8,7 @@ const path = require('path');
 
 // Middleware
 app.use(cors({
-  origin: 'http://notion-bingo-widget.vercel.app',
+  origin: 'https://notion-bingo-widget.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,

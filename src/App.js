@@ -123,7 +123,7 @@ function App() {
 
 
     try {
-      const response = await fetch('http://notion-bingo-widget.vercel.app/WidgetCustomization/save', {
+      const response = await fetch('https://notion-bingo-widget.vercel.app/WidgetCustomization/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function App() {
       setWidgetId(widgetId);
       console.log (widgetId);
 
-      const customUrl = `http://notion-bingo-widget.vercel.app/${widgetId}`;
+      const customUrl = `https://notion-bingo-widget.vercel.app/${widgetId}`;
       setUrl(customUrl);
       setShowUrl(true);
 
@@ -148,7 +148,7 @@ function App() {
     try {
       console.log("fetchwidgetdata in widgetrendercomponent.js");
       // Fetch widget data based on widgetId from the server
-      const response = await fetch(`http://notion-bingo-widget.vercel.app/${widgetId}`);
+      const response = await fetch(`https://notion-bingo-widget.vercel.app/${widgetId}`);
       // const data = await response.json();
       console.log(response);
 
