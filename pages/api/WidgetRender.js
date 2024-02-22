@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Widget = require('../models/Widget');
+const Widget = require('../../server/models/Widget');
 const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
-const allowPrototypeAccess = require('@handlebars/allow-prototype-access');
-// const allowPrototypeAccess = require('@handlebars/allow-prototype-access').allowPrototypeAccess;
-
-// const handlebars = require('handlebars');
-// const { allowPrototypeAccess } = require('@handlebars/allow-prototype-access');
-
-// allowPrototypeAccess(handlebars);
 
 if (handlebars.SafeString) {
   handlebars.SafeString.prototype.allowProtoAccess = true;

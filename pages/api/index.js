@@ -1,10 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-// const handlebars = require('handlebars');
 const app = express();
 const port = process.env.PORT || 8080;
-const path = require('path');
 
 // Middleware
 app.use(cors({
@@ -31,27 +29,11 @@ db.once('open', () => {
 });
 
 // Routes
-const widgetCustomizationRoutes = require('./routes/WidgetCustomization');
-const widgetRenderRoutes = require('./routes/WidgetRender');
+const widgetCustomizationRoutes = require('./WidgetCustomization');
+const widgetRenderRoutes = require('./WidgetRender');
+
+app.options('/WidgetCustomization/save', cors());
 
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
 app.use('/', widgetRenderRoutes);
 
-// app.get('*', (req, res) => {
-//   console.log('Catch-All Route:', req.originalUrl);
-//   res.sendFile(path.join(__dirname, '../../public/index.html'));
-// });
-
-// app.get('*', (req, res) => {
-//   try {
-//     res.sendFile(path.join(__dirname, '../../public/index.html'));
-//   } catch (error) {
-//     console.error('Error sending file:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
-
-// Start Server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});

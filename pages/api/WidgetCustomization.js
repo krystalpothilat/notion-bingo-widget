@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Widget = require('../models/Widget');
+const Widget = require('../../server/models/Widget');
 const { v4: uuidv4 } = require('uuid');
 
 router.post('/save', async (req, res) => {
