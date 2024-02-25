@@ -11,7 +11,7 @@ function WidgetRenderComponent() {
         try {
             
           // Fetch widget data based on widgetId from the server
-          const response = await fetch(`http://localhost:8080/${widgetId}`);
+          const response = await fetch(`/api/widgetrender/${widgetId}`);
           const data = await response.text(); // Use response.text() for HTML content
             
           // Set the fetched data to the state
