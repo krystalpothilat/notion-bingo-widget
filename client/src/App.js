@@ -123,7 +123,7 @@ function App() {
 
 
     try {
-      const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
+      const response = await fetch('http://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function App() {
       setWidgetId(widgetId);
       console.log (widgetId);
 
-      const customUrl = `http://localhost:3000/${widgetId}`;
+      const customUrl = `https://notion-bingo-widget.vercel.app/${widgetId}`;
       setUrl(customUrl);
       setShowUrl(true);
 
