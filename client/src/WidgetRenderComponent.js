@@ -11,7 +11,7 @@ function WidgetRenderComponent() {
         try {
             
           // Fetch widget data based on widgetId from the server
-          const response = await fetch(`http://notion-bingo-widget-server.vercel.app/${widgetId}`);
+          const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
           const data = await response.text(); // Use response.text() for HTML content
             
           // Set the fetched data to the state

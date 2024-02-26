@@ -123,7 +123,7 @@ function App() {
 
 
     try {
-      const response = await fetch('http://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
+      const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
