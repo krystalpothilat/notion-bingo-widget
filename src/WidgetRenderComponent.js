@@ -29,7 +29,7 @@ function WidgetRenderComponent() {
   
       console.log('WidgetRenderComponent rendered with widgetId:', widgetId);
 
-    }, []); // Trigger the fetch when widgetId changes
+    }, [widgetId]); // Trigger the fetch when widgetId changes
 
     if (!widgetData) {
       // Loading state or handle error

@@ -1,7 +1,6 @@
-const express = require('express');
+const app = require('express')();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware
@@ -37,3 +36,4 @@ app.options('/WidgetCustomization/save', cors());
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
 app.use('/', widgetRenderRoutes);
 
+module.exports = app;
