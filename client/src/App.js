@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import "./App.css";
+import "./styles/App.css";
 import WidgetPreview from "./WidgetPreview";
 import WidgetRenderComponent from './WidgetRenderComponent';
 import copyimg from "./copy.png";
@@ -123,7 +123,7 @@ function App() {
 
 
     try {
-      const response = await fetch('http://notion-bingo-widget.vercel.app/WidgetCustomization/save', {
+      const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function App() {
       setWidgetId(widgetId);
       console.log (widgetId);
 
-      const customUrl = `http://notion-bingo-widget.vercel.app/${widgetId}`;
+      const customUrl = `http://localhost:3000/${widgetId}`;
       setUrl(customUrl);
       setShowUrl(true);
 
@@ -145,16 +145,20 @@ function App() {
       console.error('Error saving widget:', error);
     }
 
-    try {
-      console.log("fetchwidgetdata in widgetrendercomponent.js");
-      // Fetch widget data based on widgetId from the server
-      const response = await fetch(`http://notion-bingo-widget.vercel.app/${widgetId}`);
-      // const data = await response.json();
-      console.log(response);
+    // try {
+    //   console.log("fetchwidgetdata in widgetrendercomponent.js");
+    //   // Fetch widget data based on widgetId from the server
+    //   const response = await fetch(`http://localhost:8080/${widgetId}`);
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } else {
+    //     console.error('Error fetching widget data:', response.statusText);
+    //   }
 
-    } catch (error) {
-      console.error('Error fetching widget data:', error);
-    }
+    // } catch (error) {
+    //   console.error('Error fetching widget data:', error);
+    // }
 
   };
 

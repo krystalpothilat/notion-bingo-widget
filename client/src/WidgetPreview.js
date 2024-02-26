@@ -1,4 +1,4 @@
-import "./WidgetPreview.css"; 
+import "./styles/WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
 const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {

@@ -1,22 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 const Widget = require('../models/Widget');
-const fs = require('fs');
-const path = require('path');
-const handlebars = require('handlebars');
-const allowPrototypeAccess = require('@handlebars/allow-prototype-access');
-// const allowPrototypeAccess = require('@handlebars/allow-prototype-access').allowPrototypeAccess;
 
-// const handlebars = require('handlebars');
-// const { allowPrototypeAccess } = require('@handlebars/allow-prototype-access');
-
-// allowPrototypeAccess(handlebars);
-
-if (handlebars.SafeString) {
-  handlebars.SafeString.prototype.allowProtoAccess = true;
-} else {
-  console.warn("Handlebars version does not support allowPrototypeAccess.");
-}
+router.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
 
 router.get('/:widgetId', async (req, res) => {
   try {

@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 const Widget = require('../models/Widget');
-const { v4: uuidv4 } = require('uuid');
 
-router.post('/save', async (req, res) => {
+router.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
+
+router.post('/save', cors(), async (req, res) => {
   try {
     console.log("reached save");
     // Extract widget customization data from request body
     const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title} = req.body;
-
-    const widgetId = uuidv4();
 
     // Create a new widget document
     const newWidget = new Widget({
@@ -17,7 +22,6 @@ router.post('/save', async (req, res) => {
       textColor,
       outlineColor,
       titleColor,
-      widgetId,
       squareInputs,
       titleToggle,
       title,

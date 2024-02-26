@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./BingoSquare.css";
+import "./styles/BingoSquare.css";
 
 const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextChange}) => {
 
