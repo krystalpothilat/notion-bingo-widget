@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BingoSquare from "./BingoSquare";
-import "./BingoCard.css";
+import "./styles/BingoCard.css";
 
 
 const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle,onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {

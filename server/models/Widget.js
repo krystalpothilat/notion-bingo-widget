@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
 const arrayLengthValidator = (val) => val.length === 9;
 
 const widgetSchema = new mongoose.Schema({
@@ -18,11 +17,6 @@ const widgetSchema = new mongoose.Schema({
   titleColor: {
     type: String,
     required: true,
-  },
-  widgetId: {
-    type: String,
-    default: uuidv4(),
-    unique: true,
   },
   squareInputs: {
     type: [

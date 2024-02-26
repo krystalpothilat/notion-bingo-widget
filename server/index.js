@@ -1,11 +1,12 @@
-const app = require('express')();
 const cors = require('cors');
+const express = require('express');
 const mongoose = require('mongoose');
+const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors({
-  origin: 'https://notion-bingo-widget.vercel.app',
+  origin: 'http://localhost:3000',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -19,7 +20,7 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://notion-bingo-widget.o18sfbl.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'Notion-Bingo-Widget', auth: { username: 'krystalpothilat', password: 'Dftqn1KodwdEHFLy'}, });
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -28,12 +29,13 @@ db.once('open', () => {
 });
 
 // Routes
-const widgetCustomizationRoutes = require('./WidgetCustomization');
-const widgetRenderRoutes = require('./WidgetRender');
-
-app.options('/WidgetCustomization/save', cors());
+const widgetCustomizationRoutes = require('./routes/WidgetCustomization');
+const widgetRenderRoutes = require('./routes/WidgetRender');
 
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
 app.use('/', widgetRenderRoutes);
 
-module.exports = app;
+// Start Server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
