@@ -145,20 +145,20 @@ function App() {
       console.error('Error saving widget:', error);
     }
 
-    try {
-      console.log("fetchwidgetdata in widgetrendercomponent.js");
-      // Fetch widget data based on widgetId from the server
-      const response = await fetch(`http://localhost:8080/${widgetId}`);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        console.error('Error fetching widget data:', response.statusText);
-      }
+    // try {
+    //   console.log("fetchwidgetdata in widgetrendercomponent.js");
+    //   // Fetch widget data based on widgetId from the server
+    //   const response = await fetch(`http://localhost:8080/${widgetId}`);
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } else {
+    //     console.error('Error fetching widget data:', response.statusText);
+    //   }
 
-    } catch (error) {
-      console.error('Error fetching widget data:', error);
-    }
+    // } catch (error) {
+    //   console.error('Error fetching widget data:', error);
+    // }
 
   };
 

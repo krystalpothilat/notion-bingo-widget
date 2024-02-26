@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 8080;
+require('dotenv').config();
 
 // Middleware
 app.use(cors({
@@ -20,7 +21,8 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://notion-bingo-widget.o18sfbl.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'Notion-Bingo-Widget', auth: { username: 'krystalpothilat', password: 'Dftqn1KodwdEHFLy'}, });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'Notion-Bingo-Widget'});
+
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
