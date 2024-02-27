@@ -269,6 +269,7 @@ function App() {
                     />
                     </div> 
                 </div>
+                
                 <label className="title-toggle">
                   <span className = "slider-label" > Title</span>
                   <div className = "input-container" id = "slider-container">

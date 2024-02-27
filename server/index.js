@@ -6,13 +6,13 @@ const port = process.env.PORT || 8080;
 require('dotenv').config();
 
 // Middleware
-// app.use(cors({
-//   origin: 'https://notion-bingo-widget.vercel.app/',
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   credentials: true,
-//   optionsSuccessStatus: 204,
-// }));
-app.use(cors());
+app.use(cors({
+  origin: 'https://notion-bingo-widget.vercel.app/',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
+// app.use(cors());
 app.use(express.json());
 
 app.use((err, req, res, next) => {
