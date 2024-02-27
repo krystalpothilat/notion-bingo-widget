@@ -7,7 +7,7 @@ require('dotenv').config();
 
 // Middleware
 app.use(cors({
-  origin: 'https://notion-bingo-widget.vercel.app/',
+  origin: 'https://notion-bingo-widget.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
