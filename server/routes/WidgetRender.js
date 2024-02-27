@@ -4,7 +4,7 @@ const cors = require('cors');
 const Widget = require('../models/Widget');
 
 router.use(cors({
-  origin: 'http://notion-bingo-widget-server.vercel.app',
+  origin: 'https://notion-bingo-widget-server.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
