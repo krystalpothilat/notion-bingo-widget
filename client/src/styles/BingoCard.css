@@ -28,6 +28,5 @@
     grid-template-columns: repeat(3, 1fr); 
     grid-gap: 0px; 
     width: 450px;
-    outline: none;
     position: relative;
 }

@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./styles/BingoSquare.css";
 
 const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextChange}) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState('Click to edit');
+    const textarea = useRef(null);
+
+    useEffect(() => {
+      if(isEditing && textarea.current){
+        const length = textarea.current.value.length;
+        textarea.current.selectionStart = length;
+        textarea.current.selectionEnd = length;
+        textarea.current.style.fontSize = '15px';
+        
+      }
+    })
 
     const handleBoxClick = () => {
         setIsEditing(true);
@@ -26,6 +37,7 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
       <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>
       {isEditing ? (
         <textarea
+         ref={textarea}
           type="text"
           value={text}
           onChange={handleInputChange}
@@ -36,10 +48,17 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
           style={{
             color: textColor, 
             backgroundColor: backgroundColor,
+            lineHeight: 'inherit',
+            textAlign: 'center',
+            fontFamily: 'Poppins, sans-serif',
+            boxSizing: 'border-box',
+            resize: 'none',
           }}
         />
       ) : (
-        text
+        <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+          {text}
+        </div>
       )}
       </div>
 

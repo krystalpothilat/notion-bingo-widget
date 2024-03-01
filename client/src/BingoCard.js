@@ -50,8 +50,8 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
             text
           )}
         </h2>
-
-        <div className = "squares">
+        
+        <div className = "squares" style={{border: `1px solid ${outlineColor}`}}>
           {[...Array(9).keys()].map((index) => (
             <BingoSquare key={index} backgroundColor={backgroundColor}
             textColor={textColor}
@@ -63,7 +63,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
             />
           ))}
         </div>
-
+        
       </div>
 
       );

@@ -2,8 +2,8 @@
 .square { 
     /* border: 1px solid #ccc; */
     cursor: pointer;
-    width: 150px;
-    height: 150px;
+    width: 148px;
+    height: 148px;
     display: grid; 
     align-items: center; 
     text-align: center;

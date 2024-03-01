@@ -41,7 +41,7 @@ function App() {
 
   const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
   const [hexTextColor, setHexTextColor] = useState('#000000');
-  const [hexOutlineColor, setHexOutlineColor] = useState('#007bff');
+  const [hexOutlineColor, setHexOutlineColor] = useState('#000000');
   const [hexTitleColor, setHexTitleColor] = useState("#000000");
 
   const updateColorFromHex = (hexCode, setColorFunction) => {
@@ -131,7 +131,7 @@ function App() {
         body: JSON.stringify(widgetData),
       });
       
-      const { widgetId} = await response.json();
+      const {widgetId} = await response.json();
       setWidgetId(widgetId);
       console.log (widgetId);
 
@@ -144,21 +144,6 @@ function App() {
     } catch (error) {
       console.error('Error saving widget:', error);
     }
-
-    // try {
-    //   console.log("fetchwidgetdata in widgetrendercomponent.js");
-    //   // Fetch widget data based on widgetId from the server
-    //   const response = await fetch(`http://localhost:8080/${widgetId}`);
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log(data);
-    //   } else {
-    //     console.error('Error fetching widget data:', response.statusText);
-    //   }
-
-    // } catch (error) {
-    //   console.error('Error fetching widget data:', error);
-    // }
 
   };
 
@@ -270,6 +255,7 @@ function App() {
                     </div> 
                 </div>
                 
+                <div className = "input"> 
                 <label className="title-toggle">
                   <span className = "slider-label" > Title</span>
                   <div className = "input-container" id = "slider-container">
@@ -279,17 +265,23 @@ function App() {
                   </label>
                   </div>
                 </label>
+                </div>
 
                 <div className = "input">
                   <button onClick={toggleSave} id = "save-button"> Save Widget</button>
                 </div>
 
-                {showUrl && (
-                  <div className="url-display">
-                    <div id="url">{url}</div>
-                    <img src = {copyimg} alt = "Copy to Clipboard" onClick={copyToClipboard} style={{ cursor: 'pointer' }}/>
-                  </div>
-                )}
+                <div className="url-display">
+                  {showUrl ? (
+                    <>
+                      <div id="url">{url}</div>
+                      <img src={copyimg} alt="Copy to Clipboard" onClick={copyToClipboard} style={{ cursor: 'pointer' }} />
+                    </>
+                  ) : (
+                    <div id="url">&nbsp;</div> // Non-breaking space
+                  )}
+                </div>
+
 
             </div>
 
