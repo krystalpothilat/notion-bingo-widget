@@ -7,7 +7,8 @@ require('dotenv').config();
 
 // Middleware
 app.use(cors({
-  origin: 'https://notion-bingo-widget.vercel.app',
+//   origin: 'https://notion-bingo-widget.vercel.app',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -35,7 +36,7 @@ const widgetCustomizationRoutes = require('./routes/WidgetCustomization');
 const widgetRenderRoutes = require('./routes/WidgetRender');
 
 app.use('/WidgetCustomization', widgetCustomizationRoutes);
-app.use('/', widgetRenderRoutes);
+app.use('/create', widgetRenderRoutes);
 
 // Start Server
 app.listen(port, () => {

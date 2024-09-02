@@ -1,25 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-.centered-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-  }
-  
-
 .App{
     margin: 0;
     padding: 0;
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: row;
     font-family: 'Poppins', sans-serif;
-}
-
-
-#customize{
-  display: flex;
-  flex-direction: row;
 }
 
 .widget-customization-container{
