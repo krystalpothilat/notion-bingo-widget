@@ -3,10 +3,15 @@
 body{
     display: flex;
     justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 30px;
+    padding-bottom: 0px;
+    height:100vh;
 }
 
 #web-title{
-    background-color: yellow;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -15,16 +20,15 @@ body{
     flex-direction: row;
     width: 75vw;
     justify-content: space-between;
-    background-color: rgb(228, 148, 228);
+    /* border: 3px solid red; */
+    align-items: center;
 }
 
 #account-buttons{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-left: 50px;
-    margin-right: 50px;
-    border: 2px solid pink;
+    /* border: 2px solid pink; */
     width: 350px;
 }
 
@@ -32,10 +36,31 @@ body{
     display: flex;
     flex-direction: row;
     width: 75%;
+    /* border: 5px solid blue; */
+    margin: 100px auto;
 }
 
 #create-button-container{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.btn-icon{
+    height: 25px;
+    width: 25px;
+    margin-left: 5px;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: #1a1a1a; */
+    color: black;
+    line-height: 0.5;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }

@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage/>}/>
         <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
         <Route path="/create" element = {<CustomizePage/>} />
+        
       </Routes>
     </Router>
   );
