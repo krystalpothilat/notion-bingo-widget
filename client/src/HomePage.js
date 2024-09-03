@@ -34,7 +34,7 @@ function HomePage() {
         <div id = "mainpage-example">
             <img src = {widgetexample} alt = "Widget Example"></img>
             <div id = "create-button-container">
-                <button type="button" class="btn btn-info" id="create-button" onClick={handleSignIn}> Create your own Bingo Card Widget!</button>
+                <button type="button" className="btn btn-info" id="create-button" onClick={handleSignIn}> Create your own Bingo Card Widget!</button>
             </div>
     
         </div>

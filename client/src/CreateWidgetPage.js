@@ -173,10 +173,10 @@ function CustomizePage() {
         <div className="header" id = "creater-page-header">
             <h1 id="creater-page-web-title">Bingo Widget Creator for Notion</h1>
             <div className = "usercontainer">
-                <p> {userName} </p>
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    <img src = {userimg} alt = "Current User Image" id = "user-icon"/>
+                        <p> {userName} </p>
+                        <img src = {userimg} alt = "Current User Image" id = "user-icon"/>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>

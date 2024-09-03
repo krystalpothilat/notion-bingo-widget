@@ -8,7 +8,6 @@ import {
     MDBTabsContent,
     MDBTabsPane,
     MDBBtn,
-    MDBIcon,
     MDBInput,
     MDBCheckbox
 } from 'mdb-react-ui-kit';
@@ -57,7 +56,7 @@ function AccountPage() {
 
                     window.location.href = '/create'; //go to widget creation page
                 } else {
-                    console.error('Error registering user');
+                    console.error('Error registering user: ', data);
                 }
 
             } catch (error) {

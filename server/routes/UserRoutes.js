@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
     const newUser = new User({ name, email, password });
     await newUser.save();
     
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: '1h', //max 1 hr login
     });
 

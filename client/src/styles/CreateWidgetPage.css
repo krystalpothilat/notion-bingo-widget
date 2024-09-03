@@ -29,6 +29,7 @@ body {
     box-sizing: border-box;
     /* background-color: green; */
     z-index: 2;
+    border-bottom: 3px solid gray;
 }
 
 .usercontainer{
@@ -45,6 +46,14 @@ body {
     margin: 0;
     line-height: 40px; /* Match the image height */
     margin: 0px 5px;
+}
+
+.dropdown-toggle.btn.btn-success{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #4084f2;
+    box-shadow: 0 4px 8px rgba(64, 132, 242, 0.5);
 }
 
 #user-icon{
