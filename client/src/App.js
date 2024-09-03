@@ -13,8 +13,8 @@ function App() {
 
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/account" element={<AccountPage/>}/>
+        <Route path="/" element={<AccountPage/>}/>
+        <Route path="/home" element={<HomePage/>}/>
         <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
         <Route path="/create" element = {<CustomizePage/>} />
         

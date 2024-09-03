@@ -117,10 +117,10 @@ function AccountPage() {
                     <MDBTabsContent>
                         <MDBTabsPane open={justifyActive === 'tab1'}>
                         <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
-                            <div className="text-center mb-3">
+                            {/* <div className="text-center mb-3">
                                 <img src = {googleicon} alt = "Google Icon" className = "google-icon"/> 
                                 <p className = "with-google">Sign in with Google</p>
-                            </div>
+                            </div> */}
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Password' id='login-password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>

@@ -289,7 +289,7 @@ function CustomizePage() {
                 
                 <div className = "input"> 
                 <label className="title-toggle">
-                    <span className = "slider-label" > Title</span>
+                <label htmlFor="titleColor" className = "inputlabel">Title:</label>
                     <div className = "input-container" id = "slider-container">
                     <label className="slider">
                     <input type="checkbox" checked={titleToggle} onChange={handleTitleToggle} id = "titlecheck" />

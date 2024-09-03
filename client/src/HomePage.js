@@ -10,7 +10,7 @@ function HomePage() {
     const navigate = useNavigate();
 
     const handleSignIn = () => {
-        navigate('/account'); // Replace '/signin' with the correct path for your sign-in page
+        navigate('/'); // Replace '/signin' with the correct path for your sign-in page
     };
     
 
