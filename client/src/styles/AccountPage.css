@@ -73,4 +73,27 @@ body{
     line-height: 1;
 }
 
+.google-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
+.google-login {
+    background-color: #ced4da;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    color: black;
+}
+
+.google-login:hover {
+    background-color: #adb5bd;
+}

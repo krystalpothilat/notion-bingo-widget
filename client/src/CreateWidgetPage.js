@@ -317,6 +317,7 @@ function CustomizePage() {
 
             </div>
         </div>
+        
     </div>
     );
 }

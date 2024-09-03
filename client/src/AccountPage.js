@@ -11,10 +11,9 @@ import {
     MDBInput,
     MDBCheckbox
 } from 'mdb-react-ui-kit';
-import { GoogleLogin } from '@react-oauth/google';
+// import { GoogleLogin } from '@react-oauth/google';
+import CustomGoogleLogin from './CustomGoogleLogin';
 
-
-import googleicon from "./google.png";
 
 function AccountPage() {
     const [name, setName] = useState('');
@@ -32,6 +31,7 @@ function AccountPage() {
     const responseMessage = (response) => {
         console.log(response);
     };
+
     const errorMessage = (error) => {
         console.log(error);
     };
@@ -116,11 +116,10 @@ function AccountPage() {
 
                     <MDBTabsContent>
                         <MDBTabsPane open={justifyActive === 'tab1'}>
-                        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
-                            {/* <div className="text-center mb-3">
-                                <img src = {googleicon} alt = "Google Icon" className = "google-icon"/> 
-                                <p className = "with-google">Sign in with Google</p>
-                            </div> */}
+                            <div className = "google-login-container">
+                                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} className = "google-login" style={{ width: '100%' }} /> */}
+                                <CustomGoogleLogin text = "Sign In with Google" onSucccess={responseMessage} onError={errorMessage} />
+                            </div>
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Password' id='login-password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -133,9 +132,9 @@ function AccountPage() {
                         </MDBTabsPane>
 
                         <MDBTabsPane open={justifyActive === 'tab2'}>
-                            <div className="text-center mb-3">
-                                <img src = {googleicon} alt = "Google Icon" className = "google-icon"/> 
-                                <p className = "with-google">Sign Up with Google</p>
+                            <div className = "google-login-container">
+                                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} className = "google-login" style={{ width: '100%' }} /> */}
+                                <CustomGoogleLogin text = "Sign Up with Google" onSucccess={responseMessage} onError={errorMessage} />
                             </div>
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Name' id='login-name' type='name' value={name} onChange={(e) => setName(e.target.value)} />
