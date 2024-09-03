@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./styles/HomePage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import widgetexample from "./widgetexample.png";
@@ -6,7 +7,12 @@ import loginimg from "./login.png";
 import account from "./account.png";
 
 function HomePage() {
+    const navigate = useNavigate();
 
+    const handleSignIn = () => {
+        navigate('/account'); // Replace '/signin' with the correct path for your sign-in page
+    };
+    
 
   return (
     <div >
@@ -28,7 +34,7 @@ function HomePage() {
         <div id = "mainpage-example">
             <img src = {widgetexample} alt = ""></img>
             <div id = "create-button-container">
-                <button type="button" class="btn btn-info" id="create-button"> Create your own Bingo Card Widget!</button>
+                <button type="button" class="btn btn-info" id="create-button" onClick={handleSignIn}> Create your own Bingo Card Widget!</button>
             </div>
     
         </div>

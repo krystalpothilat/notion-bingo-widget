@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
-import "./styles/CustomizePage.css";
+import "./styles/CreateWidgetPage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import WidgetPreview from "./WidgetPreview";
-import WidgetRenderComponent from './WidgetRenderComponent';
+import WidgetPreview from "./WidgetPreview.js";
+import WidgetRenderComponent from './WidgetRenderComponent.js';
 import HomePage from './HomePage.js';
 import copyimg from "./copy.png";
 

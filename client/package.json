@@ -10,6 +10,7 @@
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "handlebars": "^4.7.8",
+    "mdb-react-ui-kit": "^8.0.0",
     "mongodb": "^6.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
