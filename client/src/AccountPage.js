@@ -12,10 +12,15 @@ import {
     MDBInput,
     MDBCheckbox
 } from 'mdb-react-ui-kit';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 import googleicon from "./google.png";
 
 function AccountPage() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [justifyActive, setJustifyActive] = useState('tab1');
 
     const handleJustifyClick = (value) => {
@@ -23,8 +28,69 @@ function AccountPage() {
             return;
         }
         setJustifyActive(value);
-        console.log("handling");
-        console.log({justifyActive});
+    };
+
+    const responseMessage = (response) => {
+        console.log(response);
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+
+    const registerUser = async () => {
+        try {
+                const response = await fetch('http://localhost:8080/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({name, email, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log('User registered successfully');
+                    //store token + user name
+                    localStorage.setItem('token', data.token); // Save token
+                    localStorage.setItem('userName', data.name); // Save user name
+
+                    window.location.href = '/create'; //go to widget creation page
+                } else {
+                    console.error('Error registering user');
+                }
+
+            } catch (error) {
+                console.error('Error registering user:', error);
+            }
+    };
+
+    const signIn = async () => {
+        try {
+                const response = await fetch('http://localhost:8080/user/signIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log('User registered successfully');
+                    //store token + user name
+                    localStorage.setItem('token', data.token); // Save token
+                    localStorage.setItem('userName', data.name); // Save user name
+
+                    window.location.href = '/create'; //go to widget creation page
+                } else {
+                    console.error('Error signing in');
+                }
+
+            } catch (error) {
+                console.error('Error signing in:', error);
+            }
     };
 
     return (
@@ -51,18 +117,19 @@ function AccountPage() {
 
                     <MDBTabsContent>
                         <MDBTabsPane open={justifyActive === 'tab1'}>
+                        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
                             <div className="text-center mb-3">
                                 <img src = {googleicon} alt = "Google Icon" className = "google-icon"/> 
                                 <p className = "with-google">Sign in with Google</p>
                             </div>
                             <p className="text-center mt-3">or:</p>
-                            <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email'/>
-                            <MDBInput wrapperClass='mb-4' label='Password' id='login-password' type='password'/>
+                            <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <MDBInput wrapperClass='mb-4' label='Password' id='login-password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             <div className="d-flex justify-content-between mx-4 mb-4">
                                 <MDBCheckbox name='rememberMe' id='rememberMe' label='Remember me' />
                                 <a href="#!">Forgot password?</a>
                             </div>
-                            <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
+                            <MDBBtn className="mb-4 w-100" onClick={signIn}>Sign in</MDBBtn>
                             <p className="text-center">Not a member? <a href="#!">Register</a></p>
                         </MDBTabsPane>
 
@@ -72,14 +139,13 @@ function AccountPage() {
                                 <p className = "with-google">Sign Up with Google</p>
                             </div>
                             <p className="text-center mt-3">or:</p>
-                            <MDBInput wrapperClass='mb-4' label='Name' id='register-name' type='text'/>
-                            <MDBInput wrapperClass='mb-4' label='Username' id='register-username' type='text'/>
-                            <MDBInput wrapperClass='mb-4' label='Email' id='register-email' type='email'/>
-                            <MDBInput wrapperClass='mb-4' label='Password' id='register-password' type='password'/>
+                            <MDBInput wrapperClass='mb-4' label='Name' id='login-name' type='name' value={name} onChange={(e) => setName(e.target.value)} />
+                            <MDBInput wrapperClass='mb-4' label='Email' id='register-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <MDBInput wrapperClass='mb-4' label='Password' id='register-password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             {/* <div className='d-flex justify-content-center mb-4'>
                                 <MDBCheckbox name='terms' id='terms' label='I have read and agree to the terms' />
                             </div> */}
-                            <MDBBtn className="mb-4 w-100">Sign up</MDBBtn>
+                            <MDBBtn className="mb-4 w-100" onClick={registerUser}>Sign up</MDBBtn>
                         </MDBTabsPane>
                     </MDBTabsContent>
                 </MDBContainer>

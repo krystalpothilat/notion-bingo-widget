@@ -32,11 +32,13 @@ db.once('open', () => {
 });
 
 // Routes
-const widgetCustomizationRoutes = require('./routes/WidgetCustomization');
-const widgetRenderRoutes = require('./routes/WidgetRender');
+const widgetCustomizationRoute = require('./routes/WidgetCustomization.js');
+const widgetRenderRoute = require('./routes/WidgetRender.js');
+const userRoutes = require('./routes/UserRoutes.js');
 
-app.use('/WidgetCustomization', widgetCustomizationRoutes);
-app.use('/create', widgetRenderRoutes);
+app.use('/WidgetCustomization', widgetCustomizationRoute);
+app.use('/', widgetRenderRoute);
+app.use('/user', userRoutes);
 
 // Start Server
 app.listen(port, () => {

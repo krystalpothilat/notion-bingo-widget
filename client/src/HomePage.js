@@ -16,9 +16,9 @@ function HomePage() {
 
   return (
     <div >
-        <div id = "header">
+        <div className = "header">
             <h1 id="web-title"> Bingo Widget Creator for Notion</h1>
-            <div id = "account-buttons">
+            {/* <div id = "account-buttons">
                 <button type="button" class="btn btn-outline-secondary">
                         Sign Up
                     <img src={account} alt="Sign Up Icon" class="btn-icon" />
@@ -27,12 +27,12 @@ function HomePage() {
                     Log In
                     <img src={loginimg} alt="Log In Icon" class="btn-icon" />
                 </button>
-            </div>
+            </div> */}
             
         </div>
         
         <div id = "mainpage-example">
-            <img src = {widgetexample} alt = ""></img>
+            <img src = {widgetexample} alt = "Widget Example"></img>
             <div id = "create-button-container">
                 <button type="button" class="btn btn-info" id="create-button" onClick={handleSignIn}> Create your own Bingo Card Widget!</button>
             </div>
