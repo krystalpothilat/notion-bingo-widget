@@ -297,12 +297,12 @@ function CustomizePage() {
 
     }
 
-    useEffect(() => {
-        console.log('Title:', title);
-        console.log('TitleToggle:', titleToggle);
-        console.log('SquareTexts:', squareTexts);
-        console.log('SquareTextEdits:', squareTextEdit);
-    }, [title, titleToggle, squareTexts, squareTextEdit]);
+    // useEffect(() => {
+    //     console.log('Title:', title);
+    //     console.log('TitleToggle:', titleToggle);
+    //     console.log('SquareTexts:', squareTexts);
+    //     console.log('SquareTextEdits:', squareTextEdit);
+    // }, [title, titleToggle, squareTexts, squareTextEdit]);
     
 
     return (

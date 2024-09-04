@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import "./styles/Dashboard.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./styles/WidgetCard.css";
 
 import WidgetCard from './WidgetCard.js';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -56,6 +57,11 @@ function Dashboard() {
         googleLogout();
     }
 
+    // const widgetCards = Array.from({ length: 18 }, (_, index) => ({
+    //     id: index + 1,
+    //     title: `Widget #${index + 1}`
+    // }));
+
 
     return (
     <div className="App" id = "dashboard">
@@ -69,7 +75,9 @@ function Dashboard() {
 
                     <Dropdown.Menu align="end" className="dropdown-menu">
                         <Dropdown.Item className = "hello" > Hello {userName}! </Dropdown.Item>
-                        <Dropdown.Item as={Link} to="/create"> Create Widget </Dropdown.Item>
+                        {widgets.length < 18 && (
+                            <Dropdown.Item as={Link} to="/create"> Create Widget </Dropdown.Item>
+                        )}
                         <Dropdown.Item as={Link} to="/home" onClick = {signOut}> Log Out</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -86,13 +94,19 @@ function Dashboard() {
                 <div className = "saved-widgets">
                     {widgets.map((widget, index) => (
                         <Link to={`/create/${widget.id}`} key={widget.id} style={{ textDecoration: 'none' }}>
-                            <WidgetCard title={widget.title ? widget.title : `Widget #${index + 1}`} />
+                            <WidgetCard title={widget.title ? widget.title : `Widget #${index + 1}`} id={`widget-${index + 1}`}/>
                         </Link>
                     ))}
-                    <Link to={`/create`} style={{ textDecoration: 'none' }}>
-                        <WidgetCard title={<span> Create new widget <img src = {plusicon} alt="plus icon" style={{ width: '20px', height: '20px', marginBottom: '3px'}}/> </span>}/>
+                    {/* {widgetCards.map((widget) => (
+                        <Link to={`/create/${widget.id}`} key={widget.id} style={{ textDecoration: 'none' }}>
+                            <WidgetCard title={widget.title} />
+                        </Link>
+                    ))} */}
+                    {widgets.length < 18 && (
+                    <Link to={`/create`} style={{ textDecoration: 'none'}}>
+                        <WidgetCard title={<span> Create new widget <img src = {plusicon} alt="plus icon" style={{ width: '20px', height: '20px', marginBottom: '3px'}}/> </span>} id='create' />
                     </Link>
-                    
+                    )}
                 </div>
             )}
         </div>

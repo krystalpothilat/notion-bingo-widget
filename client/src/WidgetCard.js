@@ -4,10 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
 
 
-function WidgetCard({title}) {
+function WidgetCard({title, id}) {
 
     return (
-        <Card className = "widget-card">
+        <Card className = "widget-card" id = {id}>
         <Card.Body>{title}</Card.Body>
       </Card>
     );
