@@ -31,7 +31,7 @@ function CustomizePage() {
         if (widgetId) {
             const fetchWidget = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
+                    const response = await fetch(`https://notion-bingo-widget-server.vercel.app/saved/${widgetId}`);
                     const data = await response.json();
                     if (!response.ok) {
                         throw new Error('Trouble fetching saved widget data');
@@ -202,9 +202,7 @@ function CustomizePage() {
         
 
         try {
-        //   const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
-
-            const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
+            const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -265,9 +263,7 @@ function CustomizePage() {
         
 
         try {
-        //   const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/update', {
-
-            const response = await fetch('http://localhost:8080/saved/update', {
+            const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/update', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

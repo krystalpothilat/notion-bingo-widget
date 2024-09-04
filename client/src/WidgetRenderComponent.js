@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./styles/WidgetRenderComponent.css";
 import star from "./imgs/star.png";
-import confetti from "./imgs/confetti.png";
 
 import confetti1 from "./imgs/confetti1.png";
 import confetti2 from "./imgs/confetti2.png";
@@ -24,7 +23,7 @@ function WidgetRenderComponent() {
         const fetchWidgetData = async () => {
             try {
 
-                const response = await fetch(`http://localhost:8080/${widgetId}`);
+                const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
                 const data = await response.json();
 
                 setWidgetData(data);

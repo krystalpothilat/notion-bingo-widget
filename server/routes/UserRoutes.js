@@ -8,8 +8,8 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID); // Replace with your Google Client ID
 
 router.use(cors({
-//   origin: 'https://notion-bingo-widget.vercel.app',
-  origin: '*',
+  origin: 'https://notion-bingo-widget.vercel.app',
+//   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
