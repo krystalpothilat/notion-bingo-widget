@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./styles/AccountPage.css";
 import {
     MDBContainer,
@@ -19,6 +20,7 @@ function AccountPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [justifyActive, setJustifyActive] = useState('tab1');
+    const navigate = useNavigate();
 
     const handleJustifyClick = (value) => {
         if (value === justifyActive) {
@@ -45,7 +47,7 @@ function AccountPage() {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userName', data.name); 
                     localStorage.setItem('userId', data.userId);
-                    window.location.href = '/create'; //go to widget creation page
+                    navigate('/dashboard'); //go to widget creation page
                 } else {
                     console.error('Error registering user: ', data);
                 }
@@ -68,12 +70,12 @@ function AccountPage() {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    console.log('User registered successfully');
+                    console.log('User signed in successfully');
                     //store token + user name
                     localStorage.setItem('token', data.token); 
                     localStorage.setItem('userName', data.name); 
                     localStorage.setItem('userId', data.userId);
-                    window.location.href = '/create'; //go to widget creation page
+                    navigate('/dashboard'); //go to widget creation page
                 } else {
                     console.error('Error signing in');
                 }

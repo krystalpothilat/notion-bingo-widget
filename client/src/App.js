@@ -9,6 +9,8 @@ import AccountPage from './AccountPage.js';
 import CustomizePage from './CustomizePage.js';
 import Dashboard from './Dashboard.js';
 import WidgetRenderComponent from './WidgetRenderComponent';
+import PrivateRoute from './PrivateRoute.js';
+
 function App() {
   return (
 
@@ -17,9 +19,11 @@ function App() {
         <Route path="/" element={<AccountPage/>}/>
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
-        <Route path="/create" element = {<CustomizePage/>} />
-        <Route path="/create/:widgetId" element = {<CustomizePage/>} />
-        <Route path="/dashboard" element = {<Dashboard/>} />
+        
+         {/* must be logged in */}
+         <Route path="/create" element={<PrivateRoute element={CustomizePage} />} />
+        <Route path="/create/:widgetId" element={<PrivateRoute element={CustomizePage} />} />
+        <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
         
       </Routes>
     </Router>

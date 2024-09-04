@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
     res.json({
         token,
         name: name,
-        userId: user._id,
+        userId: newUser._id,
     });
 
     } catch (error) {

@@ -54,8 +54,6 @@ function Dashboard() {
 
         //sign user out of Google
         googleLogout();
-
-        window.location.href = '/';
     }
 
 
@@ -82,7 +80,7 @@ function Dashboard() {
             {noWidgets ? ( //no previously saved widgets
                 <div className= "no-widgets">
                     <p>No saved widgets 😕</p>
-                    <Button variant="info"> Create one now!</Button>
+                    <Button variant="info" as = {Link} to="/create"> Create one now!</Button>
                 </div>
             ) : (
                 <div className = "saved-widgets">
