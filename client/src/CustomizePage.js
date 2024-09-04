@@ -25,6 +25,7 @@ function CustomizePage() {
     const [url, setUrl] = useState("");
     const [showUrl, setShowUrl] = useState(false);
     const [userName, setUserName] = useState('');
+    const [savedWidget, setSavedWidget] = useState(false);
 
     useEffect(() => {
         if (widgetId) {
@@ -46,7 +47,7 @@ function CustomizePage() {
                     setTitleToggle(data.titleToggle);
                     setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
                     setShowUrl(true);
-                    console.log(squareTexts);
+                    setSavedWidget(true);
                 } catch (error) {
                     console.error("Error fetching widget data:", error);
                 }
@@ -56,7 +57,7 @@ function CustomizePage() {
         }
     }, [widgetId]);
 
-
+    // text input color changes
     const handleBackgroundColorChange = (color) => {
         setHexBackgroundColor(color.target.value);
         setBackgroundColor(color.target.value);
@@ -89,6 +90,7 @@ function CustomizePage() {
         }
     };
 
+    //color changes from hex square
     useEffect(() => {
         updateColorFromHex(hexBackgroundColor, setBackgroundColor);
     }, [hexBackgroundColor]);
@@ -104,6 +106,23 @@ function CustomizePage() {
     useEffect(() => {
         updateColorFromHex(hexTitleColor, setTitleColor);
     }, [hexTitleColor]);
+
+    //color changes from input widget data
+    useEffect(() => {
+        setHexBackgroundColor(backgroundColor);
+    }, [backgroundColor]);
+
+    useEffect(() => {
+        setHexTextColor(textColor);
+    }, [textColor]);
+
+    useEffect(() => {
+        setHexOutlineColor(outlineColor);
+    }, [outlineColor]);
+
+    useEffect(() => {
+        setHexTitleColor(titleColor);
+    }, [titleColor]);
 
     const handleTitleChange = (newTitle) => {
         setTitle(newTitle);
@@ -146,6 +165,7 @@ function CustomizePage() {
     const toggleSave = async () => {
         if(titleToggle && title ===""){
             alert("Title cannot be empty when visible.");
+            return;
         }
 
         const isAllTrue = squareTextEdit.every((value) => value === true);
@@ -169,7 +189,7 @@ function CustomizePage() {
             squareInputs: squareTexts.map((text, index) => ({ index, text })),
             titleToggle,
             title,
-            userId, 
+            userId,
         };
         
 
@@ -199,6 +219,59 @@ function CustomizePage() {
 
         } catch (error) {
             console.error('Error saving widget:', error);
+        }
+
+    };
+
+    const toggleUpdate = async () => {
+        if(titleToggle && title ===""){
+            alert("Title cannot be empty when visible.");
+            return;
+        }
+
+        const isAllTrue = squareTextEdit.every((value) => value === true);
+
+        if (!isAllTrue) {
+            alert(`Missing text in at least 1 square.`);
+            return;
+        }
+
+        const userId = localStorage.getItem('userId');
+        console.log(userId);
+        if (!userId) {
+            throw new Error('User ID is not available');
+        }
+
+        const widgetData = {
+            widgetId,
+            backgroundColor,
+            textColor,
+            outlineColor,
+            titleColor,
+            squareInputs: squareTexts.map((text, index) => ({ index, text })),
+            titleToggle,
+            title,
+            userId,
+        };
+        
+
+        try {
+        //   const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/update', {
+
+            const response = await fetch('http://localhost:8080/saved/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            body: JSON.stringify(widgetData),
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }   
+
+        } catch (error) {
+            console.error('Error updating widget:', error);
         }
 
     };
@@ -354,15 +427,15 @@ function CustomizePage() {
                 </div>
 
                 <div className = "input">
-                    <button onClick={toggleSave} id = "save-button"> Save Widget</button>
+                <button onClick={savedWidget ? toggleSave : toggleUpdate} id = "save-button"> {savedWidget ? "Save Updates" : "Save Widget"} </button>
                 </div>
 
                 <div className="url-display">
                     {showUrl ? (
-                    <>
+                    <div className = "url-container">
                         <div id="url">{url}</div>
                         <img src={copyimg} alt="Copy to Clipboard" onClick={copyToClipboard} style={{ cursor: 'pointer' }} />
-                    </>
+                    </div>
                     ) : (
                     <div id="url">&nbsp;</div> // Non-breaking space
                     )}

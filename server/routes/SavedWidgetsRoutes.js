@@ -57,7 +57,7 @@ router.get('/:widgetId', async (req, res) => {
 
     try {
         console.log("getting saved widget data");
-        
+
         // Fetch widget configuration from MongoDB based on widget ID
         const widget = await Widget.findById(req.params.widgetId);
         console.log(widget);
@@ -72,5 +72,52 @@ router.get('/:widgetId', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+router.post('/update', async (req, res) => {
+
+    try {
+        console.log("reached saved widget update");
+        
+        const { widgetId, backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title, userId } = req.body;
+        console.log("widget id is:", widgetId);
+
+
+        if (!mongoose.Types.ObjectId.isValid(widgetId)) {
+            return res.status(400).json({ error: 'Invalid Widget ID format' });
+        }
+
+        const widgetObjectId = new mongoose.Types.ObjectId(widgetId);
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+
+        // check if widget exists
+        const existingWidget = await Widget.findById(widgetObjectId);
+        if (!existingWidget) {
+            return res.status(400).json({ error: 'Invalid Widget ID' });
+        }
+
+         // verify the widget belongs to the user
+        if (!existingWidget.userId.equals(userObjectId)) {
+            return res.status(403).json({ error: 'Unauthorized: User ID does not match the widget owner' });
+        }
+
+        //update widget data
+        existingWidget.backgroundColor = backgroundColor;
+        existingWidget.textColor = textColor;
+        existingWidget.outlineColor = outlineColor;
+        existingWidget.titleColor = titleColor;
+        existingWidget.squareInputs = squareInputs;
+        existingWidget.titleToggle = titleToggle;
+        existingWidget.title = title;
+
+        await existingWidget.save();
+
+        res.sendStatus(200);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 module.exports = router;
