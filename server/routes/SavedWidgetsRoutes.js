@@ -53,4 +53,24 @@ router.post('/get-user-widgets', cors(), async (req, res) => {
   }
 });
 
+router.get('/:widgetId', async (req, res) => {
+
+    try {
+        console.log("getting saved widget data");
+        
+        // Fetch widget configuration from MongoDB based on widget ID
+        const widget = await Widget.findById(req.params.widgetId);
+        console.log(widget);
+
+        if (!widget) {
+        return res.status(404).json({ error: 'Widget not found' });
+        }
+
+        res.send(widget);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 module.exports = router;

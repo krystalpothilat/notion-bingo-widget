@@ -85,7 +85,9 @@ function Dashboard() {
                 </div>
             ) : (
                 widgets.map((widget) => (
-                    <WidgetCard key={widget._id} title={widget.title} />
+                    <Link to={`/create/${widget.id}`} key={widget.id} style={{ textDecoration: 'none' }}>
+                        <WidgetCard title={widget.title} />
+                    </Link>
                 ))
             )}
         </div>

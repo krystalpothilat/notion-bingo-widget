@@ -1,7 +1,9 @@
+import React, { useState, useEffect } from "react";
+
 import "./styles/WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
-const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
+const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
     const handleTitleChange = (newTitle) => {
         onTitleChange(newTitle);
     };
@@ -14,6 +16,11 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
       onAnySquareTextEdit(index);
     };
 
+    // useEffect(() => {
+    //     console.log('WidgetPreview Props:', { backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares });
+    //   }, [backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares]);
+
+      
     return (
         <div className = "preview">
             <BingoCard
@@ -22,6 +29,8 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
                 outlineColor={outlineColor}
                 titleColor = {titleColor}
                 titleToggle = {titleToggle}
+                title = {title}
+                squares = {squares}
                 onTitleChange={handleTitleChange}
                 onAnySquareTextChange={handleAnySquareTextChange}
                 onAnySquareTextEdit={handleAnySquareTextEdit}

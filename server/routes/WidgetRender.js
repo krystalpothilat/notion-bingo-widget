@@ -14,8 +14,6 @@ router.use(cors({
 router.get('/:widgetId', async (req, res) => {
   try {
 
-    console.log("widgetrender.js get");
-
     // Fetch widget configuration from MongoDB based on widget ID
     const widget = await Widget.findById(req.params.widgetId);
     console.log(widget);

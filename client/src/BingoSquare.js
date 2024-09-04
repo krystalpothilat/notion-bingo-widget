@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./styles/BingoSquare.css";
 
-const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextChange}) => {
+const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, onSquareTextChange}) => {
 
     const [isEditing, setIsEditing] = useState(false);
-    const [text, setText] = useState('Click to edit');
+    const [text, setText] = useState(initialText || 'Click to edit');
     const textarea = useRef(null);
 
+    useEffect(() => {
+        setText(initialText || 'Click to edit');
+    }, [initialText]);
+
+    
     useEffect(() => {
       if(isEditing && textarea.current){
         const length = textarea.current.value.length;
@@ -32,6 +37,9 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, onSquareTextCha
         }
     };
     
+    // useEffect(() => {
+    //     console.log('BingoSquare Props:', { backgroundColor, textColor, outlineColor, initialText });
+    //   }, [backgroundColor, textColor, outlineColor, initialText]);
 
     return (
       <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>

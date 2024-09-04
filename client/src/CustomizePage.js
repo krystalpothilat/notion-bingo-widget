@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import "./styles/CustomizePage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WidgetPreview from "./WidgetPreview.js";
@@ -11,6 +11,8 @@ import copyimg from "./copy.png";
 import userimg from "./userimg.png";
 
 function CustomizePage() {
+    const { widgetId } = useParams(); // Get the widgetId from the URL
+    const [widgetData, setWidgetData] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("#ffffff");
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
@@ -19,10 +21,41 @@ function CustomizePage() {
     const [title, setTitle] = useState("");
     const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
     const [titleToggle, setTitleToggle] = useState(true);
-    const [widgetId, setWidgetId] = useState("");
+    // const [widgetId, setWidgetId] = useState("");
     const [url, setUrl] = useState("");
     const [showUrl, setShowUrl] = useState(false);
     const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        if (widgetId) {
+            const fetchWidget = async () => {
+                try {
+                    const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error('Trouble fetching saved widget data');
+                    }
+
+                    setWidgetData(data);
+                    setBackgroundColor(data.backgroundColor);
+                    setTextColor(data.textColor);
+                    setOutlineColor(data.outlineColor);
+                    setTitleColor(data.titleColor);
+                    setSquareTexts(data.squareInputs.map((input) => input.text));
+                    setTitle(data.title);
+                    setTitleToggle(data.titleToggle);
+                    setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
+                    setShowUrl(true);
+                    console.log(squareTexts);
+                } catch (error) {
+                    console.error("Error fetching widget data:", error);
+                }
+            };
+
+            fetchWidget();
+        }
+    }, [widgetId]);
+
 
     const handleBackgroundColorChange = (color) => {
         setHexBackgroundColor(color.target.value);
@@ -107,7 +140,7 @@ function CustomizePage() {
     useEffect(() => {
         const userName = localStorage.getItem('userName');
 
-    setUserName(userName); // Set the user name
+        setUserName(userName); // Set the user name
     }, []);
 
     const toggleSave = async () => {
@@ -155,11 +188,10 @@ function CustomizePage() {
                 throw new Error('Network response was not ok');
             }   
 
-            const {widgetId} = await response.json();
-            setWidgetId(widgetId);
+            const { widgetId: updatedWidgetId } = await response.json();
             console.log (widgetId);
 
-            const customUrl = `https://notion-bingo-widget.vercel.app/${widgetId}`;
+            const customUrl = `https://notion-bingo-widget.vercel.app/${updatedWidgetId}`;
             setUrl(customUrl);
             setShowUrl(true);
 
@@ -182,6 +214,11 @@ function CustomizePage() {
 
     }
 
+    // useEffect(() => {
+    //     console.log('Title:', title);
+    //     console.log('SquareTexts:', squareTexts);
+    // }, [title, squareTexts]);
+    
 
     return (
 
@@ -209,6 +246,8 @@ function CustomizePage() {
                     outlineColor = {outlineColor} 
                     titleColor = {titleColor}
                     titleToggle = {titleToggle}
+                    title = {title}
+                    squares = {squareTexts}
                     onTitleChange={handleTitleChange}
                     onAnySquareTextChange={handleAnySquareTextChange}
                     onAnySquareTextEdit={handleAnySquareEdit}/>

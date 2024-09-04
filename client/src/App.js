@@ -18,6 +18,7 @@ function App() {
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
         <Route path="/create" element = {<CustomizePage/>} />
+        <Route path="/create/:widgetId" element = {<CustomizePage/>} />
         <Route path="/dashboard" element = {<Dashboard/>} />
         
       </Routes>
