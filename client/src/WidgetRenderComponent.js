@@ -14,10 +14,11 @@ import confetti6 from "./imgs/confetti6.png";
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
     const [widgetData, setWidgetData] = useState(null);
-    const [backgrounds, setBackgrounds] = useState({});
+    const [backgrounds, setBackgrounds] = useState(Array(9).fill(false) );
     const [raindrops, setRaindrops] = useState([]);
     const [isAnimationRunning, setIsAnimationRunning] = useState(false);
     const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
+    const [bingo, setBingo] = useState(false);
 
     useEffect(() => {
         const fetchWidgetData = async () => {
@@ -27,13 +28,6 @@ function WidgetRenderComponent() {
                 const data = await response.json();
 
                 setWidgetData(data);
-
-                //set all backgrounds to transparent->default
-                const initialBackgrounds = data.squareInputs.reduce((acc, _, index) => {
-                    acc[index] = false; 
-                    return acc;
-                }, {});
-                setBackgrounds(initialBackgrounds);
 
             } catch (error) {
                 console.error('Error fetching widget data:', error);
@@ -57,6 +51,7 @@ function WidgetRenderComponent() {
                 const rowValues = Object.values(backgrounds).slice(start, end);
                 if (rowValues.every(val => val === true)) {
                     startRainfall();
+                    setBingo(true);
                     return;
                 }
             }
@@ -69,6 +64,7 @@ function WidgetRenderComponent() {
                 }
                 if (columnValues.every(val => val === true)) {
                     startRainfall();
+                    setBingo(true);
                     return;
                 }
             }
@@ -79,12 +75,15 @@ function WidgetRenderComponent() {
 
             if (diagonal1.every(val => val === true) || diagonal2.every(val => val === true)) {
                 startRainfall();
+                setBingo(true);
                 return;
             }
         };
 
         // Call the function to check for three in a row
-        checkBingo();
+        if(!bingo) checkBingo();
+        console.log(backgrounds);
+        console.log(bingo);
     }, [backgrounds]);
     
 
