@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
-import "./styles/CreateWidgetPage.css";
+import { Link } from 'react-router-dom';
+import "./styles/CustomizePage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WidgetPreview from "./WidgetPreview.js";
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -180,7 +180,6 @@ function CustomizePage() {
         //sign user out of Google
         googleLogout();
 
-        window.location.href = '/';
     }
 
 
@@ -197,9 +196,8 @@ function CustomizePage() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/" onClick = {signOut}> Log Out</Dropdown.Item>
+                        <Dropdown.Item as={Link} to="/dashboard"> Saved Widgets </Dropdown.Item>
+                        <Dropdown.Item as={Link} to="/home" onClick = {signOut}> Log Out</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </div>

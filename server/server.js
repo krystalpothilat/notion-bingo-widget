@@ -51,10 +51,12 @@ db.once('open', () => {
 const widgetCustomizationRoute = require('./routes/WidgetCustomization.js');
 const widgetRenderRoute = require('./routes/WidgetRender.js');
 const userRoutes = require('./routes/UserRoutes.js');
+const savedWidgets = require('./routes/SavedWidgetsRoutes.js');
 
 app.use('/WidgetCustomization', widgetCustomizationRoute);
 app.use('/', widgetRenderRoute);
 app.use('/user', userRoutes);
+app.use('/saved', savedWidgets);
 
 // Start Server
 app.listen(port, () => {

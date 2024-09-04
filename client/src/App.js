@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import "./styles/App.css";
 import HomePage from './HomePage.js';
 import AccountPage from './AccountPage.js';
-import CustomizePage from './CreateWidgetPage.js';
+import CustomizePage from './CustomizePage.js';
+import Dashboard from './Dashboard.js';
 import WidgetRenderComponent from './WidgetRenderComponent';
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/:widgetId" element={<WidgetRenderComponent/>}/>
         <Route path="/create" element = {<CustomizePage/>} />
+        <Route path="/dashboard" element = {<Dashboard/>} />
         
       </Routes>
     </Router>
