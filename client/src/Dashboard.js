@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { googleLogout } from '@react-oauth/google';
 
 import userimg from "./userimg.png";
+import plusicon from "./plus.png";
 
 function Dashboard() {
     const userName = localStorage.getItem('userName');
@@ -77,18 +78,24 @@ function Dashboard() {
             </div>
         </div>
 
-        <div className = "saved-widgets">
+        <div className = "all-widgets-container">
             {noWidgets ? ( //no previously saved widgets
                 <div className= "no-widgets">
                     <p>No saved widgets 😕</p>
                     <Button variant="info"> Create one now!</Button>
                 </div>
             ) : (
-                widgets.map((widget) => (
-                    <Link to={`/create/${widget.id}`} key={widget.id} style={{ textDecoration: 'none' }}>
-                        <WidgetCard title={widget.title} />
+                <div className = "saved-widgets">
+                    {widgets.map((widget, index) => (
+                        <Link to={`/create/${widget.id}`} key={widget.id} style={{ textDecoration: 'none' }}>
+                            <WidgetCard title={widget.title ? widget.title : `Widget #${index + 1}`} />
+                        </Link>
+                    ))}
+                    <Link to={`/create`} style={{ textDecoration: 'none' }}>
+                        <WidgetCard title={<span> Create new widget <img src = {plusicon} alt="plus icon" style={{ width: '20px', height: '20px', marginBottom: '3px'}}/> </span>}/>
                     </Link>
-                ))
+                    
+                </div>
             )}
         </div>
 

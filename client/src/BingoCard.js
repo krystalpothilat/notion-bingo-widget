@@ -33,8 +33,8 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
       onTitleChange(e.target.value);
     }
     
-    const handleAnySquareTextEditLocal = (index) => {
-      onAnySquareTextEdit(index);
+    const handleAnySquareTextEditLocal = (index, newSquareText) => {
+      onAnySquareTextEdit(index, newSquareText);
     };
 
     // useEffect(() => {
@@ -71,7 +71,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
         initialText={square || ''} // Ensure initialText is always a string
         onSquareTextChange={(newSquareText) => {
             handleSquareTextChangeLocal(index, newSquareText);
-            handleAnySquareTextEditLocal(index);
+            handleAnySquareTextEditLocal(index, newSquareText);
         }}
     />
 ))}

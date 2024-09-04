@@ -12,8 +12,8 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
       onAnySquareTextChange(index, newSquareText);
     };
 
-    const handleAnySquareTextEdit = (index) => {
-      onAnySquareTextEdit(index);
+    const handleAnySquareTextEdit = (index, newSquareText) => {
+      onAnySquareTextEdit(index, newSquareText);
     };
 
     // useEffect(() => {

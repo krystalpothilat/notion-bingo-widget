@@ -12,7 +12,7 @@ import userimg from "./userimg.png";
 
 function CustomizePage() {
     const { widgetId } = useParams(); // Get the widgetId from the URL
-    const [widgetData, setWidgetData] = useState(null);
+    // const [widgetData, setWidgetData] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("#ffffff");
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
@@ -37,12 +37,13 @@ function CustomizePage() {
                         throw new Error('Trouble fetching saved widget data');
                     }
 
-                    setWidgetData(data);
+                    // setWidgetData(data);
                     setBackgroundColor(data.backgroundColor);
                     setTextColor(data.textColor);
                     setOutlineColor(data.outlineColor);
                     setTitleColor(data.titleColor);
                     setSquareTexts(data.squareInputs.map((input) => input.text));
+                    setSquareTextEdit(data.squareInputs.map(() => true));
                     setTitle(data.title);
                     setTitleToggle(data.titleToggle);
                     setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
@@ -130,22 +131,29 @@ function CustomizePage() {
 
     const handleTitleToggle = () => {
         setTitleToggle(!titleToggle);
+        setTitle('');
     }
     
     const handleAnySquareTextChange = (index, newSquareText) => {
+        console.log("handle any square text change");
         setSquareTexts((prevSquareTexts) => {
             const newSquareTexts = [...prevSquareTexts];
             newSquareTexts[index] = newSquareText;
             return newSquareTexts;
         });
+        console.log(squareTexts);
     };
 
-    const handleAnySquareEdit = (index) => {
+    const handleAnySquareEdit = (index, newSquareText) => {
+        console.log("handle any square edit");
+        console.log(newSquareText);
         setSquareTextEdit((prevSquareTextEdits) => {
             const newSquareEdits = [...prevSquareTextEdits];
-            newSquareEdits[index] = true;
+            newSquareEdits[index] = newSquareText !== '';
+            console.log(newSquareEdits);
             return newSquareEdits;
         });
+        console.log(squareTextEdit);
     }
 
     const copyToClipboard = () => {
@@ -229,8 +237,8 @@ function CustomizePage() {
             return;
         }
 
+    
         const isAllTrue = squareTextEdit.every((value) => value === true);
-
         if (!isAllTrue) {
             alert(`Missing text in at least 1 square.`);
             return;
@@ -241,6 +249,7 @@ function CustomizePage() {
         if (!userId) {
             throw new Error('User ID is not available');
         }
+
 
         const widgetData = {
             widgetId,
@@ -269,6 +278,7 @@ function CustomizePage() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }   
+            console.log("update successful");
 
         } catch (error) {
             console.error('Error updating widget:', error);
@@ -287,10 +297,12 @@ function CustomizePage() {
 
     }
 
-    // useEffect(() => {
-    //     console.log('Title:', title);
-    //     console.log('SquareTexts:', squareTexts);
-    // }, [title, squareTexts]);
+    useEffect(() => {
+        console.log('Title:', title);
+        console.log('TitleToggle:', titleToggle);
+        console.log('SquareTexts:', squareTexts);
+        console.log('SquareTextEdits:', squareTextEdit);
+    }, [title, titleToggle, squareTexts, squareTextEdit]);
     
 
     return (
@@ -427,7 +439,7 @@ function CustomizePage() {
                 </div>
 
                 <div className = "input">
-                <button onClick={savedWidget ? toggleSave : toggleUpdate} id = "save-button"> {savedWidget ? "Save Updates" : "Save Widget"} </button>
+                <button onClick={savedWidget ? toggleUpdate : toggleSave} id = "save-button"> {savedWidget ? "Save Updates" : "Save Widget"} </button>
                 </div>
 
                 <div className="url-display">
