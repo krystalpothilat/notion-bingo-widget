@@ -1,5 +1,6 @@
 import React  from "react";
 import { useNavigate, Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import "./styles/HomePage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import widgetexample from "./widgetexample.png";
@@ -19,14 +20,8 @@ function HomePage() {
         <div className = "header">
             <h1 id="web-title"> Bingo Widget Creator for Notion</h1>
             <div id = "account-buttons">
-                {/* <button type="button" className="btn btn-outline-secondary">
-                        Sign Up
-                    <img src={account} alt="Sign Up Icon" className="btn-icon" />
-                </button> */}
-                <button type="button" className="btn btn-outline-secondary">
-                    Log In
-                    <img src={loginimg} alt="Log In Icon" className="btn-icon" />
-                </button>
+                {/* <Button variant="outline-secondary"> Sign Up <img src={account} alt="Sign Up Icon" className="btn-icon" /> </Button>{' '} */}
+                <Button variant="outline-secondary" as={Link} to={'/'}> Log In <img src={loginimg} alt="Log In Icon" className="btn-icon" /> </Button>{' '}
             </div>
             
         </div>

@@ -312,12 +312,12 @@ function CustomizePage() {
             <h1 id="creater-page-web-title">Bingo Widget Creator for Notion</h1>
             <div className = "usercontainer">
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        <p> {userName} </p>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic" className="dropdown-toggle">
                         <img src = {userimg} alt = "Current User Image" id = "user-icon"/>
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
+                    <Dropdown.Menu align="end" className="dropdown-menu">
+                        <Dropdown.Item className = "hello" > Hello {userName}! </Dropdown.Item>
                         <Dropdown.Item as={Link} to="/dashboard"> Saved Widgets </Dropdown.Item>
                         <Dropdown.Item as={Link} to="/home" onClick = {signOut}> Log Out</Dropdown.Item>
                     </Dropdown.Menu>

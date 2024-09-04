@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import "./styles/AccountPage.css";
 import {
     MDBContainer,
@@ -88,7 +88,9 @@ function AccountPage() {
     return (
         <div>
             <div id="header">
-                <h1 id="web-title">Bingo Widget Creator for Notion</h1>
+                <Link to={'/home'} style={{ textDecoration: 'none', color: 'black'}}>
+                    <h1 id="web-title">Bingo Widget Creator for Notion</h1>
+                </Link>
             </div>
             
             <div id="account-div">
@@ -120,7 +122,7 @@ function AccountPage() {
                                 <a href="#!">Forgot password?</a>
                             </div>
                             <MDBBtn className="mb-4 w-100" onClick={signIn}>Sign in</MDBBtn>
-                            <p className="text-center">Not a member? <a href="#!">Register</a></p>
+                            <p className="text-center">Not a member? <p onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'} id="register" > Register</p></p>
                         </MDBTabsPane>
 
                         <MDBTabsPane open={justifyActive === 'tab2'}>

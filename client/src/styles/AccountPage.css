@@ -12,6 +12,7 @@ body{
 
 #web-title{
     font-family: 'Poppins', sans-serif;
+    cursor: pointer;
 }
 
 #header {
@@ -96,4 +97,17 @@ body{
 
 .google-login:hover {
     background-color: #adb5bd;
+}
+
+.text-center{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#register{
+    margin: 0px 5px;
+    text-decoration: underline;
+    color: #3680fd;
+    cursor: pointer;
 }
