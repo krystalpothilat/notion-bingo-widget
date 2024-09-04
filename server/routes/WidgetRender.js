@@ -23,9 +23,10 @@ router.get('/:widgetId', async (req, res) => {
     }
 
     // Generate HTML for rendering the widget based on the retrieved configuration
-    const widgetHtml = getHtml(widget);
+    // const widgetHtml = getHtml(widget);
     // Send the HTML back to the client
-    res.send(widgetHtml);
+    // res.send(widgetHtml);
+    res.send(widget);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -35,19 +36,34 @@ router.get('/:widgetId', async (req, res) => {
 function getHtml(data) {
   console.log("getHtml");
   const html = `
-    <div class="bingocard" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
-      <h2 id="title" style="color: ${data.titleColor}; visibility: ${data.titleToggle ? 'visible' : 'hidden'};">
-        ${data.title}
-      </h2>
+    // <div class="bingocard" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+    //   <h2 id="title" style="color: ${data.titleColor}; visibility: ${data.titleToggle ? 'visible' : 'hidden'};">
+    //     ${data.title}
+    //   </h2>
 
-      <div class="squares">
-        ${data.squareInputs.map((input, index) => `
-          <div class="square" id="square-${index}" style="background-color: ${data.backgroundColor}; color: ${data.textColor}; border: 1px solid ${data.outlineColor};" onclick="handleBoxClick(${index})">
-            <div class="text" style="pointer-events: none;">${input.text}</div>
-          </div>
-        `).join('')}
+    //   <div class="squares">
+    //     ${data.squareInputs.map((input, index) => `
+    //       <div class="square" id="square-${index}" style="background-color: ${data.backgroundColor}; color: ${data.textColor}; border: 1px solid ${data.outlineColor};" onclick="handleBoxClick(${index})">
+    //         <div class="text" style="pointer-events: none;">${input.text}</div>
+    //       </div>
+    //     `).join('')}
+    //   </div>
+    // </div>
+
+    <div class="bingocard">
+  <h2 id="title" style="color: ${data.titleColor}; visibility: ${data.titleToggle ? 'visible' : 'hidden'};">
+    ${data.title}
+  </h2>
+
+  <div class="grid">
+    ${data.squareInputs.map((input, index) => `
+      <div class="square" id="square-${index}" style="background-color: ${data.backgroundColor}; color: ${data.textColor}; border: 1px solid ${data.outlineColor};" onclick="handleBoxClick(${index})">
+        <div class="text" style="pointer-events: none;">${input.text}</div>
       </div>
-    </div>
+    `).join('')}
+  </div>
+</div>
+
 
   `;
 
