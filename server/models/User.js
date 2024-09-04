@@ -7,13 +7,20 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     email: {
-    type: String,
-    required: true,
-    unique: true
+        type: String,
+        required: true,
+        unique: true
     },
     password: {
-    type: String,
-    required: true,
+        type: String,
+        required: function() {
+            return !this.googleId;  // Password is required if googleId is not present
+        },
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true, // Allows for the googleId field to be optional (only enforced if a value is present)
     }
 });
 

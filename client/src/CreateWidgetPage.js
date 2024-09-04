@@ -4,6 +4,8 @@ import "./styles/CreateWidgetPage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WidgetPreview from "./WidgetPreview.js";
 import Dropdown from 'react-bootstrap/Dropdown';
+import { googleLogout } from '@react-oauth/google';
+
 
 import copyimg from "./copy.png";
 import userimg from "./userimg.png";
@@ -103,7 +105,6 @@ function CustomizePage() {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
         const userName = localStorage.getItem('userName');
 
     setUserName(userName); // Set the user name
@@ -121,6 +122,12 @@ function CustomizePage() {
             return;
         }
 
+        const userId = localStorage.getItem('userId');
+        console.log(userId);
+        if (!userId) {
+            throw new Error('User ID is not available');
+        }
+
         const widgetData = {
             backgroundColor,
             textColor,
@@ -129,19 +136,25 @@ function CustomizePage() {
             squareInputs: squareTexts.map((text, index) => ({ index, text })),
             titleToggle,
             title,
+            userId, 
         };
         
 
         try {
         //   const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
+
             const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             body: JSON.stringify(widgetData),
             });
             
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }   
+
             const {widgetId} = await response.json();
             setWidgetId(widgetId);
             console.log (widgetId);
@@ -159,10 +172,14 @@ function CustomizePage() {
     };
 
     function signOut() {
-        // Remove the token from local storage
+        // clear local storage
         localStorage.removeItem('token');
-    
-        // Optionally, redirect to the login page
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userId');
+
+        //sign user out of Google
+        googleLogout();
+
         window.location.href = '/';
     }
 

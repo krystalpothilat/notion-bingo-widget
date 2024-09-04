@@ -1,7 +1,9 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const Widget = require('../models/Widget');
+const User = require('../models/User');
 
 router.use(cors({
 //   origin: 'https://notion-bingo-widget-server.vercel.app',
@@ -14,10 +16,25 @@ router.use(cors({
 router.post('/save', cors(), async (req, res) => {
   try {
     console.log("reached save");
-    // Extract widget customization data from request body
-    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title} = req.body;
+    // extract widget customization data from request body
+    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title, userId} = req.body;
+    console.log("user id is :" , userId);
 
-    // Create a new widget document
+    // Validate if userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: 'Invalid User ID format' });
+    }
+
+    // Convert userId to ObjectId
+    const objectId = new mongoose.Types.ObjectId(userId);
+
+    // Check if user exists
+    const existingUser = await User.findById(objectId);
+    if (!existingUser) {
+    return res.status(400).json({ error: 'Invalid User ID' });
+    }
+    console.log("checked user");
+
     const newWidget = new Widget({
       backgroundColor,
       textColor,
@@ -26,13 +43,16 @@ router.post('/save', cors(), async (req, res) => {
       squareInputs,
       titleToggle,
       title,
+      userId: objectId, 
     });
     
-    // Save the widget to the database
+    console.log("created new widget");
+
+    // save widget
     const savedWidget = await newWidget.save();
     console.log ("saved widget id is " + savedWidget._id.toString());
 
-    // Respond with the saved widget ID
+    // return saved widget ID
     res.json({ widgetId: savedWidget._id.toString() });
     
   } catch (error) {

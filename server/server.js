@@ -5,6 +5,21 @@ const app = express();
 const port = process.env.PORT || 8080;
 require('dotenv').config();
 
+
+// Remove COOP and CORP headers
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+
+    res.cookie('cookieName', 'cookieValue', {
+        sameSite: 'None', 
+        secure: true // Ensure HTTPS is used
+    });
+    
+    next();
+});
+
+
 // Middleware
 app.use(cors({
 //   origin: 'https://notion-bingo-widget.vercel.app',
@@ -13,6 +28,7 @@ app.use(cors({
   credentials: true,
   optionsSuccessStatus: 204,
 }));
+
 // app.use(cors());
 app.use(express.json());
 

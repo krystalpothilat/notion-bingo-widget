@@ -11,8 +11,7 @@ import {
     MDBInput,
     MDBCheckbox
 } from 'mdb-react-ui-kit';
-// import { GoogleLogin } from '@react-oauth/google';
-import CustomGoogleLogin from './CustomGoogleLogin';
+import GoogleLogIn from './GoogleLogIn';
 
 
 function AccountPage() {
@@ -26,14 +25,6 @@ function AccountPage() {
             return;
         }
         setJustifyActive(value);
-    };
-
-    const responseMessage = (response) => {
-        console.log(response);
-    };
-
-    const errorMessage = (error) => {
-        console.log(error);
     };
 
     const registerUser = async () => {
@@ -51,9 +42,9 @@ function AccountPage() {
                 if (response.ok) {
                     console.log('User registered successfully');
                     //store token + user name
-                    localStorage.setItem('token', data.token); // Save token
-                    localStorage.setItem('userName', data.name); // Save user name
-
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userName', data.name); 
+                    localStorage.setItem('userId', data.userId);
                     window.location.href = '/create'; //go to widget creation page
                 } else {
                     console.error('Error registering user: ', data);
@@ -79,9 +70,9 @@ function AccountPage() {
                 if (response.ok) {
                     console.log('User registered successfully');
                     //store token + user name
-                    localStorage.setItem('token', data.token); // Save token
-                    localStorage.setItem('userName', data.name); // Save user name
-
+                    localStorage.setItem('token', data.token); 
+                    localStorage.setItem('userName', data.name); 
+                    localStorage.setItem('userId', data.userId);
                     window.location.href = '/create'; //go to widget creation page
                 } else {
                     console.error('Error signing in');
@@ -117,8 +108,7 @@ function AccountPage() {
                     <MDBTabsContent>
                         <MDBTabsPane open={justifyActive === 'tab1'}>
                             <div className = "google-login-container">
-                                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} className = "google-login" style={{ width: '100%' }} /> */}
-                                <CustomGoogleLogin text = "Sign In with Google" onSucccess={responseMessage} onError={errorMessage} />
+                                <GoogleLogIn text = "signin_with" />
                             </div>
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -133,8 +123,7 @@ function AccountPage() {
 
                         <MDBTabsPane open={justifyActive === 'tab2'}>
                             <div className = "google-login-container">
-                                {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} className = "google-login" style={{ width: '100%' }} /> */}
-                                <CustomGoogleLogin text = "Sign Up with Google" onSucccess={responseMessage} onError={errorMessage} />
+                                <GoogleLogIn text = "signup_with" />
                             </div>
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Name' id='login-name' type='name' value={name} onChange={(e) => setName(e.target.value)} />
