@@ -3,9 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import "./styles/HomePage.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import widgetexample from "./widgetexample.png";
-import loginimg from "./login.png";
-import account from "./account.png";
+import widgetexample from "./imgs/widgetexample.png";
+import loginimg from "./imgs/login.png";
+import account from "./imgs/account.png";
 
 function HomePage() {
     const navigate = useNavigate();

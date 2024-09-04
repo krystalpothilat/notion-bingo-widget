@@ -7,8 +7,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { googleLogout } from '@react-oauth/google';
 
 
-import copyimg from "./copy.png";
-import userimg from "./userimg.png";
+import copyimg from "./imgs/copy.png";
+import userimg from "./imgs/userimg.png";
 
 function CustomizePage() {
     const { widgetId } = useParams(); // Get the widgetId from the URL

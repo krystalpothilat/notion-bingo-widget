@@ -9,8 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import { googleLogout } from '@react-oauth/google';
 
-import userimg from "./userimg.png";
-import plusicon from "./plus.png";
+import userimg from "./imgs/userimg.png";
+import plusicon from "./imgs/plus.png";
 
 function Dashboard() {
     const userName = localStorage.getItem('userName');

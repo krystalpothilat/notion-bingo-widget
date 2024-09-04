@@ -1,17 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link} from 'react-router-dom';
 import "./styles/AccountPage.css";
-import {
-    MDBContainer,
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane,
-    MDBBtn,
-    MDBInput,
-    MDBCheckbox
-} from 'mdb-react-ui-kit';
+import { MDBContainer, MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsContent, MDBTabsPane, MDBBtn, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 import GoogleLogIn from './GoogleLogIn';
 
 
@@ -20,6 +10,9 @@ function AccountPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [justifyActive, setJustifyActive] = useState('tab1');
+    const [signInErrorMessage, setSignInErrorMessage] = useState('');
+    const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
+
     const navigate = useNavigate();
 
     const handleJustifyClick = (value) => {
@@ -42,14 +35,14 @@ function AccountPage() {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    console.log('User registered successfully');
+                    setSignUpErrorMessage('');
                     //store token + user name
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userName', data.name); 
                     localStorage.setItem('userId', data.userId);
                     navigate('/dashboard'); //go to widget creation page
                 } else {
-                    console.error('Error registering user: ', data);
+                    setSignUpErrorMessage(data.message || 'An error occurred. Please try again.');
                 }
 
             } catch (error) {
@@ -70,14 +63,14 @@ function AccountPage() {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    console.log('User signed in successfully');
+                    setSignInErrorMessage('');
                     //store token + user name
                     localStorage.setItem('token', data.token); 
                     localStorage.setItem('userName', data.name); 
                     localStorage.setItem('userId', data.userId);
                     navigate('/dashboard'); //go to widget creation page
                 } else {
-                    console.error('Error signing in');
+                    setSignInErrorMessage(data.message || 'An error occurred. Please try again.');
                 }
 
             } catch (error) {
@@ -117,10 +110,13 @@ function AccountPage() {
                             <p className="text-center mt-3">or:</p>
                             <MDBInput wrapperClass='mb-4' label='Email address' id='login-email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Password' id='login-password' type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                            <div className="d-flex justify-content-between mx-4 mb-4">
+                            <div className="alert-container">
+                                <p className="alert" style={{ display: signInErrorMessage ? 'block' : 'none' }}> {signInErrorMessage} </p>
+                            </div>
+                            {/* <div className="d-flex justify-content-between mx-4 mb-4">
                                 <MDBCheckbox name='rememberMe' id='rememberMe' label='Remember me' />
                                 <a href="#!">Forgot password?</a>
-                            </div>
+                            </div> */}
                             <MDBBtn className="mb-4 w-100" onClick={signIn}>Sign in</MDBBtn>
                             <p className="text-center">Not a member? <p onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'} id="register" > Register</p></p>
                         </MDBTabsPane>
@@ -136,6 +132,9 @@ function AccountPage() {
                             {/* <div className='d-flex justify-content-center mb-4'>
                                 <MDBCheckbox name='terms' id='terms' label='I have read and agree to the terms' />
                             </div> */}
+                            <div className="alert-container">
+                                <p className="alert" style={{ display: signUpErrorMessage ? 'block' : 'none' }}> {signUpErrorMessage} </p>
+                            </div>
                             <MDBBtn className="mb-4 w-100" onClick={registerUser}>Sign up</MDBBtn>
                         </MDBTabsPane>
                     </MDBTabsContent>

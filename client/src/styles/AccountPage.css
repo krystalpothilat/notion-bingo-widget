@@ -111,3 +111,16 @@ body{
     color: #3680fd;
     cursor: pointer;
 }
+
+.alert-container{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.alert{
+    margin: 0;
+    padding: 0;
+    transform: translate(0, -50%);
+}

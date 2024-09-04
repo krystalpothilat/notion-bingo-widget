@@ -19,17 +19,30 @@ router.post('/register', async (req, res) => {
   try {
     const {name, email, password } = req.body;
 
-    const newUser = new User({ name, email, password });
-    await newUser.save();
+    let user = await User.findOne({ email });
+
+    if (!user) {
+        // create a new user if not found
+        user = new User({
+            name,
+            email,
+            password,
+        });
+
+        await user.save();
+    } else {
+        return res.status(401).json({ message: 'Account exists. Please sign in.' });
+    }
+
     
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: '1h', //max 1 hr login
     });
 
     res.json({
         token,
         name: name,
-        userId: newUser._id,
+        userId: user._id,
     });
 
     } catch (error) {
@@ -44,13 +57,19 @@ router.post('/signIn', async (req, res) => {
         // find user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Invalid email, please create an account' });
+        }
+
+        // check for google account
+        //handles when user tries to sign in as email vs with Google
+        if (user.googleId) {
+            return res.status(401).json({ message: 'Account exists. Please sign in through Google' });
         }
 
         // check password
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Password incorrect' });
         }
 
         // create JWT token
