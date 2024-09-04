@@ -1,4 +1,7 @@
 
+body{
+    overflow: hidden;
+}
 .bingocard {
     display: flex;
     flex-direction: column;
@@ -57,3 +60,38 @@
     position: relative;
     z-index: 1; /* Ensure the text is above the image */
 }
+
+.raindrop {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    animation: fly 5s linear infinite;
+    transform: rotate(var(--rotation));
+    pointer-events: none !important;
+    z-index: 3;
+}
+
+.raindrops-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 150%;
+    width: 100%;
+    overflow: hidden;
+}
+
+  
+ 
+@keyframes fly {
+    0% {
+        transform: translateY(-100%) translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(150vh) translateX(calc(var(--horizontalMovement)));
+        opacity: 1;
+    }
+}
+  

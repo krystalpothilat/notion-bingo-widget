@@ -2,11 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./styles/WidgetRenderComponent.css";
 import star from "./imgs/star.png";
+import confetti from "./imgs/confetti.png";
+
+import confetti1 from "./imgs/confetti1.png";
+import confetti2 from "./imgs/confetti2.png";
+import confetti3 from "./imgs/confetti3.png";
+import confetti4 from "./imgs/confetti4.png";
+import confetti5 from "./imgs/confetti5.png";
+import confetti6 from "./imgs/confetti6.png";
 
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
     const [widgetData, setWidgetData] = useState(null);
     const [backgrounds, setBackgrounds] = useState({});
+    const [raindrops, setRaindrops] = useState([]);
+    const [isAnimationRunning, setIsAnimationRunning] = useState(false);
+    const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
 
     useEffect(() => {
         const fetchWidgetData = async () => {
@@ -17,9 +28,9 @@ function WidgetRenderComponent() {
 
                 setWidgetData(data);
 
-                //set all backgrounds to transparent
+                //set all backgrounds to transparent->default
                 const initialBackgrounds = data.squareInputs.reduce((acc, _, index) => {
-                    acc[index] = false; // Default to transparent
+                    acc[index] = false; 
                     return acc;
                 }, {});
                 setBackgrounds(initialBackgrounds);
@@ -29,12 +40,53 @@ function WidgetRenderComponent() {
             }
         };
         
-        // Call the fetch function
         fetchWidgetData();
 
         console.log('WidgetRenderComponent rendered with widgetId:', widgetId);
-    }, [widgetId]); // Trigger the fetch when widgetId changes
+    }, [widgetId]);
 
+    useEffect(() => {
+        const checkBingo = () => {
+            console.log("check bingo");
+            const size = 3; // Assuming a 3x3 grid
+
+            // Check rows
+            for (let row = 0; row < size; row++) {
+                const start = row * size;
+                const end = start + size;
+                const rowValues = Object.values(backgrounds).slice(start, end);
+                if (rowValues.every(val => val === true)) {
+                    startRainfall();
+                    return;
+                }
+            }
+
+            // Check columns
+            for (let col = 0; col < size; col++) {
+                const columnValues = [];
+                for (let row = 0; row < size; row++) {
+                    columnValues.push(backgrounds[row * size + col]);
+                }
+                if (columnValues.every(val => val === true)) {
+                    startRainfall();
+                    return;
+                }
+            }
+
+            // Check diagonals
+            const diagonal1 = [0, 4, 8].map(i => backgrounds[i]);
+            const diagonal2 = [2, 4, 6].map(i => backgrounds[i]);
+
+            if (diagonal1.every(val => val === true) || diagonal2.every(val => val === true)) {
+                startRainfall();
+                return;
+            }
+        };
+
+        // Call the function to check for three in a row
+        checkBingo();
+    }, [backgrounds]);
+    
 
     const handleBoxClick = (index) => {
         setBackgrounds(prevBackgrounds => ({
@@ -43,13 +95,70 @@ function WidgetRenderComponent() {
         }));
     };
 
+    const startRainfall = () => {
+        console.log("rainfall");
+        if (isAnimationRunning) {
+            return;
+        }
+    
+        setIsAnimationRunning(true);
+    
+        const newRaindrops = [];
+    
+        for (let i = 0; i < 300; i++) {
+            const startTime = Math.random() * 1; // Random start times between 0 and 1 seconds
+            const speed = Math.random() * 3 + 1; // Speed between 1 and 4 seconds
+            const leftPosition = Math.random() * 100; // Random horizontal position between 0 and 100vw
+            const horizontalMovement = Math.random() * 20 - 10; // Random movement between -10vw and 10vw
+            const rotation = Math.random() * 360; 
+            const image = confettiImages[Math.floor(Math.random() * confettiImages.length)]; // Random image selection
+
+            newRaindrops.push({
+                id: i,
+                left: `${leftPosition}vw`,
+                startTime: `${startTime}s`,
+                speed: `${speed}s`,
+                horizontalMovement: `${horizontalMovement}vw`,
+                rotation: `${rotation}deg`,
+                image,
+            });
+        }
+    
+        setRaindrops(newRaindrops);
+    
+        setTimeout(() => {
+            setIsAnimationRunning(false);
+            setRaindrops([]);
+        }, 5000);
+    };
+    
+
     if (!widgetData) {
-        // Loading state or handle error
         return <div>Loading...</div>;
     }
 
     return (
+        <>
+            <div className="raindrops-container">
+                {raindrops.length > 0 &&
+                raindrops.map((raindrop) => (
+                    <div
+                    key={raindrop.id}
+                    className="raindrop"
+                    style={{
+                        left: raindrop.left,
+                        top: "-30px",
+                        backgroundImage: `url(${raindrop.image})`,
+                        animation: `fly ${raindrop.speed} ease-out ${raindrop.startTime}`,
+                        '--horizontalMovement': raindrop.horizontalMovement,
+                        '--rotation': raindrop.rotation,
+                    }}
+                    />
+                ))}
+            </div>
+
         <div className="bingocard">
+                
             <div className = "title-container">
                 <h2 id="title"
                     style={{
@@ -82,6 +191,7 @@ function WidgetRenderComponent() {
                 ))}
             </div>
         </div>
+        </>
     );
 }
 
