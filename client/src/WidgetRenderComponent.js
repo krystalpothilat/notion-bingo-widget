@@ -155,20 +155,20 @@ function WidgetRenderComponent() {
                 ))}
             </div>
 
-        <div className="bingocard">
+        <div className="bingo-card">
                 
             <div className = "title-container">
-                <h2 id="title"
+                <h2 id="bingo-title"
                     style={{
                         color: widgetData.titleColor,
                         visibility: widgetData.titleToggle ? 'visible' : 'hidden',
                     }} > {widgetData.title}  </h2>
             </div>
-            <div className="squares">
+            <div className="bingo-squares">
                 {widgetData.squareInputs.map((input, index) => (
                     <div
                         key={index}
-                        className="square"
+                        className="bingo-square"
                         id={`square-${index}`}
                         style={{
                             backgroundColor: widgetData.backgroundColor,

@@ -2,7 +2,7 @@
 body{
     overflow: hidden;
 }
-.bingocard {
+.bingo-card {
     display: flex;
     flex-direction: column;
     min-height: 100vh; 
@@ -21,13 +21,13 @@ body{
     padding: 1rem;
 }
 
-#title {
+#bingo-title {
     text-align: center;
     margin: 0; 
     line-height: 1;
 }
 
-.squares {
+.bingo-squares {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr); 
@@ -37,7 +37,7 @@ body{
     overflow: hidden;
 }
 
-.square {
+.bingo-square {
     display: flex;
     align-items: center;
     justify-content: center;
