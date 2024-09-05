@@ -85,7 +85,7 @@ body{
  
 @keyframes fly {
     0% {
-        transform: translateY(-100%) translateX(0);
+        transform: translateY(-150%) translateX(0) rotate(var(--rotation));
         opacity: 1;
     }
 

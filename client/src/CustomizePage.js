@@ -314,6 +314,9 @@ function CustomizePage() {
 
                     <Dropdown.Menu align="end" className="dropdown-menu">
                         <Dropdown.Item className = "hello" > Hello {userName}! </Dropdown.Item>
+                        {savedWidget ? (
+                            <Dropdown.Item as={Link} to="/create">Create Widget</Dropdown.Item>
+                        ) : null}
                         <Dropdown.Item as={Link} to="/dashboard"> Saved Widgets </Dropdown.Item>
                         <Dropdown.Item as={Link} to="/home" onClick = {signOut}> Log Out</Dropdown.Item>
                     </Dropdown.Menu>
