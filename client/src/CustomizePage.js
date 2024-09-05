@@ -49,6 +49,7 @@ function CustomizePage() {
                     setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
                     setShowUrl(true);
                     setSavedWidget(true);
+                    console.log("saved widget render for customize");
                 } catch (error) {
                     console.error("Error fetching widget data:", error);
                 }
@@ -314,9 +315,9 @@ function CustomizePage() {
 
                     <Dropdown.Menu align="end" className="dropdown-menu">
                         <Dropdown.Item className = "hello" > Hello {userName}! </Dropdown.Item>
-                        {savedWidget ? (
+                        {/* {savedWidget ? (
                             <Dropdown.Item as={Link} to="/create">Create Widget</Dropdown.Item>
-                        ) : null}
+                        ) : null} */}
                         <Dropdown.Item as={Link} to="/dashboard"> Saved Widgets </Dropdown.Item>
                         <Dropdown.Item as={Link} to="/home" onClick = {signOut}> Log Out</Dropdown.Item>
                     </Dropdown.Menu>

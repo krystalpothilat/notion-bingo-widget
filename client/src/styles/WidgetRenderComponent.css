@@ -63,8 +63,8 @@ body{
 
 .raindrop {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     background-size: cover;
     animation: fly 5s linear infinite;
     transform: rotate(var(--rotation));
@@ -81,7 +81,6 @@ body{
     overflow: hidden;
 }
 
-  
  
 @keyframes fly {
     0% {

@@ -103,7 +103,7 @@ function WidgetRenderComponent() {
     
         const newRaindrops = [];
     
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 150; i++) {
             const startTime = Math.random() * 1; // Random start times between 0 and 1 seconds
             const speed = Math.random() * 3 + 1; // Speed between 1 and 4 seconds
             const leftPosition = Math.random() * 100; // Random horizontal position between 0 and 100vw
