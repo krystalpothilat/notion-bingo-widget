@@ -73,12 +73,12 @@ router.get('/:widgetId', async (req, res) => {
     }
 });
 
-router.post('/update', async (req, res) => {
+router.put('/update', async (req, res) => {
 
     try {
         console.log("reached saved widget update");
         
-        const { widgetId, backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, title, userId } = req.body;
+        const { widgetId, backgroundColor, textColor, outlineColor, titleColor, squareInputs, squareBackgrounds, titleToggle, title, userId, gridSize } = req.body;
         console.log("widget id is:", widgetId);
 
 
@@ -108,7 +108,8 @@ router.post('/update', async (req, res) => {
         existingWidget.squareInputs = squareInputs;
         existingWidget.titleToggle = titleToggle;
         existingWidget.title = title;
-
+        existingWidget.gridSize = gridSize;
+        existingWidget.squareBackgrounds = squareBackgrounds;
         await existingWidget.save();
 
         res.sendStatus(200);

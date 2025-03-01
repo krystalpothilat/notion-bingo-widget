@@ -21,6 +21,7 @@ function CustomizePage() {
     const [squareTexts, setSquareTexts] = useState(Array(9).fill(""));
     const [title, setTitle] = useState("");
     const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
+    const [squareBackgrounds, setSquareBackgrounds] = useState(Array(9).fill(false));
     const [titleToggle, setTitleToggle] = useState(true);
     // const [widgetId, setWidgetId] = useState("");
     const [url, setUrl] = useState("");
@@ -46,11 +47,13 @@ function CustomizePage() {
                     setTitleColor(data.titleColor);
                     setSquareTexts(data.squareInputs.map((input) => input.text));
                     setSquareTextEdit(data.squareInputs.map(() => true));
+                    setSquareBackgrounds(data.squareBackgrounds.map((input) => input));
                     setTitle(data.title);
                     setTitleToggle(data.titleToggle);
                     setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
                     setShowUrl(true);
                     setSavedWidget(true);
+                    setGridSize(data.gridSize);
                     console.log("saved widget render for customize");
                 } catch (error) {
                     console.error("Error fetching widget data:", error);
@@ -94,6 +97,11 @@ function CustomizePage() {
         setSquareTextEdit((prevSquareTextEdit) => {
             const newSquareTextEdit = new Array(totalSquares).fill(false);
             return newSquareTextEdit;
+        });
+
+        setSquareBackgrounds((prevSquareBackgrounds) => {
+            const newSquareBackgrounds = new Array(totalSquares).fill(false);
+            return newSquareBackgrounds;
         });
     
         console.log("Selected GridSize:", selectedSize);
@@ -215,12 +223,15 @@ function CustomizePage() {
             outlineColor,
             titleColor,
             squareInputs: squareTexts.map((text, index) => ({ index, text })),
+            squareBackgrounds,
+            gridSize,
             titleToggle,
             title,
             userId,
         };
         
-
+        
+        //Save new widget
         try {
             const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
             // const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
@@ -277,16 +288,17 @@ function CustomizePage() {
             outlineColor,
             titleColor,
             squareInputs: squareTexts.map((text, index) => ({ index, text })),
+            squareBackgrounds,
             titleToggle,
             title,
             userId,
         };
         
-
+        // Update saved widget
         try {
             const response = await fetch('http://localhost:8080/saved/update', {
             // const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/update', {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },

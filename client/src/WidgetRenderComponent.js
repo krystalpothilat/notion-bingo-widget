@@ -13,11 +13,11 @@ import confetti6 from "./imgs/confetti6.png";
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
     const [widgetData, setWidgetData] = useState(null);
-    const [backgrounds, setBackgrounds] = useState(Array(9).fill(false) );
-    const [raindrops, setRaindrops] = useState([]);
-    const [isAnimationRunning, setIsAnimationRunning] = useState(false);
-    const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
-    const [bingo, setBingo] = useState(false);
+    // const [raindrops, setRaindrops] = useState([]);
+    // const [isAnimationRunning, setIsAnimationRunning] = useState(false);
+    // const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
+    // const [bingo, setBingo] = useState(false);
+
 
     useEffect(() => {
         const fetchWidgetData = async () => {
@@ -38,97 +38,138 @@ function WidgetRenderComponent() {
         console.log('WidgetRenderComponent rendered with widgetId:', widgetId);
     }, [widgetId]);
 
-    useEffect(() => {
-        const checkBingo = () => {
-            console.log("check bingo");
-            const size = 3; // Assuming a 3x3 grid
+    const updateWidget = async () => {
+        const userId = localStorage.getItem('userId');
 
-            // Check rows
-            for (let row = 0; row < size; row++) {
-                const start = row * size;
-                const end = start + size;
-                const rowValues = Object.values(backgrounds).slice(start, end);
-                if (rowValues.every(val => val === true)) {
-                    startRainfall();
-                    setBingo(true);
-                    return;
-                }
+        try {
+            const response = await fetch('http://localhost:8080/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    widgetId: widgetId, // Widget ID to update
+                    backgroundColor: widgetData.backgroundColor,
+                    textColor: widgetData.textColor,
+                    outlineColor: widgetData.outlineColor,
+                    titleColor: widgetData.titleColor,
+                    squareInputs: widgetData.squareInputs,  // The inputs for the squares
+                    squareBackgrounds: widgetData.squareBackgrounds, // The boolean array indicating background for each square
+                    titleToggle: widgetData.titleToggle,
+                    title: widgetData.title,
+                    userId: userId, // The user ID to check ownership
+                    gridSize: widgetData.gridSize,
+                }),
+            });
+    
+            if (response.ok) {
+                console.log('Widget updated successfully');
+            } else {
+                console.error('Failed to update widget');
             }
+        } catch (error) {
+            console.error('Error updating widget:', error);
+        }
+    };
 
-            // Check columns
-            for (let col = 0; col < size; col++) {
-                const columnValues = [];
-                for (let row = 0; row < size; row++) {
-                    columnValues.push(backgrounds[row * size + col]);
-                }
-                if (columnValues.every(val => val === true)) {
-                    startRainfall();
-                    setBingo(true);
-                    return;
-                }
-            }
+    // useEffect(() => {
+    //     const checkBingo = () => {
+    //         console.log("check bingo");
+    //         const size = 3; // Assuming a 3x3 grid
 
-            // Check diagonals
-            const diagonal1 = [0, 4, 8].map(i => backgrounds[i]);
-            const diagonal2 = [2, 4, 6].map(i => backgrounds[i]);
+    //         // Check rows
+    //         for (let row = 0; row < size; row++) {
+    //             const start = row * size;
+    //             const end = start + size;
+    //             const rowValues = Object.values(backgrounds).slice(start, end);
+    //             if (rowValues.every(val => val === true)) {
+    //                 startRainfall();
+    //                 setBingo(true);
+    //                 return;
+    //             }
+    //         }
 
-            if (diagonal1.every(val => val === true) || diagonal2.every(val => val === true)) {
-                startRainfall();
-                setBingo(true);
-                return;
-            }
-        };
+    //         // Check columns
+    //         for (let col = 0; col < size; col++) {
+    //             const columnValues = [];
+    //             for (let row = 0; row < size; row++) {
+    //                 columnValues.push(backgrounds[row * size + col]);
+    //             }
+    //             if (columnValues.every(val => val === true)) {
+    //                 startRainfall();
+    //                 setBingo(true);
+    //                 return;
+    //             }
+    //         }
 
-        // Call the function to check for three in a row
-        if(!bingo) checkBingo();
-        console.log(backgrounds);
-        console.log(bingo);
-    }, [backgrounds]);
+    //         // Check diagonals
+    //         const diagonal1 = [0, 4, 8].map(i => backgrounds[i]);
+    //         const diagonal2 = [2, 4, 6].map(i => backgrounds[i]);
+
+    //         if (diagonal1.every(val => val === true) || diagonal2.every(val => val === true)) {
+    //             startRainfall();
+    //             setBingo(true);
+    //             return;
+    //         }
+    //     };
+
+    //     // Call the function to check for three in a row
+    //     if(!bingo) checkBingo();
+    //     console.log(backgrounds);
+    //     console.log(bingo);
+    // }, [backgrounds]);
     
 
     const handleBoxClick = (index) => {
-        setBackgrounds(prevBackgrounds => ({
-            ...prevBackgrounds,
-            [index]: !prevBackgrounds[index] 
+        const updatedSquareBackgrounds = [...widgetData.squareBackgrounds];  // Create a copy of the array
+        updatedSquareBackgrounds[index] = !updatedSquareBackgrounds[index]; // Toggle background
+
+            // Update the state with the new squareBackgrounds array
+        setWidgetData((prevWidgetData) => ({
+            ...prevWidgetData, // Keep the previous data
+            squareBackgrounds: updatedSquareBackgrounds, // Update only the squareBackgrounds
         }));
+
+        updateWidget();
     };
 
-    const startRainfall = () => {
-        console.log("rainfall");
-        if (isAnimationRunning) {
-            return;
-        }
     
-        setIsAnimationRunning(true);
+    // const startRainfall = () => {
+    //     console.log("rainfall");
+    //     if (isAnimationRunning) {
+    //         return;
+    //     }
     
-        const newRaindrops = [];
+    //     setIsAnimationRunning(true);
     
-        for (let i = 0; i < 150; i++) {
-            const startTime = Math.random() * 1; // Random start times between 0 and 1 seconds
-            const speed = Math.random() * 3 + 1; // Speed between 1 and 4 seconds
-            const leftPosition = Math.random() * 100; // Random horizontal position between 0 and 100vw
-            const horizontalMovement = Math.random() * 20 - 10; // Random movement between -10vw and 10vw
-            const rotation = Math.random() * 360; 
-            const image = confettiImages[Math.floor(Math.random() * confettiImages.length)]; // Random image selection
+    //     const newRaindrops = [];
+    
+    //     for (let i = 0; i < 150; i++) {
+    //         const startTime = Math.random() * 1; // Random start times between 0 and 1 seconds
+    //         const speed = Math.random() * 3 + 1; // Speed between 1 and 4 seconds
+    //         const leftPosition = Math.random() * 100; // Random horizontal position between 0 and 100vw
+    //         const horizontalMovement = Math.random() * 20 - 10; // Random movement between -10vw and 10vw
+    //         const rotation = Math.random() * 360; 
+    //         const image = confettiImages[Math.floor(Math.random() * confettiImages.length)]; // Random image selection
 
-            newRaindrops.push({
-                id: i,
-                left: `${leftPosition}vw`,
-                startTime: `${startTime}s`,
-                speed: `${speed}s`,
-                horizontalMovement: `${horizontalMovement}vw`,
-                rotation: `${rotation}deg`,
-                image,
-            });
-        }
+    //         newRaindrops.push({
+    //             id: i,
+    //             left: `${leftPosition}vw`,
+    //             startTime: `${startTime}s`,
+    //             speed: `${speed}s`,
+    //             horizontalMovement: `${horizontalMovement}vw`,
+    //             rotation: `${rotation}deg`,
+    //             image,
+    //         });
+    //     }
     
-        setRaindrops(newRaindrops);
+    //     setRaindrops(newRaindrops);
     
-        setTimeout(() => {
-            setIsAnimationRunning(false);
-            setRaindrops([]);
-        }, 5000);
-    };
+    //     setTimeout(() => {
+    //         setIsAnimationRunning(false);
+    //         setRaindrops([]);
+    //     }, 5000);
+    // };
     
 
     if (!widgetData) {
@@ -137,7 +178,7 @@ function WidgetRenderComponent() {
 
     return (
         <>
-            <div className="raindrops-container">
+            {/* <div className="raindrops-container">
                 {raindrops.length > 0 &&
                 raindrops.map((raindrop) => (
                     <div
@@ -153,7 +194,7 @@ function WidgetRenderComponent() {
                     }}
                     />
                 ))}
-            </div>
+            </div> */}
 
         <div className="bingo-card">
                 
@@ -177,7 +218,7 @@ function WidgetRenderComponent() {
                         }}
                         onClick={() => handleBoxClick(index)}
                     >
-                        {backgrounds[index] && (
+                        {widgetData.squareBackgrounds[index] && (
                             <img
                                 src={star}
                                 alt={`Background for square ${index}`}

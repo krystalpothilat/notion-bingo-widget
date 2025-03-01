@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const arrayLengthValidator = (val) => val.length === 9;
+const arrayLengthValidator = (val) => [9, 16, 25].includes(val.length);
+
 
 const widgetSchema = new mongoose.Schema({
   backgroundColor: {
@@ -33,7 +34,7 @@ const widgetSchema = new mongoose.Schema({
     ],
     validate: {
       validator: arrayLengthValidator,
-      message: '{PATH} must have exactly 9 elements',
+      message: '{PATH} must have exactly 9, 16, or 25 elements',
     },
     required: true,
   },
@@ -43,7 +44,20 @@ const widgetSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    // required: true,
+  },
+  gridSize: {
+    type: Number,
+    required: true, 
+  },
+  squareBackgrounds: { 
+    type: [Boolean],
+    required: true,
+    validate: {
+      validator: function(val) {
+        return val.length === this.gridSize * this.gridSize; 
+      },
+      message: 'The square state array must have the same number of elements as gridSize * gridSize',
+    },
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
