@@ -14,6 +14,7 @@ function WidgetRenderComponent() {
 
     const importAll = (r) => r.keys().map(r);
     const confettiImages = importAll(require.context('./imgs/confetti', false, /\.(png|jpe?g|svg)$/));
+    const [confettiSize, setConfettiSize] = useState(0);
 
     useEffect(() => {
         if (!widgetId) {
@@ -185,7 +186,7 @@ function WidgetRenderComponent() {
         }
         
         setIsAnimationRunning(true);
-    
+
         const newRaindrops = [];
     
         for (let i = 0; i < 150; i++) {
@@ -204,6 +205,7 @@ function WidgetRenderComponent() {
                 horizontalMovement: `${horizontalMovement}vw`,
                 rotation: `${rotation}deg`,
                 image,
+                size: confettiSize,
             });
         }
     
@@ -222,6 +224,24 @@ function WidgetRenderComponent() {
             updateWidget();  // Update widget whenever widgetData changes
         }
     }, [widgetData]);
+
+
+    //set confetti size based on window size
+    useEffect(() => {
+        const handleResize = () => {
+            setConfettiSize(Math.min(window.innerWidth, window.innerHeight) * 0.05); 
+        };
+
+        handleResize();
+
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
 
     if (!widgetData) {
         return <div>Loading...</div>;
@@ -242,6 +262,8 @@ function WidgetRenderComponent() {
                             animation: `fly ${raindrop.speed} ease-out ${raindrop.startTime}`,
                             '--horizontalMovement': raindrop.horizontalMovement,
                             '--rotation': raindrop.rotation,
+                            width: `${raindrop.size}px`,  
+                            height: `${raindrop.size}px`,
                         }}
                     />
                 ))}

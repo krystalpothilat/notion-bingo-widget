@@ -89,7 +89,7 @@ body{
 
     100% {
         transform: translateY(150vh) translateX(calc(var(--horizontalMovement)));
-        opacity: 1;
+        opacity: 0;
     }
 }
   
