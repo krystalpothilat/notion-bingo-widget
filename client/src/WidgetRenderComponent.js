@@ -3,13 +3,6 @@ import { useParams } from 'react-router-dom';
 import "./styles/WidgetRenderComponent.css";
 import BingoCard from './BingoCard';
 
-import confetti1 from "./imgs/confetti1.png";
-import confetti2 from "./imgs/confetti2.png";
-import confetti3 from "./imgs/confetti3.png";
-import confetti4 from "./imgs/confetti4.png";
-import confetti5 from "./imgs/confetti5.png";
-import confetti6 from "./imgs/confetti6.png";
-
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
     const [widgetData, setWidgetData] = useState(null);
@@ -17,9 +10,10 @@ function WidgetRenderComponent() {
 
     const [raindrops, setRaindrops] = useState([]);
     const [isAnimationRunning, setIsAnimationRunning] = useState(false);
-    const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
     const [bingo, setBingo] = useState(false);
 
+    const importAll = (r) => r.keys().map(r);
+    const confettiImages = importAll(require.context('./imgs/confetti', false, /\.(png|jpe?g|svg)$/));
 
     useEffect(() => {
         if (!widgetId) {
@@ -218,6 +212,7 @@ function WidgetRenderComponent() {
         setTimeout(() => {
             setIsAnimationRunning(false);
             setRaindrops([]);
+            console.log("done");
         }, 5000);
     };
     
@@ -233,6 +228,25 @@ function WidgetRenderComponent() {
     }
 
     return (
+        <>
+        <div className="raindrops-container">
+            {raindrops.length > 0 &&
+                raindrops.map((raindrop) => (
+                    <div
+                        key={raindrop.id}
+                        className="raindrop"
+                        style={{
+                            left: raindrop.left,
+                            top: "-30px",
+                            backgroundImage: `url(${raindrop.image})`,
+                            animation: `fly ${raindrop.speed} ease-out ${raindrop.startTime}`,
+                            '--horizontalMovement': raindrop.horizontalMovement,
+                            '--rotation': raindrop.rotation,
+                        }}
+                    />
+                ))}
+        </div>
+
         <div className="widget-container">
             <BingoCard
                 backgroundColor={widgetData.backgroundColor}
@@ -243,11 +257,12 @@ function WidgetRenderComponent() {
                 title={widgetData.title}
                 squares={widgetData.squareInputs} 
                 squareBackgrounds={widgetData.squareBackgrounds}
-                gridSize={widgetData.gridSize}     // Grid size (e.g., 3x3, 4x4)
-                onBoxClick={handleBoxClick}        // Function to handle box clicks
+                gridSize={widgetData.gridSize}     
+                onBoxClick={handleBoxClick}       
                 isEditable={false}
             />
         </div>
+        </>
     );
 
     
