@@ -22,8 +22,8 @@ function WidgetRenderComponent() {
     useEffect(() => {
         const fetchWidgetData = async () => {
             try {
-
-                const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
+                const response = await fetch(`http://localhost:8080/${widgetId}`);
+                // const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
                 const data = await response.json();
 
                 setWidgetData(data);

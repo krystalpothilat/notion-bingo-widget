@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
-const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
+const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, gridSize, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
     const handleTitleChange = (newTitle) => {
         onTitleChange(newTitle);
     };
@@ -31,6 +31,7 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
                 titleToggle = {titleToggle}
                 title = {title}
                 squares = {squares}
+                gridSize = {gridSize}
                 onTitleChange={handleTitleChange}
                 onAnySquareTextChange={handleAnySquareTextChange}
                 onAnySquareTextEdit={handleAnySquareTextEdit}

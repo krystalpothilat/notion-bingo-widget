@@ -24,7 +24,8 @@ function AccountPage() {
 
     const registerUser = async () => {
         try {
-                const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/register', {
+                const response = await fetch('http://localhost:8080/user/register', {
+                // const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +53,8 @@ function AccountPage() {
 
     const signIn = async () => {
         try {
-                const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/signIn', {
+                const response = await fetch('http://localhost:8080/user/signIn', {
+                // const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/signIn', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

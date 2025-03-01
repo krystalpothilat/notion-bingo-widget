@@ -8,7 +8,8 @@ const GoogleLogIn = ({text}) => {
             const { credential } = credentialResponse;
 
             // send JWT to server
-            const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/googleSignIn', {
+            const response = await fetch('http://localhost:8080/user/googleSignIn', {
+            // const response = await fetch('https://notion-bingo-widget-server.vercel.app/user/googleSignIn', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

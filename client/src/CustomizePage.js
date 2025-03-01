@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import WidgetPreview from "./WidgetPreview.js";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { googleLogout } from '@react-oauth/google';
-
+import Form from 'react-bootstrap/Form';
 
 import copyimg from "./imgs/copy.png";
 import userimg from "./imgs/userimg.png";
@@ -13,6 +13,7 @@ import userimg from "./imgs/userimg.png";
 function CustomizePage() {
     const { widgetId } = useParams(); // Get the widgetId from the URL
     // const [widgetData, setWidgetData] = useState(null);
+    const [gridSize, setGridSize] = useState(3);
     const [backgroundColor, setBackgroundColor] = useState("#ffffff");
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
@@ -31,7 +32,8 @@ function CustomizePage() {
         if (widgetId) {
             const fetchWidget = async () => {
                 try {
-                    const response = await fetch(`https://notion-bingo-widget-server.vercel.app/saved/${widgetId}`);
+                    const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
+                    // const response = await fetch(`https://notion-bingo-widget-server.vercel.app/saved/${widgetId}`);
                     const data = await response.json();
                     if (!response.ok) {
                         throw new Error('Trouble fetching saved widget data');
@@ -78,6 +80,23 @@ function CustomizePage() {
     const handleTitleColorChange = (color) => {
         setHexTitleColor(color.target.value);
         setTitleColor(color.target.value);
+    };
+
+    const handleGridSizeChange = (event) => {
+        const selectedSize = Number(event.target.value);
+        setGridSize(selectedSize);
+        const totalSquares = selectedSize * selectedSize;
+        
+        setSquareTexts((prevSquareTexts) => {
+            const newSquareTexts = new Array(totalSquares).fill("");
+            return newSquareTexts;
+        });
+        setSquareTextEdit((prevSquareTextEdit) => {
+            const newSquareTextEdit = new Array(totalSquares).fill(false);
+            return newSquareTextEdit;
+        });
+    
+        console.log("Selected GridSize:", selectedSize);
     };
 
     const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
@@ -203,7 +222,8 @@ function CustomizePage() {
         
 
         try {
-            const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
+            const response = await fetch('http://localhost:8080/WidgetCustomization/save', {
+            // const response = await fetch('https://notion-bingo-widget-server.vercel.app/WidgetCustomization/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -264,7 +284,8 @@ function CustomizePage() {
         
 
         try {
-            const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/update', {
+            const response = await fetch('http://localhost:8080/saved/update', {
+            // const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/update', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -333,13 +354,52 @@ function CustomizePage() {
                     titleToggle = {titleToggle}
                     title = {title}
                     squares = {squareTexts}
+                    gridSize = {gridSize}
                     onTitleChange={handleTitleChange}
                     onAnySquareTextChange={handleAnySquareTextChange}
                     onAnySquareTextEdit={handleAnySquareEdit}/>
 
             <div className = "widget-customization-container">
                 <h2> Customize Widget </h2>
+                
+                <div className= "input">
+                    <label htmlFor="gridSize" className = "inputlabel">Grid Size</label>
+                    <Form>
+                        <div key="inline-radio" className="mb-3">
+                            <Form.Check
+                            inline
+                            label="3x3"
+                            name="gridSize"
+                            type="radio"
+                            id="inline-radio-1"
+                            value = {3}
+                            checked={gridSize === 3}
+                            onChange={handleGridSizeChange}
+                            />
+                            <Form.Check
+                            inline
+                            label="4x4"
+                            name="gridSize"
+                            type="radio"
+                            id="inline-radio-2"
+                            value={4}
+                            checked={gridSize === 4}
+                            onChange={handleGridSizeChange}
+                            />
+                            <Form.Check
+                            inline
+                            label="5x5"
+                            name="gridSize"
+                            type="radio"
+                            id="inline-radio-3"
+                            value={5}
+                            checked={gridSize === 5}
+                            onChange={handleGridSizeChange}
+                            />
+                        </div>
+                    </Form>
 
+                </div>
                 <div className = "input">
                     <label htmlFor="backgroundColor" className = "inputlabel">Background Color:</label>
                     <div className = "input-container">

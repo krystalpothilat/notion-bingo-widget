@@ -3,11 +3,12 @@ import BingoSquare from "./BingoSquare";
 import "./styles/BingoCard.css";
 
 
-const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
+const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, gridSize, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(title || 'Click to edit');
 
-    const squaresArray = squares ? squares : Array(9).fill('');
+    const totalSquares = gridSize * gridSize;
+    const squaresArray = squares ? squares : Array(totalSquares).fill('');
 
     useEffect(() => {
         setText(title || 'Click to edit');
@@ -37,6 +38,9 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
       onAnySquareTextEdit(index, newSquareText);
     };
 
+    const gridTemplateColumns = `repeat(${gridSize}, 1fr)`; //dynamically set grid columns to match grid size
+
+
     // useEffect(() => {
     //     console.log('BingoCard Props:', { backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares });
     //   }, [backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares]);
@@ -61,7 +65,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
           )}
         </h2>
         
-        <div className = "squares" style={{border: `1px solid ${outlineColor}`}}>
+        <div className = "squares" style={{border: `1px solid ${outlineColor}`, gridTemplateColumns}}>
             {squaresArray.map((square, index) => (
     <BingoSquare
         key={index}

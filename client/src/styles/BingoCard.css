@@ -1,7 +1,13 @@
 
 .bingocard{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; 
 }
+
 #title{
     outline: none;
     height: 30px;
@@ -25,8 +31,8 @@
 
 .squares{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    /* grid-template-columns: repeat(3, 1fr);  */
     grid-gap: 0px; 
-    width: 446px;
+    width: 100%;
     position: relative;
 }
