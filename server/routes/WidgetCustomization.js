@@ -17,7 +17,7 @@ router.post('/save', cors(), async (req, res) => {
   try {
     console.log("reached save");
     // extract widget customization data from request body
-    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, squareBackgrounds, gridSize, title, userId} = req.body;
+    const {backgroundColor, textColor, outlineColor, titleColor, squareInputs, titleToggle, squareBackgrounds, gridSize, title, userId, bingoToggle,} = req.body;
     console.log("user id is :" , userId);
 
     // Validate if userId is a valid ObjectId
@@ -46,6 +46,7 @@ router.post('/save', cors(), async (req, res) => {
       title,
       gridSize,
       userId: objectId, 
+      bingoToggle,
     });
     
     console.log("created new widget");

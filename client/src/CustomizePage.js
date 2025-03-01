@@ -14,13 +14,13 @@ function CustomizePage() {
     const { widgetId } = useParams(); // Get the widgetId from the URL
     // const [widgetData, setWidgetData] = useState(null);
     const [gridSize, setGridSize] = useState(3);
+    const [bingoToggle, setBingoToggle] = useState("1line");
     const [backgroundColor, setBackgroundColor] = useState("#ffffff");
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
     const [titleColor, setTitleColor] = useState("#000000");
     const [squareTexts, setSquareTexts] = useState(Array(9).fill("Click to Edit"));
     const [title, setTitle] = useState("");
-    const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
     const [squareBackgrounds, setSquareBackgrounds] = useState(Array(9).fill(false));
     const [titleToggle, setTitleToggle] = useState(true);
     // const [widgetId, setWidgetId] = useState("");
@@ -46,7 +46,6 @@ function CustomizePage() {
                     setOutlineColor(data.outlineColor);
                     setTitleColor(data.titleColor);
                     setSquareTexts(data.squareInputs);
-                    setSquareTextEdit(data.squareInputs);
                     setSquareBackgrounds(data.squareBackgrounds);
                     setTitle(data.title);
                     setTitleToggle(data.titleToggle);
@@ -54,6 +53,7 @@ function CustomizePage() {
                     setShowUrl(true);
                     setSavedWidget(true);
                     setGridSize(data.gridSize);
+                    setBingoToggle(data.bingoToggle);
                     console.log("saved widget render for customize");
                 } catch (error) {
                     console.error("Error fetching widget data:", error);
@@ -103,6 +103,10 @@ function CustomizePage() {
         // console.log("Selected GridSize:", selectedSize);
         // console.log("squareBackgrounds size:", squareBackgrounds.length);
     };
+
+    const handleBingoToggleChange = (event) => {
+        setBingoToggle(event.target.value);
+    }
 
     const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
     const [hexTextColor, setHexTextColor] = useState('#000000');
@@ -216,6 +220,7 @@ function CustomizePage() {
             squareInputs: squareTexts,
             squareBackgrounds,
             gridSize,
+            bingoToggle,
             titleToggle,
             title,
             userId,
@@ -279,6 +284,8 @@ function CustomizePage() {
             titleColor,
             squareInputs: squareTexts,
             squareBackgrounds,
+            gridSize,
+            bingoToggle,
             titleToggle,
             title,
             userId,
@@ -365,7 +372,7 @@ function CustomizePage() {
                             label="3x3"
                             name="gridSize"
                             type="radio"
-                            id="inline-radio-1"
+                            id="grid-radio-1"
                             value = {3}
                             checked={gridSize === 3}
                             onChange={handleGridSizeChange}
@@ -375,7 +382,7 @@ function CustomizePage() {
                             label="4x4"
                             name="gridSize"
                             type="radio"
-                            id="inline-radio-2"
+                            id="grid-radio-2"
                             value={4}
                             checked={gridSize === 4}
                             onChange={handleGridSizeChange}
@@ -385,7 +392,7 @@ function CustomizePage() {
                             label="5x5"
                             name="gridSize"
                             type="radio"
-                            id="inline-radio-3"
+                            id="grid-radio-3"
                             value={5}
                             checked={gridSize === 5}
                             onChange={handleGridSizeChange}
@@ -394,6 +401,46 @@ function CustomizePage() {
                     </Form>
 
                 </div>
+
+                <div className= "input">
+                    <label htmlFor="bingoToggle" className = "inputlabel">Bingo Toggle:</label>
+                    <Form>
+                        <div key="inline-radio" className="mb-3">
+                            <Form.Check
+                            inline
+                            label="1 Line"
+                            name="bingoToggle"
+                            type="radio"
+                            id="bingo-radio-1"
+                            value="1line"
+                            checked={bingoToggle === "1line"}
+                            onChange={handleBingoToggleChange}
+                            />
+                            <Form.Check
+                            inline
+                            label="Blackout"
+                            name="bingoToggle"
+                            type="radio"
+                            id="bingo-radio-2"
+                            value="blackout"
+                            checked={bingoToggle === "blackout"}
+                            onChange={handleBingoToggleChange}
+                            />
+                            <Form.Check
+                            inline
+                            label="None"
+                            name="bingoToggle"
+                            type="radio"
+                            id="bingo-radio-3" 
+                            value="none"
+                            checked={bingoToggle === "none"}
+                            onChange={handleBingoToggleChange}
+                            />
+                        </div>
+                    </Form>
+
+                </div>
+
                 <div className = "input">
                     <label htmlFor="backgroundColor" className = "inputlabel">Background Color:</label>
                     <div className = "input-container">

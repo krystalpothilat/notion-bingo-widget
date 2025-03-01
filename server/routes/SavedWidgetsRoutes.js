@@ -67,7 +67,8 @@ router.get('/:widgetId', async (req, res) => {
       if (!widget) {
         return res.status(404).json({ error: 'Widget not found' });
       }
-      console.log("squareInputs in response:", widget.squareInputs);
+      console.log("squareBackgrounds in response:", widget.squareBackgrounds);
+      
       res.send(widget);
       
     } catch (error) {
@@ -81,7 +82,7 @@ router.put('/update', async (req, res) => {
     try {
         console.log("reached saved widget update");
         
-        const { widgetId, backgroundColor, textColor, outlineColor, titleColor, squareInputs, squareBackgrounds, titleToggle, title, userId, gridSize } = req.body;
+        const { widgetId, backgroundColor, textColor, outlineColor, titleColor, squareInputs, squareBackgrounds, titleToggle, title, userId, gridSize, bingoToggle} = req.body;
         console.log("widget id is:", widgetId);
 
 
@@ -113,6 +114,7 @@ router.put('/update', async (req, res) => {
         existingWidget.title = title;
         existingWidget.gridSize = gridSize;
         existingWidget.squareBackgrounds = squareBackgrounds;
+        existingWidget.bingoToggle = bingoToggle;
         await existingWidget.save();
 
         res.sendStatus(200);

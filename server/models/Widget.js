@@ -38,6 +38,11 @@ const widgetSchema = new mongoose.Schema({
     type: Number,
     required: true, 
   },
+  bingoToggle: {
+    type: String,
+    enum: ['1line', 'blackout', 'none'],
+    required: true,
+  },
   squareBackgrounds: { 
     type: [Boolean],
     required: true,
