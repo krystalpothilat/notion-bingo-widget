@@ -257,7 +257,7 @@ function WidgetRenderComponent() {
                         className="raindrop"
                         style={{
                             left: raindrop.left,
-                            top: "-30px",
+                            top: "-100px",
                             backgroundImage: `url(${raindrop.image})`,
                             animation: `fly ${raindrop.speed} ease-out ${raindrop.startTime}`,
                             '--horizontalMovement': raindrop.horizontalMovement,

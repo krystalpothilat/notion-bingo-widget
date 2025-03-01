@@ -83,12 +83,12 @@ body{
  
 @keyframes fly {
     0% {
-        transform: translateY(-150%) translateX(0) rotate(var(--rotation));
+        transform: translateY(-200%) translateX(0) rotate(var(--rotation));
         opacity: 1;
     }
 
     100% {
-        transform: translateY(150vh) translateX(calc(var(--horizontalMovement)));
+        transform: translateY(200vh) translateX(calc(var(--horizontalMovement)));
         opacity: 0;
     }
 }
