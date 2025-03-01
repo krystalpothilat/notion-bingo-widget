@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 require('dotenv').config();
 
+app.use(express.static('public'));
 
 // Remove COOP and CORP headers
 app.use((req, res, next) => {

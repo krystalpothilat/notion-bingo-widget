@@ -47,7 +47,7 @@ function CustomizePage() {
                     setTitleColor(data.titleColor);
                     setSquareTexts(data.squareInputs.map((input) => input.text));
                     setSquareTextEdit(data.squareInputs.map(() => true));
-                    setSquareBackgrounds(data.squareBackgrounds.map((input) => input));
+                    setSquareBackgrounds(data.squareBackgrounds);
                     setTitle(data.title);
                     setTitleToggle(data.titleToggle);
                     setUrl(`https://notion-bingo-widget.vercel.app/${widgetId}`);
@@ -105,6 +105,7 @@ function CustomizePage() {
         });
     
         console.log("Selected GridSize:", selectedSize);
+        console.log("squareBackgrounds size:", squareBackgrounds.length);
     };
 
     const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
@@ -170,6 +171,7 @@ function CustomizePage() {
             return newSquareTexts;
         });
         console.log(squareTexts);
+        console.log(squareBackgrounds);
     };
 
     const handleAnySquareEdit = (index, newSquareText) => {

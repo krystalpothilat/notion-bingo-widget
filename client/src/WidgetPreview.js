@@ -35,6 +35,7 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
                 onTitleChange={handleTitleChange}
                 onAnySquareTextChange={handleAnySquareTextChange}
                 onAnySquareTextEdit={handleAnySquareTextEdit}
+                isEditable = {true}
                 />
         </div>
 

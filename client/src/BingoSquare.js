@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./styles/BingoSquare.css";
+import star from "./imgs/star.png";
 
-const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, onSquareTextChange}) => {
+const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, squareBackground, onSquareTextChange, onBoxClick, isEditable}) => {
 
     const [text, setText] = useState(initialText || 'Click to edit');
     const squareRef = useRef(null);
@@ -28,15 +29,22 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, on
     };
 
     const handleBoxClick = () => {
-        editableDivRef.current.setAttribute("contenteditable", "true");
-        editableDivRef.current.focus();
+        if(isEditable){
+            editableDivRef.current.setAttribute("contenteditable", "true");
+            editableDivRef.current.focus();
+        } else {
+            onBoxClick(); // Notify parent to toggle background
+        }
     };
 
     const handleInputChange = (e) => {
-        setText(e.target.textContent);
-        onSquareTextChange(e.target.textContent); // callback to parent
-        adjustFontSize(); // Adjust font size on every input change
-        setCaretToEnd(); // Ensure the cursor stays at the end
+        if(isEditable){
+            setText(e.target.textContent);
+            onSquareTextChange(e.target.textContent); // callback to parent
+            adjustFontSize(); // Adjust font size on every input change
+            setCaretToEnd(); // Ensure the cursor stays at the end 
+        }
+        
     };
 
     // Function to move cursor to the end of the contenteditable div
@@ -58,17 +66,26 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, on
         }
     };
 
+    const squareStyle = {
+        background: backgroundColor, 
+        color: textColor,
+        border: `1px solid ${outlineColor}`,
+      };
+
+      
     useEffect(() => {
         adjustFontSize(); 
+        // console.log(squareBackground);
     }, [text]);
 
     return (
     <div
         className="square"
-        style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}` }}
+        style={squareStyle}
         ref={squareRef}
         onClick={handleBoxClick}
-    >
+    >   
+    {/* {squareBackground && <img src={star} alt="Square background" className="square-image" />} */}
         <div
             ref={editableDivRef}
             contentEditable="false" // Initially set to false to prevent accidental editing
@@ -78,6 +95,7 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, on
         >
             {text}
         </div>
+        {squareBackground && <img src={star} alt="Square background" className="square-image" />}
     </div>
     );
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./styles/WidgetRenderComponent.css";
-import star from "./imgs/star.png";
+import BingoCard from './BingoCard';
 
-import confetti1 from "./imgs/confetti1.png";
-import confetti2 from "./imgs/confetti2.png";
-import confetti3 from "./imgs/confetti3.png";
-import confetti4 from "./imgs/confetti4.png";
-import confetti5 from "./imgs/confetti5.png";
-import confetti6 from "./imgs/confetti6.png";
+// import confetti1 from "./imgs/confetti1.png";
+// import confetti2 from "./imgs/confetti2.png";
+// import confetti3 from "./imgs/confetti3.png";
+// import confetti4 from "./imgs/confetti4.png";
+// import confetti5 from "./imgs/confetti5.png";
+// import confetti6 from "./imgs/confetti6.png";
 
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
@@ -20,10 +20,18 @@ function WidgetRenderComponent() {
 
 
     useEffect(() => {
+        if (!widgetId) {
+            console.error("Widget ID is missing!");
+            return;
+        }
+        console.log("widgetId:", widgetId);
         const fetchWidgetData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/${widgetId}`);
+                const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
                 // const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
+                if (!response.ok) {
+                    throw new Error('Trouble fetching saved widget data');
+                } 
                 const data = await response.json();
 
                 setWidgetData(data);
@@ -42,7 +50,7 @@ function WidgetRenderComponent() {
         const userId = localStorage.getItem('userId');
 
         try {
-            const response = await fetch('http://localhost:8080/update', {
+            const response = await fetch('http://localhost:8080/saved/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -177,61 +185,24 @@ function WidgetRenderComponent() {
     }
 
     return (
-        <>
-            {/* <div className="raindrops-container">
-                {raindrops.length > 0 &&
-                raindrops.map((raindrop) => (
-                    <div
-                    key={raindrop.id}
-                    className="raindrop"
-                    style={{
-                        left: raindrop.left,
-                        top: "-30px",
-                        backgroundImage: `url(${raindrop.image})`,
-                        animation: `fly ${raindrop.speed} ease-out ${raindrop.startTime}`,
-                        '--horizontalMovement': raindrop.horizontalMovement,
-                        '--rotation': raindrop.rotation,
-                    }}
-                    />
-                ))}
-            </div> */}
-
-        <div className="bingo-card">
-                
-            <div className = "title-container">
-                <h2 id="bingo-title"
-                    style={{
-                        color: widgetData.titleColor,
-                        visibility: widgetData.titleToggle ? 'visible' : 'hidden',
-                    }} > {widgetData.title}  </h2>
-            </div>
-            <div className="bingo-squares">
-                {widgetData.squareInputs.map((input, index) => (
-                    <div
-                        key={index}
-                        className="bingo-square"
-                        id={`square-${index}`}
-                        style={{
-                            backgroundColor: widgetData.backgroundColor,
-                            color: widgetData.textColor,
-                            border: `1px solid ${widgetData.outlineColor}`,
-                        }}
-                        onClick={() => handleBoxClick(index)}
-                    >
-                        {widgetData.squareBackgrounds[index] && (
-                            <img
-                                src={star}
-                                alt={`Background for square ${index}`}
-                                className="square-image"
-                            />
-                        )}
-                        <div className="text">{input.text}</div>
-                    </div>
-                ))}
-            </div>
+        <div className="widget-container">
+            <BingoCard
+                backgroundColor={widgetData.backgroundColor}
+                textColor={widgetData.textColor}
+                outlineColor={widgetData.outlineColor}
+                titleColor={widgetData.titleColor}
+                titleToggle={widgetData.titleToggle}
+                title={widgetData.title}
+                squares={widgetData.squareInputs} 
+                squareBackgrounds={widgetData.squareBackgrounds}
+                gridSize={widgetData.gridSize}     // Grid size (e.g., 3x3, 4x4)
+                onBoxClick={handleBoxClick}        // Function to handle box clicks
+                isEditable={false}
+            />
         </div>
-        </>
     );
+
+    
 }
 
 export default WidgetRenderComponent;

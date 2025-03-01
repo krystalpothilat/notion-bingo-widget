@@ -20,18 +20,7 @@ const widgetSchema = new mongoose.Schema({
     required: true,
   },
   squareInputs: {
-    type: [
-      {
-        index: {
-          type: Number,
-          required: true,
-        },
-        text: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    type: [String],
     validate: {
       validator: arrayLengthValidator,
       message: '{PATH} must have exactly 9, 16, or 25 elements',
@@ -54,6 +43,8 @@ const widgetSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function(val) {
+        console.log('gridSize:', this.gridSize);
+        console.log('squareBackgrounds length:', val.length);
         return val.length === this.gridSize * this.gridSize; 
       },
       message: 'The square state array must have the same number of elements as gridSize * gridSize',
