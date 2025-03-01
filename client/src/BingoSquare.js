@@ -3,73 +3,82 @@ import "./styles/BingoSquare.css";
 
 const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, onSquareTextChange}) => {
 
-    const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(initialText || 'Click to edit');
-    const textarea = useRef(null);
+    const squareRef = useRef(null);
+    const editableDivRef = useRef(null);
 
     useEffect(() => {
         setText(initialText || 'Click to edit');
     }, [initialText]);
 
-    
-    useEffect(() => {
-      if(isEditing && textarea.current){
-        const length = textarea.current.value.length;
-        textarea.current.selectionStart = length;
-        textarea.current.selectionEnd = length;
-        textarea.current.style.fontSize = '15px';
-        
-      }
-    })
+    // Dynamically adjust font size based on content width
+    const adjustFontSize = () => {
+        if (squareRef.current && editableDivRef.current) {
+            const squareWidth = squareRef.current.offsetWidth;
+            const textLength = editableDivRef.current.textContent.length;
+            let fontSize = 15; // Initial font size
+
+            // Shrink the font size depending on text length and square width
+            if (textLength > 20) {
+                fontSize = Math.max(15 - (textLength / squareWidth) * 10, 10); // Shrink until font size 10
+            }
+
+            editableDivRef.current.style.fontSize = `${fontSize}px`; // Apply dynamic font size
+        }
+    };
 
     const handleBoxClick = () => {
-        setIsEditing(true);
+        editableDivRef.current.setAttribute("contenteditable", "true");
+        editableDivRef.current.focus();
     };
 
     const handleInputChange = (e) => {
-        setText(e.target.value);
-        onSquareTextChange(e.target.value); //callback
+        setText(e.target.textContent);
+        onSquareTextChange(e.target.textContent); // callback to parent
+        adjustFontSize(); // Adjust font size on every input change
+        setCaretToEnd(); // Ensure the cursor stays at the end
     };
 
-    const handleKeyPress = (e) => {
+    // Function to move cursor to the end of the contenteditable div
+    const setCaretToEnd = () => {
+        const div = editableDivRef.current;
+        const range = document.createRange();
+        const selection = window.getSelection();
+
+        range.selectNodeContents(div); // Select all text inside the div
+        range.collapse(false); // Collapse the range to the end (set the cursor at the end)
+        selection.removeAllRanges(); // Remove any existing selections
+        selection.addRange(range); // Add the new selection
+        div.focus(); // Ensure the div remains focused
+    };
+
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-        setIsEditing(false);
+            e.preventDefault(); // prevent Enter key from creating a new line
         }
     };
-    
-    // useEffect(() => {
-    //     console.log('BingoSquare Props:', { backgroundColor, textColor, outlineColor, initialText });
-    //   }, [backgroundColor, textColor, outlineColor, initialText]);
+
+    useEffect(() => {
+        adjustFontSize(); 
+    }, [text]);
 
     return (
-      <div className="square" style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}`}} onClick={handleBoxClick}>
-      {isEditing ? (
-        <textarea
-         ref={textarea}
-          type="text"
-          value={text}
-          onChange={handleInputChange}
-          onBlur={() => setIsEditing(false)}
-          onKeyPress={handleKeyPress}
-          autoFocus
-          maxLength={50}
-          style={{
-            color: textColor, 
-            backgroundColor: backgroundColor,
-            lineHeight: 'inherit',
-            textAlign: 'center',
-            fontFamily: 'Poppins, sans-serif',
-            boxSizing: 'border-box',
-            resize: 'none',
-          }}
-        />
-      ) : (
-        <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
-          {text}
+    <div
+        className="square"
+        style={{ backgroundColor, color: textColor, border: `1px solid ${outlineColor}` }}
+        ref={squareRef}
+        onClick={handleBoxClick}
+    >
+        <div
+            ref={editableDivRef}
+            contentEditable="false" // Initially set to false to prevent accidental editing
+            onInput={handleInputChange}
+            onKeyDown={handleKeyDown}
+            suppressContentEditableWarning={true} // Suppress React warning for contenteditable
+        >
+            {text}
         </div>
-      )}
-      </div>
-
+    </div>
     );
 
 }

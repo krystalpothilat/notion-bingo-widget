@@ -86,7 +86,7 @@ function CustomizePage() {
         const selectedSize = Number(event.target.value);
         setGridSize(selectedSize);
         const totalSquares = selectedSize * selectedSize;
-        
+
         setSquareTexts((prevSquareTexts) => {
             const newSquareTexts = new Array(totalSquares).fill("");
             return newSquareTexts;
@@ -363,7 +363,7 @@ function CustomizePage() {
                 <h2> Customize Widget </h2>
                 
                 <div className= "input">
-                    <label htmlFor="gridSize" className = "inputlabel">Grid Size</label>
+                    <label htmlFor="gridSize" className = "inputlabel">Grid Size:</label>
                     <Form>
                         <div key="inline-radio" className="mb-3">
                             <Form.Check
