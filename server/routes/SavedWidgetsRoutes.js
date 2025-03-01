@@ -63,14 +63,13 @@ router.get('/:widgetId', async (req, res) => {
         console.log("getting prev widget");
       // Fetch widget configuration from MongoDB based on widget ID
       const widget = await Widget.findById(req.params.widgetId);
-      console.log(widget);
     
       if (!widget) {
         return res.status(404).json({ error: 'Widget not found' });
       }
-  
+      console.log("squareInputs in response:", widget.squareInputs);
       res.send(widget);
-  
+      
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });

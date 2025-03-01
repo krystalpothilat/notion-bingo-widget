@@ -44,7 +44,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
 
 
     return (
-      <div className = "bingocard">
+        <div className={`bingocard ${isEditable ? "" : "render-mode"}`}>
         <h2  id = "title" style = {{color: titleColor, visibility: titleToggle ? 'visible' : 'hidden',}} onClick={handleTitleClick}>
             {isEditing ? (
                 <input
@@ -60,7 +60,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
           )}
         </h2>
         
-        <div className = "squares" style={{border: `1px solid ${outlineColor}`, gridTemplateColumns}}>
+        <div className={`squares ${isEditable ? "" : "grid-full-screen"}`} style={{border: `1px solid ${outlineColor}`, gridTemplateColumns}}>
             {squaresArray.map((square, index) => (
             <BingoSquare
                 key={index}
@@ -70,7 +70,7 @@ const BingoCard = ({backgroundColor, textColor, outlineColor, titleColor, titleT
                 initialText={square || ''} // Ensure initialText is always a string
                 onSquareTextChange={(newSquareText) => handleSquareTextChange(index, newSquareText)}
                 isEditable={isEditable}
-                squareBackground={squareBackgrounds[index]}
+                squareBackground={squareBackgrounds && squareBackgrounds[index] ? squareBackgrounds[index] : undefined}
                 onBoxClick={() => handleSquareClick(index)}
             />
             ))}

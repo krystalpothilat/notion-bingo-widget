@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import "./styles/WidgetRenderComponent.css";
 import BingoCard from './BingoCard';
@@ -13,6 +13,10 @@ import BingoCard from './BingoCard';
 function WidgetRenderComponent() {
     const { widgetId } = useParams();
     const [widgetData, setWidgetData] = useState(null);
+
+    // Create a ref to store the previous widgetData for comparison
+    const prevWidgetDataRef = useRef();
+
     // const [raindrops, setRaindrops] = useState([]);
     // const [isAnimationRunning, setIsAnimationRunning] = useState(false);
     // const confettiImages = [confetti1, confetti2, confetti3, confetti4, confetti5, confetti6];
@@ -33,7 +37,7 @@ function WidgetRenderComponent() {
                     throw new Error('Trouble fetching saved widget data');
                 } 
                 const data = await response.json();
-
+                console.log(data);
                 setWidgetData(data);
 
             } catch (error) {
@@ -56,16 +60,16 @@ function WidgetRenderComponent() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    widgetId: widgetId, // Widget ID to update
+                    widgetId: widgetId, 
                     backgroundColor: widgetData.backgroundColor,
                     textColor: widgetData.textColor,
                     outlineColor: widgetData.outlineColor,
                     titleColor: widgetData.titleColor,
-                    squareInputs: widgetData.squareInputs,  // The inputs for the squares
-                    squareBackgrounds: widgetData.squareBackgrounds, // The boolean array indicating background for each square
+                    squareInputs: widgetData.squareInputs,  
+                    squareBackgrounds: widgetData.squareBackgrounds, 
                     titleToggle: widgetData.titleToggle,
                     title: widgetData.title,
-                    userId: userId, // The user ID to check ownership
+                    userId: userId, 
                     gridSize: widgetData.gridSize,
                 }),
             });
@@ -129,6 +133,11 @@ function WidgetRenderComponent() {
     
 
     const handleBoxClick = (index) => {
+        if (!widgetData) {
+            console.error("Widget data is missing!");
+            return;
+        }
+
         const updatedSquareBackgrounds = [...widgetData.squareBackgrounds];  // Create a copy of the array
         updatedSquareBackgrounds[index] = !updatedSquareBackgrounds[index]; // Toggle background
 
@@ -138,7 +147,6 @@ function WidgetRenderComponent() {
             squareBackgrounds: updatedSquareBackgrounds, // Update only the squareBackgrounds
         }));
 
-        updateWidget();
     };
 
     
@@ -179,6 +187,12 @@ function WidgetRenderComponent() {
     //     }, 5000);
     // };
     
+    // Compare the previous and current widgetData and trigger updateWidget if needed
+    useEffect(() => {
+        if (widgetData) {
+            updateWidget();  // Update widget whenever widgetData changes
+        }
+    }, [widgetData]);
 
     if (!widgetData) {
         return <div>Loading...</div>;

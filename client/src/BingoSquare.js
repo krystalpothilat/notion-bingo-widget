@@ -85,7 +85,7 @@ const BingoSquare = ({ backgroundColor, textColor, outlineColor, initialText, sq
         ref={squareRef}
         onClick={handleBoxClick}
     >   
-    {/* {squareBackground && <img src={star} alt="Square background" className="square-image" />} */}
+    {squareBackground && <img src={star} alt="Square background" className="square-image" />}
         <div
             ref={editableDivRef}
             contentEditable="false" // Initially set to false to prevent accidental editing

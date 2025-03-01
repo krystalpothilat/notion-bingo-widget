@@ -18,7 +18,7 @@ function CustomizePage() {
     const [textColor, setTextColor] = useState("#000000");
     const [outlineColor, setOutlineColor] = useState("#000000");
     const [titleColor, setTitleColor] = useState("#000000");
-    const [squareTexts, setSquareTexts] = useState(Array(9).fill(""));
+    const [squareTexts, setSquareTexts] = useState(Array(9).fill("Click to Edit"));
     const [title, setTitle] = useState("");
     const [squareTextEdit, setSquareTextEdit] = useState(Array(9).fill(false));
     const [squareBackgrounds, setSquareBackgrounds] = useState(Array(9).fill(false));
@@ -45,8 +45,8 @@ function CustomizePage() {
                     setTextColor(data.textColor);
                     setOutlineColor(data.outlineColor);
                     setTitleColor(data.titleColor);
-                    setSquareTexts(data.squareInputs.map((input) => input.text));
-                    setSquareTextEdit(data.squareInputs.map(() => true));
+                    setSquareTexts(data.squareInputs);
+                    setSquareTextEdit(data.squareInputs);
                     setSquareBackgrounds(data.squareBackgrounds);
                     setTitle(data.title);
                     setTitleToggle(data.titleToggle);
@@ -94,18 +94,14 @@ function CustomizePage() {
             const newSquareTexts = new Array(totalSquares).fill("");
             return newSquareTexts;
         });
-        setSquareTextEdit((prevSquareTextEdit) => {
-            const newSquareTextEdit = new Array(totalSquares).fill(false);
-            return newSquareTextEdit;
-        });
 
         setSquareBackgrounds((prevSquareBackgrounds) => {
             const newSquareBackgrounds = new Array(totalSquares).fill(false);
             return newSquareBackgrounds;
         });
     
-        console.log("Selected GridSize:", selectedSize);
-        console.log("squareBackgrounds size:", squareBackgrounds.length);
+        // console.log("Selected GridSize:", selectedSize);
+        // console.log("squareBackgrounds size:", squareBackgrounds.length);
     };
 
     const [hexBackgroundColor, setHexBackgroundColor] = useState('#ffffff');
@@ -120,6 +116,7 @@ function CustomizePage() {
         }
     };
 
+    
     //color changes from hex square
     useEffect(() => {
         updateColorFromHex(hexBackgroundColor, setBackgroundColor);
@@ -164,27 +161,21 @@ function CustomizePage() {
     }
     
     const handleAnySquareTextChange = (index, newSquareText) => {
-        console.log("handle any square text change");
+        // console.log("handle any square text change");
         setSquareTexts((prevSquareTexts) => {
             const newSquareTexts = [...prevSquareTexts];
             newSquareTexts[index] = newSquareText;
             return newSquareTexts;
         });
-        console.log(squareTexts);
-        console.log(squareBackgrounds);
+        // console.log(squareTexts);
+        // console.log(squareBackgrounds);
     };
 
-    const handleAnySquareEdit = (index, newSquareText) => {
-        console.log("handle any square edit");
-        console.log(newSquareText);
-        setSquareTextEdit((prevSquareTextEdits) => {
-            const newSquareEdits = [...prevSquareTextEdits];
-            newSquareEdits[index] = newSquareText !== '';
-            console.log(newSquareEdits);
-            return newSquareEdits;
-        });
-        console.log(squareTextEdit);
-    }
+
+    const checkIfAllSquaresEdited = () => {
+        // Check if every square text is not equal to "Click to edit"
+        return squareTexts.every(squareText => squareText !== "Click to edit");
+    };
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(url).then(() => {
@@ -206,15 +197,13 @@ function CustomizePage() {
             return;
         }
 
-        const isAllTrue = squareTextEdit.every((value) => value === true);
-
-        if (!isAllTrue) {
-            alert(`Missing text in at least 1 square.`);
+        // Check if all squares are edited
+        if (!checkIfAllSquaresEdited()) {
+            alert("Please edit all squares before submitting.");
             return;
         }
 
         const userId = localStorage.getItem('userId');
-        console.log(userId);
         if (!userId) {
             throw new Error('User ID is not available');
         }
@@ -224,7 +213,7 @@ function CustomizePage() {
             textColor,
             outlineColor,
             titleColor,
-            squareInputs: squareTexts.map((text, index) => ({ index, text })),
+            squareInputs: squareTexts,
             squareBackgrounds,
             gridSize,
             titleToggle,
@@ -269,13 +258,12 @@ function CustomizePage() {
             return;
         }
 
-    
-        const isAllTrue = squareTextEdit.every((value) => value === true);
-        if (!isAllTrue) {
-            alert(`Missing text in at least 1 square.`);
+        // Check if all squares are edited
+        if (!checkIfAllSquaresEdited()) {
+            alert("Please edit all squares before submitting.");
             return;
         }
-
+        
         const userId = localStorage.getItem('userId');
         console.log(userId);
         if (!userId) {
@@ -289,7 +277,7 @@ function CustomizePage() {
             textColor,
             outlineColor,
             titleColor,
-            squareInputs: squareTexts.map((text, index) => ({ index, text })),
+            squareInputs: squareTexts,
             squareBackgrounds,
             titleToggle,
             title,
@@ -329,13 +317,6 @@ function CustomizePage() {
 
     }
 
-    // useEffect(() => {
-    //     console.log('Title:', title);
-    //     console.log('TitleToggle:', titleToggle);
-    //     console.log('SquareTexts:', squareTexts);
-    //     console.log('SquareTextEdits:', squareTextEdit);
-    // }, [title, titleToggle, squareTexts, squareTextEdit]);
-    
 
     return (
 
@@ -370,8 +351,7 @@ function CustomizePage() {
                     squares = {squareTexts}
                     gridSize = {gridSize}
                     onTitleChange={handleTitleChange}
-                    onAnySquareTextChange={handleAnySquareTextChange}
-                    onAnySquareTextEdit={handleAnySquareEdit}/>
+                    onAnySquareTextChange={handleAnySquareTextChange}/>
 
             <div className = "widget-customization-container">
                 <h2> Customize Widget </h2>

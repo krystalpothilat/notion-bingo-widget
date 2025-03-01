@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/WidgetPreview.css"; 
 import BingoCard from "./BingoCard";
 
-const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, gridSize, onTitleChange, onAnySquareTextChange, onAnySquareTextEdit}) => {
+const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares, gridSize, onTitleChange, onAnySquareTextChange, }) => {
     const handleTitleChange = (newTitle) => {
         onTitleChange(newTitle);
     };
@@ -11,14 +11,6 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
     const handleAnySquareTextChange = (index, newSquareText) => {
       onAnySquareTextChange(index, newSquareText);
     };
-
-    const handleAnySquareTextEdit = (index, newSquareText) => {
-      onAnySquareTextEdit(index, newSquareText);
-    };
-
-    // useEffect(() => {
-    //     console.log('WidgetPreview Props:', { backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares });
-    //   }, [backgroundColor, textColor, outlineColor, titleColor, titleToggle, title, squares]);
 
       
     return (
@@ -34,7 +26,6 @@ const WidgetPreview = ({backgroundColor, textColor, outlineColor, titleColor, ti
                 gridSize = {gridSize}
                 onTitleChange={handleTitleChange}
                 onAnySquareTextChange={handleAnySquareTextChange}
-                onAnySquareTextEdit={handleAnySquareTextEdit}
                 isEditable = {true}
                 />
         </div>

@@ -8,6 +8,15 @@
     max-width: 100%; 
 }
 
+.bingocard .render-mode{
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.bingocard .render-mode #title{
+    height: 50px;
+}
+
 #title{
     outline: none;
     height: 30px;
@@ -31,8 +40,27 @@
 
 .squares{
     display: grid;
-    /* grid-template-columns: repeat(3, 1fr);  */
     grid-gap: 0px; 
     width: 100%;
     position: relative;
+}
+
+.grid-full-screen{
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+.grid-full-screen .square{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.grid-full-screen .square img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: fill; 
 }
