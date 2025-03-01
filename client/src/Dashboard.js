@@ -22,8 +22,8 @@ function Dashboard() {
         const fetchUserWidgets = async () => {
             if (userId) {
                 try {
-                    const response = await fetch('http://localhost:8080/saved/get-user-widgets', {
-                    // const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/get-user-widgets', {
+                    // const response = await fetch('http://localhost:8080/saved/get-user-widgets', {
+                    const response = await fetch('https://notion-bingo-widget-server.vercel.app/saved/get-user-widgets', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

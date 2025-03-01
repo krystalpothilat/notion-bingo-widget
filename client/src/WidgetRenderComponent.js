@@ -26,8 +26,8 @@ function WidgetRenderComponent() {
                     
         const fetchWidgetData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
-                // const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
+                // const response = await fetch(`http://localhost:8080/saved/${widgetId}`);
+                const response = await fetch(`https://notion-bingo-widget-server.vercel.app/${widgetId}`);
                 const data = await response.json();
                 if (!response.ok) {
                     throw new Error('Trouble fetching saved widget data');
@@ -53,7 +53,8 @@ function WidgetRenderComponent() {
         const userId = localStorage.getItem('userId');
 
         try {
-            const response = await fetch('http://localhost:8080/saved/update', {
+            // const response = await fetch('http://localhost:8080/saved/update'), {
+            const response = await fetch(`https://notion-bingo-widget-server.vercel.app/saved/update`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
