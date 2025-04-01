@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 
 // Middleware
 app.use(cors({
-//   origin: 'https://notion-bingo-widget.vercel.app',
-  origin: '*',
+  origin: 'https://notion-bingo-widget.vercel.app',
+//   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
